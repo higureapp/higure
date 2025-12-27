@@ -4,6 +4,8 @@
  */
 const config = {
   singleQuote: true,
+  tabWidth: 4,
+  semi: false
 };
 
 export default config;
