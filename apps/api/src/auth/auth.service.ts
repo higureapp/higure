@@ -44,6 +44,8 @@ export class AuthService {
         const user = await this.userService.create({
             ...data,
             password: hashedPassword,
+            timezone: '',
+            locale: ''
         });
 
         const payload = { sub: user.id, email: user.email };
