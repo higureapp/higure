@@ -16,7 +16,7 @@ import { ConfigifyModule } from '@itgorillaz/configify'
         GraphQLModule.forRoot<ApolloDriverConfig>({
             driver: ApolloDriver,
             playground: true,
-            autoSchemaFile: join(process.cwd(), '../src/schema.gql'),
+            autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
         }),
         UsersModule,
         AuthModule
