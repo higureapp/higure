@@ -30,4 +30,4 @@ import { ConfigifyModule } from '@itgorillaz/configify'
         },
     ],
 })
-export class AppModule { }
+export class AppModule {}

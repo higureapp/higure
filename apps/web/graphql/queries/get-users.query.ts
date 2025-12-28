@@ -1,11 +1,11 @@
-import { gql } from "graphql-request";
+import { gql } from 'graphql-request'
 
 export const GetUsers = gql`
     query GetUsers {
         users {
-            id,
-            firstname,
-            lastname,
+            id
+            firstname
+            lastname
             email
         }
     }
