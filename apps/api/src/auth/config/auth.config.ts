@@ -1,17 +1,17 @@
-import { registerAs } from "@nestjs/config";
-import z from "zod/v4";
-import { AuthConfig } from "./auth-config.type";
+import { Configuration, Value } from "@itgorillaz/configify";
+import { IsInt, IsNotEmpty, IsString } from "class-validator";
 
-export const environmentVariableValidator = z.object({
-    JWT_SECRET: z.string(),
-    JWT_EXPIRES_IN: z.string()
-})
+@Configuration()
+export class AuthConfiguration {
 
-export default registerAs<AuthConfig>('auth', () => {
-    const env = environmentVariableValidator.parse(process.env);
+    @Value('JWT_SECRET')
+    @IsString()
+    @IsNotEmpty()
+    jwtSecret: string;
 
-    return {
-        jwtSecret: env.JWT_SECRET,
-        jwtExpiresIn: +env.JWT_EXPIRES_IN
-    }
-})
+    @Value('JWT_EXPIRES_IN', {
+        parse: (value: any) => parseInt(value)
+    })
+    @IsInt()
+    jwtExpiresIn: number;
+}

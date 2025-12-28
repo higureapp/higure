@@ -1,7 +1,7 @@
-import { AuthConfig } from 'src/auth/config/auth-config.type'
-import { AppConfig } from './app-config.type'
+import { AuthConfiguration } from 'src/auth/config/auth.config'
+import { AppConfiguration } from './app.config'
 
 export type AllConfigType = {
-    app: AppConfig,
-    auth: AuthConfig
+    app: AppConfiguration,
+    auth: AuthConfiguration
 }

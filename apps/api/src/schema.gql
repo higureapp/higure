@@ -2,6 +2,33 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type User {
+  id: ID!
+  firstname: String!
+  lastname: String!
+  email: String!
+  phone: String
+  timezone: String!
+  locale: String!
+  emailVerified: Boolean!
+  phoneVerified: Boolean!
+  lastLoginAt: DateTime
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime
+  avatarUrl: String
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
 type Query {
-  hello: String!
+  chad: String!
+  users: [User!]!
+}
+
+type Mutation {
+  hello: User!
 }
