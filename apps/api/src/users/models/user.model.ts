@@ -16,6 +16,9 @@ export class User {
     @Expose()
     lastname: string;
 
+    /* Sensitive */
+    password: string;
+
     @Field()
     @Expose()
     email: string;

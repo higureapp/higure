@@ -1,9 +1,10 @@
-import { Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { User } from './models/user.model';
 import { UsersService } from './users.service';
 import { plainToInstance } from 'class-transformer';
 import { Public } from 'src/auth/decorators/public.decorator';
 import { AppConfiguration } from 'src/config/app.config';
+import { NotFoundException } from '@nestjs/common';
 
 @Resolver(of => User)
 export class UsersResolver {
@@ -13,24 +14,16 @@ export class UsersResolver {
     ) { }
 
     @Public()
-    @Query(returns => String)
-    chad() {
-        return 'Chad!';
+    @Query(() => User)
+    async findUser(@Args('id', { type: () => String }) id: string) {
+        const user = await this.userService.findOne(id);
+
+        if (!user)
+            throw new NotFoundException('User not found');
+
+        return user;
     }
 
-    @Public()
-    @Mutation(returns => User)
-    async hello(): Promise<User> {
-        console.log(this.config.databaseUrl)
-        return await this.userService.create({
-            firstname: 'Davide',
-            lastname: 'usberti',
-            email: 'usbertibox@gmail.com',
-            password: 'abc',
-            timezone: 'US',
-            locale: 'IT',
-        })
-    }
 
     @Public()
     @Query(returns => [User])
