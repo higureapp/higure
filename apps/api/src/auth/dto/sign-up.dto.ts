@@ -1,25 +1,32 @@
-import { IsEmail, IsOptional, IsPhoneNumber, IsPositive, IsString, MaxLength, MinLength } from 'class-validator';
+import {
+    IsEmail,
+    IsOptional,
+    IsPhoneNumber,
+    IsPositive,
+    IsString,
+    MaxLength,
+    MinLength,
+} from 'class-validator'
 
 export class SignUpDto {
-
     @IsEmail()
-    email: string;
+    email: string
 
     @MinLength(8)
     @MaxLength(120)
-    password: string;
+    password: string
 
     @IsString()
     @MinLength(4)
     @MaxLength(40)
-    firstname: string;
+    firstname: string
 
     @IsString()
     @MinLength(4)
     @MaxLength(40)
-    lastname: string;
+    lastname: string
 
     @IsPhoneNumber()
     @IsOptional()
-    phone?: string;
+    phone?: string
 }

@@ -1,5 +1,5 @@
 {
-  "name": "my-turborepo",
+  "name": "higure",
   "version": "0.0.0",
   "private": true,
   "description": "",
@@ -11,11 +11,13 @@
     "test": "turbo run test",
     "test:e2e": "turbo run test:e2e",
     "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "prepare": "husky"
   },
   "devDependencies": {
-    "@repo/eslint-config": "*",
-    "@repo/typescript-config": "*",
+    "@higure/eslint-config": "*",
+    "@higure/typescript-config": "*",
+    "husky": "^9.1.7",
     "prettier": "^3.2.5",
     "turbo": "^2.7.2"
   },

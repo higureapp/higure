@@ -1,42 +1,51 @@
-import { Field, InputType } from "@nestjs/graphql";
-import { IsEmail, IsLocale, IsOptional, IsPhoneNumber, IsPositive, IsString, IsTimeZone, MaxLength, MinLength } from 'class-validator';
+import { Field, InputType } from '@nestjs/graphql'
+import {
+    IsEmail,
+    IsLocale,
+    IsOptional,
+    IsPhoneNumber,
+    IsPositive,
+    IsString,
+    IsTimeZone,
+    MaxLength,
+    MinLength,
+} from 'class-validator'
 
 @InputType()
 export class NewUserInput {
-
     @Field()
     @IsEmail()
-    email: string;
+    email: string
 
     @Field()
     @MinLength(8)
     @MaxLength(120)
-    password: string;
+    password: string
 
     @Field()
     @IsString()
     @MinLength(4)
     @MaxLength(40)
-    firstname: string;
+    firstname: string
 
     @Field()
     @IsString()
     @MinLength(4)
     @MaxLength(40)
-    lastname: string;
+    lastname: string
 
     @Field()
     @IsPhoneNumber()
     @IsOptional()
-    phone?: string;
+    phone?: string
 
     @Field()
     @IsTimeZone()
     @IsOptional()
-    timezone?: string;
+    timezone?: string
 
     @Field()
     @IsLocale()
     @IsOptional()
-    locale?: string;
+    locale?: string
 }

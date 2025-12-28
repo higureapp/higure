@@ -1,6 +1,6 @@
-import 'reflect-metadata';
-import { Exclude } from 'class-transformer';
+import 'reflect-metadata'
+import { Exclude } from 'class-transformer'
 
 export function Sensitive(): PropertyDecorator {
-    return Exclude();
+    return Exclude()
 }

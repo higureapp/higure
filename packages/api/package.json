@@ -1,5 +1,5 @@
 {
-  "name": "@repo/api",
+  "name": "@higure/api",
   "version": "0.0.0",
   "private": true,
   "license": "MIT",
@@ -30,8 +30,8 @@
     "@nestjs/mapped-types": "*"
   },
   "devDependencies": {
-    "@repo/eslint-config": "*",
-    "@repo/typescript-config": "*",
+    "@higure/eslint-config": "*",
+    "@higure/typescript-config": "*",
     "@types/node": "^22.10.7",
     "ts-loader": "^9.4.3",
     "ts-node": "^10.9.2",

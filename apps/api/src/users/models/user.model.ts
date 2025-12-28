@@ -1,69 +1,69 @@
-import { Field, ID, ObjectType } from "@nestjs/graphql";
-import { Expose } from "class-transformer";
-import { Sensitive } from "src/utils/decorators/sensitive.decorator";
+import { Field, ID, ObjectType } from '@nestjs/graphql'
+import { Expose } from 'class-transformer'
+import { Sensitive } from 'src/utils/decorators/sensitive.decorator'
 
 @ObjectType()
 export class User {
-    @Field(type => ID)
+    @Field((type) => ID)
     @Expose()
-    id: string;
+    id: string
 
     @Field()
     @Expose()
-    firstname: string;
+    firstname: string
 
     @Field()
     @Expose()
-    lastname: string;
+    lastname: string
 
     /* Sensitive */
-    password: string;
+    password: string
 
     @Field()
     @Expose()
-    email: string;
+    email: string
 
     @Field({ nullable: true })
     @Sensitive()
-    phone?: string;
+    phone?: string
 
     @Field()
     @Expose()
-    timezone: string;
+    timezone: string
 
     @Field()
     @Expose()
-    locale: string;
+    locale: string
 
     @Field()
     @Expose()
-    emailVerified: boolean;
+    emailVerified: boolean
 
     @Field()
     @Expose()
-    phoneVerified: boolean;
+    phoneVerified: boolean
 
     @Field({ nullable: true })
     @Expose()
-    lastLoginAt?: Date;
+    lastLoginAt?: Date
 
     @Field()
     @Expose()
-    createdAt: Date;
+    createdAt: Date
 
     @Field()
     @Expose()
-    updatedAt: Date;
+    updatedAt: Date
 
     @Field({ nullable: true })
     @Expose()
-    deletedAt?: Date;
+    deletedAt?: Date
 
     @Field({ nullable: true })
     @Expose()
-    avatarUrl?: string;
+    avatarUrl?: string
 
-    // Relations 
+    // Relations
     // @Field(type => [Task], { nullable: true })
     // tasks?: Task[];
 
