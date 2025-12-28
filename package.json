@@ -15,6 +15,11 @@
     "prepare": "husky"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "^6.1.0",
+    "@graphql-codegen/client-preset": "^5.2.2",
+    "@graphql-codegen/typed-document-node": "^6.1.5",
+    "@graphql-codegen/typescript": "^5.0.7",
+    "@graphql-codegen/typescript-operations": "^5.0.7",
     "@higure/eslint-config": "*",
     "@higure/typescript-config": "*",
     "husky": "^9.1.7",
@@ -28,5 +33,8 @@
   "workspaces": [
     "apps/*",
     "packages/*"
-  ]
+  ],
+  "dependencies": {
+    "typescript-react-apollo": "^9.9.0"
+  }
 }

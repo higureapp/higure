@@ -4,7 +4,7 @@ import { UsersService } from './users.service'
 import { plainToInstance } from 'class-transformer'
 import { Public } from 'src/auth/decorators/public.decorator'
 import { AppConfiguration } from 'src/config/app.config'
-import { NotFoundException } from '@nestjs/common'
+import { Logger, NotFoundException } from '@nestjs/common'
 
 @Resolver((of) => User)
 export class UsersResolver {
@@ -27,6 +27,7 @@ export class UsersResolver {
     @Query((returns) => [User])
     async users() {
         const users = await this.userService.findAll()
+        Logger.log('ised user')
 
         return users.map((u) =>
             plainToInstance(User, u, {
