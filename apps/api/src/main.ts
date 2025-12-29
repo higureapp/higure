@@ -16,15 +16,14 @@ async function bootstrap() {
         ],
     })
 
-    app.useGlobalPipes(
+    ;(app.useGlobalPipes(
         new ValidationPipe({
             whitelist: true,
             forbidNonWhitelisted: true,
-            transform: true
-        })
+            transform: true,
+        }),
     ),
-
-    await app.listen(3000)
+        await app.listen(3000))
 }
 
 void bootstrap()

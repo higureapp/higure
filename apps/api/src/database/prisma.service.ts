@@ -11,8 +11,9 @@ import { AppConfiguration } from 'src/config/app.config'
 @Injectable()
 export class PrismaService
     extends PrismaClient
-    implements OnModuleInit, OnModuleDestroy {
-    private logger = new Logger('PrismaService');
+    implements OnModuleInit, OnModuleDestroy
+{
+    private logger = new Logger('PrismaService')
 
     constructor(private readonly appConfig: AppConfiguration) {
         //const adapter = new PrismaPg({ url: appConfig.databaseUrl })
@@ -31,10 +32,10 @@ export class PrismaService
 
     async onModuleInit() {
         try {
-            this.logger.log('Connected to database');
+            this.logger.log('Connected to database')
             await this.$connect()
         } catch (error) {
-            this.logger.error('Database connection failed', error);
+            this.logger.error('Database connection failed', error)
         }
     }
 
@@ -42,7 +43,7 @@ export class PrismaService
         try {
             await this.$disconnect()
         } catch (error) {
-            this.logger.error('Error disconnecting from database', error);
+            this.logger.error('Error disconnecting from database', error)
         }
     }
 }

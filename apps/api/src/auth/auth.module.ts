@@ -14,7 +14,7 @@ import { JwtStrategy } from './strategies/jwt.strategy'
         UsersModule,
         PassportModule.register({
             defaultStrategy: 'jwt',
-            session: false
+            session: false,
         }),
         JwtModule.registerAsync({
             global: true,
@@ -27,7 +27,13 @@ import { JwtStrategy } from './strategies/jwt.strategy'
             inject: [AuthConfiguration],
         }),
     ],
-    providers: [AuthService, AuthResolver, PrismaService, RefreshTokenService, JwtStrategy],
+    providers: [
+        AuthService,
+        AuthResolver,
+        PrismaService,
+        RefreshTokenService,
+        JwtStrategy,
+    ],
     exports: [AuthService],
 })
 export class AuthModule {}

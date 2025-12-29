@@ -1,23 +1,23 @@
-import { Injectable } from '@nestjs/common';
-import { PrismaService } from '../database/prisma.service';
-import * as bcrypt from 'bcrypt';
-import { RefreshToken } from 'src/generated/prisma/client';
+import { Injectable } from '@nestjs/common'
+import { PrismaService } from '../database/prisma.service'
+import * as bcrypt from 'bcrypt'
+import { RefreshToken } from 'src/generated/prisma/client'
 
 @Injectable()
 export class RefreshTokenService {
-    constructor(private prisma: PrismaService) { }
+    constructor(private prisma: PrismaService) {}
 
     /**
      * Returns a valid refresh token
      * @param userId User
      * @param token Access Token
      * @param expiresInDays (default: 7)
-     * @returns 
+     * @returns
      */
     async createRefreshToken(userId: string, token: string, expiresInDays = 7) {
-        const hashedToken = await bcrypt.hash(token, 10);
-        const expireAt = new Date();
-        expireAt.setDate(expireAt.getDate() + expiresInDays);
+        const hashedToken = await bcrypt.hash(token, 10)
+        const expireAt = new Date()
+        expireAt.setDate(expireAt.getDate() + expiresInDays)
 
         return this.prisma.refreshToken.create({
             data: {
@@ -25,11 +25,11 @@ export class RefreshTokenService {
                 userId,
                 expireAt,
             },
-        });
+        })
     }
 
     async findValidToken(token: string) {
-        const hashedToken = await this.hashToken(token);
+        const hashedToken = await this.hashToken(token)
 
         const tokens = await this.prisma.refreshToken.findMany({
             where: {
@@ -41,30 +41,30 @@ export class RefreshTokenService {
             include: {
                 User: true,
             },
-        });
+        })
 
         /* Verify token hash */
         for (const tokenRecord of tokens) {
-            const isValid = await bcrypt.compare(token, tokenRecord.hashedToken);
+            const isValid = await bcrypt.compare(token, tokenRecord.hashedToken)
             if (isValid) {
-                return tokenRecord;
+                return tokenRecord
             }
         }
 
-        return null;
+        return null
     }
 
     async revokeToken(token: string) {
-        const tokenRecord = await this.findValidToken(token);
+        const tokenRecord = await this.findValidToken(token)
 
         if (!tokenRecord) {
-            return null;
+            return null
         }
 
         return this.prisma.refreshToken.update({
             where: { id: tokenRecord.id },
             data: { revoked: true },
-        });
+        })
     }
 
     async revokeAllUserTokens(userId: string) {
@@ -76,7 +76,7 @@ export class RefreshTokenService {
             data: {
                 revoked: true,
             },
-        });
+        })
     }
 
     async deleteExpiredTokens() {
@@ -86,7 +86,7 @@ export class RefreshTokenService {
                     lt: new Date(),
                 },
             },
-        });
+        })
     }
 
     async getUserActiveTokensCount(userId: string) {
@@ -98,10 +98,10 @@ export class RefreshTokenService {
                     gt: new Date(),
                 },
             },
-        });
+        })
     }
 
     private async hashToken(token: string): Promise<string> {
-        return bcrypt.hash(token, 10);
+        return bcrypt.hash(token, 10)
     }
 }

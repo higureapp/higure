@@ -11,7 +11,7 @@ export class AuthConfiguration {
     @Value('JWT_REFRESH_SECRET')
     @IsString()
     @IsNotEmpty()
-    jwtRefreshSecret: string;
+    jwtRefreshSecret: string
 
     @Value('JWT_EXPIRES_IN', {
         parse: (value: any) => parseInt(value),
