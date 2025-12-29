@@ -1,40 +1,70 @@
-import { Injectable } from '@nestjs/common'
-import { Prisma, User } from 'src/generated/prisma/client'
+import { ConflictException, Injectable, NotFoundException } from '@nestjs/common'
+import { Prisma } from 'src/generated/prisma/client'
 import { PrismaService } from 'src/database/prisma.service'
+import * as bcrypt from 'bcrypt'
 
 @Injectable()
 export class UsersService {
-    constructor(private readonly prismaService: PrismaService) {}
+    constructor(private readonly prismaService: PrismaService) { }
 
-    async create(data: Prisma.UserCreateInput): Promise<User> {
-        const user = await this.prismaService.user.create({
-            data: {
-                ...data,
-                timezone: data.timezone || 'UTC',
-                locale: data.locale || 'en',
+    async create(data: Prisma.UserCreateInput) {
+        const existingUser = await this.prismaService.user.findUnique({
+            where: {
+                email: data.email,
             },
         })
 
-        return user
+        if (existingUser) {
+            throw new ConflictException('Email already registered');
+        }
+
+        const hashedPassword = await bcrypt.hash(data.password, 10);
+
+        return this.prismaService.user.create({
+            data: {
+                ...data,
+                password: hashedPassword
+            },
+        })
     }
 
-    async findOne(id: string): Promise<User | null> {
-        return await this.prismaService.user.findUnique({
+    async findOne(id: string) {
+        const user = await this.prismaService.user.findUnique({
             where: {
                 id,
             },
         })
+
+        if (!user) {
+            throw new NotFoundException('User not found');
+        }
+
+        return user;
     }
 
-    async findOneByEmail(email: string): Promise<User | null> {
-        return await this.prismaService.user.findUnique({
+    async findOneByEmail(email: string) {
+        const user = await this.prismaService.user.findUnique({
             where: {
                 email,
             },
         })
+
+        if (!user) {
+            throw new NotFoundException('User not found');
+        }
+
+        return user;
     }
 
-    async findAll(): Promise<User[]> {
-        return await this.prismaService.user.findMany()
+    async findAll() {
+        return this.prismaService.user.findMany()
+    }
+
+    async delete(id: string) {
+        return this.prismaService.user.delete({
+            where: {
+                id
+            }
+        })
     }
 }

@@ -4,7 +4,6 @@ import {
     IsLocale,
     IsOptional,
     IsPhoneNumber,
-    IsPositive,
     IsString,
     IsTimeZone,
     MaxLength,

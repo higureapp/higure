@@ -1,21 +1,22 @@
+import { Field, InputType } from '@nestjs/graphql'
 import { Transform } from 'class-transformer'
 import {
     IsEmail,
     IsNotEmpty,
-    IsOptional,
-    IsPhoneNumber,
-    IsString,
     MaxLength,
     MinLength,
 } from 'class-validator'
 import { lowerCaseTransformer } from 'src/utils/transformers/lower-case.transformer'
 
-export class SignInDto {
+@InputType()
+export class SignInInput {
+    @Field()
     @IsEmail()
     @Transform(lowerCaseTransformer)
     @IsNotEmpty()
     email: string
 
+    @Field()
     @MinLength(8)
     @MaxLength(120)
     @IsNotEmpty()

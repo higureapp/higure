@@ -7,7 +7,7 @@ import { join } from 'path'
 import { UsersModule } from '../users/users.module'
 import { AuthModule } from '../auth/auth.module'
 import { APP_GUARD } from '@nestjs/core'
-import { AuthGuard } from '../auth/auth.guard'
+import { GqlAuthGuard } from 'src/auth/guards/gql-auth.guard';
 import { ConfigifyModule } from '@itgorillaz/configify'
 
 @Module({
@@ -16,7 +16,7 @@ import { ConfigifyModule } from '@itgorillaz/configify'
         GraphQLModule.forRoot<ApolloDriverConfig>({
             driver: ApolloDriver,
             playground: true,
-            autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+            autoSchemaFile: join(process.cwd(), 'src/schema.gql')
         }),
         UsersModule,
         AuthModule,
@@ -26,8 +26,8 @@ import { ConfigifyModule } from '@itgorillaz/configify'
         AppService,
         {
             provide: APP_GUARD,
-            useClass: AuthGuard,
+            useClass: GqlAuthGuard,
         },
     ],
 })
-export class AppModule {}
+export class AppModule { }

@@ -56,11 +56,28 @@ model User {
   deletedAt     DateTime?
 
   // Relations
+  refreshTokens  RefreshToken[]
   tasks          Task[]
   taskCategories TaskCategory[]
   events         Event[]
   habits         Habit[]
   sleeps         Sleep[]
+}
+
+model RefreshToken {
+  id          String   @id @unique @default(uuid())
+  hashedToken String   @unique
+  userId      String
+  revoked     Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  expireAt    DateTime
+
+  // Relations
+  User        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([hashedToken])
 }
 
 model Task {

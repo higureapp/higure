@@ -8,6 +8,11 @@ export class AuthConfiguration {
     @IsNotEmpty()
     jwtSecret: string
 
+    @Value('JWT_REFRESH_SECRET')
+    @IsString()
+    @IsNotEmpty()
+    jwtRefreshSecret: string;
+
     @Value('JWT_EXPIRES_IN', {
         parse: (value: any) => parseInt(value),
     })

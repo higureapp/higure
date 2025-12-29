@@ -24,7 +24,44 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+type AuthResponse {
+  access_token: String!
+  refresh_token: String!
+}
+
+type SignUpResponse {
+  access_token: String!
+  refresh_token: String!
+  user: User!
+}
+
 type Query {
-  findUser(id: String!): User!
-  users: [User!]!
+  me: User!
+}
+
+type Mutation {
+  deleteAccount: String!
+  signUp(signUpInput: SignUpInput!): SignUpResponse!
+  signIn(signInInput: SignInInput!): AuthResponse!
+  refreshToken(refreshTokenInput: RefreshTokenInput!): AuthResponse!
+  logout(refreshToken: String): String!
+  logoutAllDevices: String!
+}
+
+input SignUpInput {
+  email: String!
+  password: String!
+  firstname: String!
+  lastname: String!
+  phone: String
+}
+
+input SignInInput {
+  email: String!
+  password: String!
+}
+
+input RefreshTokenInput {
+  """The refresh token to use for re-authentication"""
+  refreshToken: String!
 }

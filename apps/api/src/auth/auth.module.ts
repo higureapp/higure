@@ -1,14 +1,21 @@
 import { Module } from '@nestjs/common'
 import { AuthService } from './auth.service'
 import { AuthResolver } from './auth.resolver'
-import { AuthController } from './auth.controller'
 import { JwtModule } from '@nestjs/jwt'
 import { AuthConfiguration } from './config/auth.config'
 import { UsersModule } from 'src/users/users.module'
+import { PassportModule } from '@nestjs/passport'
+import { RefreshTokenService } from 'src/refresh-token/refresh-token.service'
+import { PrismaService } from 'src/database/prisma.service'
+import { JwtStrategy } from './strategies/jwt.strategy'
 
 @Module({
     imports: [
         UsersModule,
+        PassportModule.register({
+            defaultStrategy: 'jwt',
+            session: false
+        }),
         JwtModule.registerAsync({
             global: true,
             useFactory: (config: AuthConfiguration) => ({
@@ -20,8 +27,7 @@ import { UsersModule } from 'src/users/users.module'
             inject: [AuthConfiguration],
         }),
     ],
-    providers: [AuthService, AuthResolver],
-    controllers: [AuthController],
+    providers: [AuthService, AuthResolver, PrismaService, RefreshTokenService, JwtStrategy],
     exports: [AuthService],
 })
 export class AuthModule {}
