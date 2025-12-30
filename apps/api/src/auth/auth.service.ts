@@ -6,7 +6,7 @@ import {
 import { JwtService } from '@nestjs/jwt'
 import * as bcrypt from 'bcrypt'
 import { UsersService } from '../users/users.service'
-import { RefreshTokenService } from '../refresh-token/refresh-token.service'
+import { RefreshTokenService } from './refresh-token/refresh-token.service'
 import { SignInInput } from './inputs/sign-in.input'
 import { AuthConfiguration } from './config/auth.config'
 import { SignUpInput } from './inputs/sign-up.input'
@@ -19,13 +19,13 @@ export class AuthService {
         private authConfig: AuthConfiguration,
         private userService: UsersService,
         private refreshTokenService: RefreshTokenService,
-    ) {}
+    ) { }
 
     async signIn(signInInput: SignInInput): Promise<{
         access_token: string
         refresh_token: string
     }> {
-        const user = await this.userService.findOneByEmail(signInInput.email)
+        const user = await this.userService.findOneByEmailWithPassword(signInInput.email)
 
         if (!user) {
             throw new UnauthorizedException('Invalid credentials')
@@ -55,29 +55,23 @@ export class AuthService {
         refresh_token: string
         user: User
     }> {
-        try {
-            const user = await this.userService.create({
-                ...signUpInput,
-                timezone: 'US',
-                locale: 'en',
-            })
+        const user = await this.userService.create({
+            ...signUpInput,
+            timezone: 'US',
+            locale: 'en',
+        })
 
-            const tokens = await this.getTokens(user.id, user.email)
-            await this.refreshTokenService.createRefreshToken(
-                user.id,
-                tokens.refresh_token,
-            )
+        const tokens = await this.getTokens(user.id, user.email)
+        await this.refreshTokenService.createRefreshToken(
+            user.id,
+            tokens.refresh_token,
+        )
 
-            return {
-                ...tokens,
-                user,
-            }
-        } catch (error) {
-            if (error instanceof ConflictException) {
-                throw error
-            }
-            throw new Error('Failed to create user')
+        return {
+            ...tokens,
+            user,
         }
+
     }
 
     async getTokens(userId: string, email: string) {

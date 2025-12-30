@@ -9,7 +9,7 @@ import { User } from './models/user.model'
 import { UsersService } from './users.service'
 
 @Resolver(() => User)
-export class UserResolver {
+export class UsersResolver {
     constructor(private usersService: UsersService) {}
 
     @UseGuards(GqlAuthGuard)
