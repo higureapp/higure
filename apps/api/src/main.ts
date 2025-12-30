@@ -15,7 +15,6 @@ async function bootstrap() {
             'Apollo-Require-Preflight',
         ],
     })
-
     ;(app.useGlobalPipes(
         new ValidationPipe({
             whitelist: true,
