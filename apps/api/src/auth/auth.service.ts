@@ -19,13 +19,15 @@ export class AuthService {
         private authConfig: AuthConfiguration,
         private userService: UsersService,
         private refreshTokenService: RefreshTokenService,
-    ) { }
+    ) {}
 
     async signIn(signInInput: SignInInput): Promise<{
         access_token: string
         refresh_token: string
     }> {
-        const user = await this.userService.findOneByEmailWithPassword(signInInput.email)
+        const user = await this.userService.findOneByEmailWithPassword(
+            signInInput.email,
+        )
 
         if (!user) {
             throw new UnauthorizedException('Invalid credentials')
@@ -71,7 +73,6 @@ export class AuthService {
             ...tokens,
             user,
         }
-
     }
 
     async getTokens(userId: string, email: string) {

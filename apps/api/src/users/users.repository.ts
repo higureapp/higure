@@ -1,23 +1,25 @@
-import { Injectable, Logger } from "@nestjs/common";
-import { PrismaService } from "../database/prisma.service";
-import { Prisma, User } from "../generated/prisma/client";
-import { IUsersRepository } from "./interfaces/users-repository.interface";
+import { Injectable, Logger } from '@nestjs/common'
+import { PrismaService } from '../database/prisma.service'
+import { Prisma, User } from '../generated/prisma/client'
+import { IUsersRepository } from './interfaces/users-repository.interface'
 
 @Injectable()
 export class UsersRepository implements IUsersRepository {
     private logger = new Logger('UsersRepository')
 
     constructor(private readonly prismaService: PrismaService) {
-        this.logger.log('UsersRepository initialized: ' + !!this.prismaService);
+        this.logger.log('UsersRepository initialized: ' + !!this.prismaService)
     }
 
     public async create(data: Prisma.UserCreateInput): Promise<User> {
         return await this.prismaService.user.create({
-            data
+            data,
         })
     }
 
-    public async findUnique(where: Prisma.UserWhereUniqueInput): Promise<User | null> {
+    public async findUnique(
+        where: Prisma.UserWhereUniqueInput,
+    ): Promise<User | null> {
         const user = await this.prismaService.user.findUnique({
             where,
         })
@@ -49,12 +51,15 @@ export class UsersRepository implements IUsersRepository {
         return await this.prismaService.user.findMany()
     }
 
-    public async update(id: string, data: Prisma.UserUpdateInput): Promise<User> {
+    public async update(
+        id: string,
+        data: Prisma.UserUpdateInput,
+    ): Promise<User> {
         return await this.prismaService.user.update({
             where: {
-                id
+                id,
             },
-            data
+            data,
         })
     }
 
@@ -69,11 +74,11 @@ export class UsersRepository implements IUsersRepository {
     /**
      * This method applies the flag `isHidden` on the current user
      * without removing it from database.
-     * @param id User id 
+     * @param id User id
      * @returns Promise<void> No return
      */
     public async hideUser(id: string): Promise<void> {
         // TODO: Implement `isHidden` flag in database
-        return;
+        return
     }
 }

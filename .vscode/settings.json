@@ -1,0 +1,7 @@
+{
+  "restructuredtext.preview.name": "sphinx",
+  "restructuredtext.linter.run": "onType",
+  "restructuredtext.linter.executablePath": "doc8",
+  "restructuredtext.preview.autoShowPreviewToSide": true,
+  "esbonio.preview.synchronizeScroll": "bothWays"
+}
