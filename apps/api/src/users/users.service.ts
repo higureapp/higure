@@ -9,9 +9,9 @@ import * as bcrypt from 'bcrypt'
 
 @Injectable()
 export class UsersService {
-    constructor(private readonly prismaService: PrismaService) {}
+    constructor(private readonly prismaService: PrismaService) { }
 
-    async create(data: Prisma.UserCreateInput) {
+    public async create(data: Prisma.UserCreateInput) {
         const existingUser = await this.prismaService.user.findUnique({
             where: {
                 email: data.email,
@@ -32,39 +32,47 @@ export class UsersService {
         })
     }
 
-    async findOne(id: string) {
+    public async findUnique(where: Prisma.UserWhereUniqueInput) {
         const user = await this.prismaService.user.findUnique({
-            where: {
-                id,
-            },
+            where
         })
 
         if (!user) {
-            throw new NotFoundException('User not found')
+            throw new NotFoundException('User not found');
         }
 
-        return user
+        return user;
     }
 
-    async findOneByEmail(email: string) {
-        const user = await this.prismaService.user.findUnique({
-            where: {
-                email,
-            },
+    public async findFirst(where: Prisma.UserWhereInput) {
+        const user = await this.prismaService.user.findFirst({
+            where
         })
 
         if (!user) {
-            throw new NotFoundException('User not found')
+            throw new NotFoundException('User not found');
         }
 
-        return user
+        return user;
     }
 
-    async findAll() {
+    public async findOne(id: string) {
+        return await this.findUnique({
+            id
+        })
+    }
+
+    public async findOneByEmail(email: string) {
+        return await this.findUnique({
+            email
+        })
+    }
+
+    public async findAll() {
         return this.prismaService.user.findMany()
     }
 
-    async delete(id: string) {
+    public async delete(id: string) {
         return this.prismaService.user.delete({
             where: {
                 id,
