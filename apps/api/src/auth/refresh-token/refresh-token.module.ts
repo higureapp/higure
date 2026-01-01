@@ -6,8 +6,18 @@ import { JwtRefreshAuthGuard } from './refresh-token.guard'
 import { JwtRefreshStrategy } from './refresh-token.strategy'
 
 @Module({
-    imports: [PrismaService],
-    providers: [RefreshTokenService, RefreshTokenCron, JwtRefreshStrategy],
-    exports: [RefreshTokenService, RefreshTokenCron, JwtRefreshAuthGuard, JwtRefreshStrategy],
+    providers: [
+        RefreshTokenService,
+        RefreshTokenCron,
+        JwtRefreshStrategy,
+        JwtRefreshAuthGuard,
+        PrismaService,
+    ],
+    exports: [
+        RefreshTokenService,
+        RefreshTokenCron,
+        JwtRefreshAuthGuard,
+        JwtRefreshStrategy,
+    ],
 })
 export class RefreshTokenModule {}

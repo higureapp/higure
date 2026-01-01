@@ -1,49 +1,28 @@
 import {
     ConflictException,
+    Inject,
     Injectable,
     NotFoundException,
 } from '@nestjs/common'
-import { Prisma, User } from 'src/generated/prisma/client'
+import { Prisma } from 'src/generated/prisma/client'
 import { PrismaService } from 'src/database/prisma.service'
 import * as bcrypt from 'bcrypt'
-import { UsersRepository } from './users.repository'
-
-type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>
-type UserWithoutPassword = Omit<User, 'password'>
+import { UsersRepository } from '../users.repository'
+import { UsersMapper } from '../mappers/users.mapper'
+import { Cache, CACHE_MANAGER } from '@nestjs/cache-manager'
+import { CacheKeys } from '../../cache/cache.keys'
+import { User as UserModel } from '../models/user.model'
+import { RefreshTokenService } from '../../auth/refresh-token/refresh-token.service'
 
 @Injectable()
 export class UsersService {
     constructor(
-        private readonly prismaService: PrismaService,
         private readonly usersRepository: UsersRepository,
+        private readonly refreshTokenService: RefreshTokenService,
+
+        @Inject(CACHE_MANAGER) 
+        private readonly cacheManager: Cache
     ) {}
-
-    /**
-     * Data filtering is processed by services, so
-     * this simple utility delete the attribute `password`
-     * from a given user entity.
-     * @param user
-     * @returns
-     */
-    private excludePassword(user: User): UserWithoutPassword {
-        const { password, ...userWithoutPassword } = user
-        return userWithoutPassword
-    }
-
-    private excludeSensitiveFields(user: User): UserWithoutPassword {
-        const { password, ...safeUser } = user
-        return safeUser
-    }
-
-    private exclude<T, Key extends keyof T>(
-        entity: T,
-        ...keys: Key[]
-    ): Omit<T, Key> {
-        for (const key of keys) {
-            delete entity[key]
-        }
-        return entity
-    }
 
     public async create(data: Prisma.UserCreateInput) {
         const existingUser = await this.usersRepository.findOneByEmail(
@@ -61,31 +40,31 @@ export class UsersService {
             password: hashedPassword,
         })
 
-        return this.excludePassword(newUser)
+        return UsersMapper.toPublic(newUser)
     }
 
     public async findUnique(where: Prisma.UserWhereUniqueInput) {
-        const user = await this.prismaService.user.findUnique({
-            where,
+        const user = await this.usersRepository.findUnique({
+            ...where,
         })
 
-        if (!user) {
+        if (!user || user.status !== 'active') {
             throw new NotFoundException('User not found')
         }
 
-        return this.excludePassword(user)
+        return UsersMapper.toPublic(user)
     }
 
     public async findFirst(where: Prisma.UserWhereInput) {
-        const user = await this.prismaService.user.findFirst({
-            where,
+        const user = await this.usersRepository.findFirst({
+            ...where,
         })
 
-        if (!user) {
+        if (!user || user.status !== 'active') {
             throw new NotFoundException('User not found')
         }
 
-        return this.excludePassword(user)
+        return UsersMapper.toPublic(user)
     }
 
     public async findOne(id: string) {
@@ -113,20 +92,28 @@ export class UsersService {
     }
 
     public async findAll() {
-        const users = await this.usersRepository.findAll()
+        const cachedUsers = await this.cacheManager.get<UserModel[]>(CacheKeys.users.getAll());
 
-        return users.map((u) => this.excludePassword(u))
+        if (cachedUsers)
+            return cachedUsers;
+
+        const users = await this.usersRepository.findAll()
+        const dto = UsersMapper.toPublicArray(users);
+
+        await this.cacheManager.set(CacheKeys.users.getAll(), dto, 120);
+        return dto;
     }
 
     public async update(id: string, data: Prisma.UserUpdateInput) {
         await this.findOne(id)
         const updatedUser = await this.usersRepository.update(id, data)
 
-        return this.excludePassword(updatedUser)
+        return UsersMapper.toPublic(updatedUser);
     }
 
     public async delete(id: string) {
-        await this.findOne(id)
-        await this.usersRepository.delete(id)
+        await this.findOne(id);
+        await this.usersRepository.softDelete(id);
+        await this.refreshTokenService.revokeAllUserTokens(id);
     }
 }

@@ -35,6 +35,12 @@ export class UsersRepository implements IUsersRepository {
         return user
     }
 
+    public async findMany(where: Prisma.UserWhereInput): Promise<User[]> {
+        return await this.prismaService.user.findMany({
+            where
+        })
+    }
+
     public async findOne(id: string): Promise<User | null> {
         return await this.findUnique({
             id,
@@ -71,14 +77,17 @@ export class UsersRepository implements IUsersRepository {
         })
     }
 
-    /**
-     * This method applies the flag `isHidden` on the current user
-     * without removing it from database.
-     * @param id User id
-     * @returns Promise<void> No return
-     */
-    public async hideUser(id: string): Promise<void> {
-        // TODO: Implement `isHidden` flag in database
-        return
+    public async softDelete(id: string): Promise<void> {
+        await this.update(id, {
+            status: 'deleted',
+            deletedAt: new Date()
+        });
+    }
+
+    public async getAllSoftDeletedUsers(lte: Date): Promise<User[]> {
+        return await this.findMany({
+            status: 'deleted',
+            deletedAt: lte
+        })
     }
 }

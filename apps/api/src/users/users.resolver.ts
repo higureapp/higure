@@ -6,7 +6,7 @@ import {
     CurrentUserType,
 } from '../auth/decorators/current-user.decorator'
 import { User } from './models/user.model'
-import { UsersService } from './users.service'
+import { UsersService } from './services/users.service'
 
 @Resolver(() => User)
 export class UsersResolver {

@@ -18,6 +18,12 @@ datasource db {
 // ENUMS
 //////////////////////
 
+enum UserStatus {
+  active
+  disabled
+  deleted
+}
+
 enum TaskStatus {
   pending
   completed
@@ -53,6 +59,7 @@ model User {
   lastLoginAt   DateTime?
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
+  status        UserStatus @default(active)
   deletedAt     DateTime?
 
   // Relations
