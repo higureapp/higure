@@ -7,7 +7,7 @@ export class AuthConfiguration {
     @IsString()
     @IsNotEmpty()
     jwtSecret: string
-    
+
     @Value('JWT_REFRESH_SECRET')
     @IsString()
     @IsNotEmpty()

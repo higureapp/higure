@@ -1,40 +1,19 @@
-'use client'
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
-import { useUsers } from '@/hooks/useUsers'
-
-export default function UsersPage() {
-    const { data: users, isLoading, error, refetch } = useUsers()
-
-    if (isLoading) {
-        return <div>Caricamento...</div>
-    }
-
-    if (error) {
-        return <div>Errore: {error.message}</div>
-    }
-
+export default function HomePage() {
     return (
-        <div className="p-8">
-            <div className="flex justify-between items-center mb-6">
-                <h1 className="text-2xl font-bold">Utenti</h1>
-                <button
-                    onClick={() => refetch()}
-                    className="px-4 py-2 bg-blue-500 text-white rounded"
-                >
-                    Ricarica
-                </button>
-            </div>
-
-            <div className="grid gap-4">
-                {users?.map((user) => (
-                    <div key={user.id} className="border p-4 rounded">
-                        <h2 className="font-semibold">
-                            {user.firstname} {user.lastname}
-                        </h2>
-                        <p className="text-gray-600">{user.email}</p>
-                    </div>
-                ))}
+        <div className="flex flex-col items-center justify-center min-h-screen">
+            <h1 className="text-4xl font-bold mb-4">Welcome to Higure</h1>
+            <p className="mb-8">Please sign in or sign up to continue.</p>
+            <div className="flex gap-4">
+                <Link href="/auth/signin">
+                    <Button>Sign In</Button>
+                </Link>
+                <Link href="/auth/signup">
+                    <Button variant="secondary">Sign Up</Button>
+                </Link>
             </div>
         </div>
-    )
+    );
 }

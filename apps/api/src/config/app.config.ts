@@ -19,11 +19,11 @@ export class AppConfiguration {
     @IsString()
     @IsNotEmpty()
     @Value('REDIS_URL')
-    redisUrl: string;
+    redisUrl: string
 
     @Value('REDIS_DEFAULT_TTL_MS', {
         parse: (value: any) => parseInt(value),
-        default: 60000
+        default: 60000,
     })
-    redisDefaultTtlMs: number;
+    redisDefaultTtlMs: number
 }

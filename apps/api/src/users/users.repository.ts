@@ -37,7 +37,7 @@ export class UsersRepository implements IUsersRepository {
 
     public async findMany(where: Prisma.UserWhereInput): Promise<User[]> {
         return await this.prismaService.user.findMany({
-            where
+            where,
         })
     }
 
@@ -80,14 +80,14 @@ export class UsersRepository implements IUsersRepository {
     public async softDelete(id: string): Promise<void> {
         await this.update(id, {
             status: 'deleted',
-            deletedAt: new Date()
-        });
+            deletedAt: new Date(),
+        })
     }
 
     public async getAllSoftDeletedUsers(lte: Date): Promise<User[]> {
         return await this.findMany({
             status: 'deleted',
-            deletedAt: lte
+            deletedAt: lte,
         })
     }
 }

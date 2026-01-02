@@ -1,5 +1,5 @@
-import { User } from "@/src/generated/prisma/client";
-import { User as UserModel } from "../models/user.model";
+import { User } from '@/src/generated/prisma/client'
+import { User as UserModel } from '../models/user.model'
 
 export class UsersMapper {
     public static toPublic(user: User): UserModel {
@@ -17,11 +17,11 @@ export class UsersMapper {
             createdAt: user.createdAt,
             updatedAt: user.updatedAt,
             deletedAt: user.deletedAt,
-            avatarUrl: user.avatarUrl
+            avatarUrl: user.avatarUrl,
         }
     }
 
     public static toPublicArray(users: User[]): UserModel[] {
-        return users.map(this.toPublic);
+        return users.map(this.toPublic)
     }
 }

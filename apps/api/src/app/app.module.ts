@@ -8,9 +8,9 @@ import { AuthModule } from '../auth/auth.module'
 import { APP_GUARD } from '@nestjs/core'
 import { GqlAuthGuard } from 'src/auth/guards/gql-auth.guard'
 import { ConfigifyModule } from '@itgorillaz/configify'
-import KeyvRedis from '@keyv/redis';
-import { Keyv } from 'keyv';
-import { CacheableMemory } from 'cacheable';
+import KeyvRedis from '@keyv/redis'
+import { Keyv } from 'keyv'
+import { CacheableMemory } from 'cacheable'
 import { CacheModule } from '@nestjs/cache-manager'
 import { AppConfiguration } from '../config/app.config'
 
@@ -24,11 +24,14 @@ import { AppConfiguration } from '../config/app.config'
                 return {
                     stores: [
                         new Keyv({
-                            store: new CacheableMemory({ ttl: config.redisDefaultTtlMs, lruSize: 5000 }),
+                            store: new CacheableMemory({
+                                ttl: config.redisDefaultTtlMs,
+                                lruSize: 5000,
+                            }),
                         }),
                         new KeyvRedis(config.redisUrl),
                     ],
-                };
+                }
             },
         }),
         GraphQLModule.forRoot<ApolloDriverConfig>({
@@ -44,7 +47,7 @@ import { AppConfiguration } from '../config/app.config'
         {
             provide: APP_GUARD,
             useClass: GqlAuthGuard,
-        }
+        },
     ],
 })
-export class AppModule { }
+export class AppModule {}

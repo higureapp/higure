@@ -1,7 +1,4 @@
-import {
-    Injectable,
-    UnauthorizedException,
-} from '@nestjs/common'
+import { Injectable, UnauthorizedException } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
 import * as bcrypt from 'bcrypt'
 import { UsersService } from '../users/services/users.service'
@@ -32,8 +29,7 @@ export class AuthService {
             throw new UnauthorizedException('Invalid credentials')
         }
 
-        if (user.status !== 'active')
-            throw new UnauthorizedException();
+        if (user.status !== 'active') throw new UnauthorizedException()
 
         const isPasswordValid = await bcrypt.compare(
             signInInput.password,

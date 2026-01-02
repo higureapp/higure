@@ -7,7 +7,7 @@ import { UsersModule } from '../users/users.module'
 import { PassportModule } from '@nestjs/passport'
 import { PrismaService } from 'src/database/prisma.service'
 import { JwtStrategy } from './strategies/jwt.strategy'
-import { RefreshTokenModule } from './refresh-token/refresh-token.module';
+import { RefreshTokenModule } from './refresh-token/refresh-token.module'
 
 @Module({
     imports: [
@@ -24,16 +24,11 @@ import { RefreshTokenModule } from './refresh-token/refresh-token.module';
                     expiresIn: config.jwtExpiresIn,
                 },
             }),
-            inject: [AuthConfiguration]
+            inject: [AuthConfiguration],
         }),
         RefreshTokenModule,
     ],
-    providers: [
-        AuthService,
-        AuthResolver,
-        JwtStrategy,
-        PrismaService,
-    ],
+    providers: [AuthService, AuthResolver, JwtStrategy, PrismaService],
     exports: [AuthService],
 })
-export class AuthModule { }
+export class AuthModule {}

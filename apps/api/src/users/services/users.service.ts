@@ -20,8 +20,8 @@ export class UsersService {
         private readonly usersRepository: UsersRepository,
         private readonly refreshTokenService: RefreshTokenService,
 
-        @Inject(CACHE_MANAGER) 
-        private readonly cacheManager: Cache
+        @Inject(CACHE_MANAGER)
+        private readonly cacheManager: Cache,
     ) {}
 
     public async create(data: Prisma.UserCreateInput) {
@@ -92,28 +92,29 @@ export class UsersService {
     }
 
     public async findAll() {
-        const cachedUsers = await this.cacheManager.get<UserModel[]>(CacheKeys.users.getAll());
+        const cachedUsers = await this.cacheManager.get<UserModel[]>(
+            CacheKeys.users.getAll(),
+        )
 
-        if (cachedUsers)
-            return cachedUsers;
+        if (cachedUsers) return cachedUsers
 
         const users = await this.usersRepository.findAll()
-        const dto = UsersMapper.toPublicArray(users);
+        const dto = UsersMapper.toPublicArray(users)
 
-        await this.cacheManager.set(CacheKeys.users.getAll(), dto, 120);
-        return dto;
+        await this.cacheManager.set(CacheKeys.users.getAll(), dto, 120)
+        return dto
     }
 
     public async update(id: string, data: Prisma.UserUpdateInput) {
         await this.findOne(id)
         const updatedUser = await this.usersRepository.update(id, data)
 
-        return UsersMapper.toPublic(updatedUser);
+        return UsersMapper.toPublic(updatedUser)
     }
 
     public async delete(id: string) {
-        await this.findOne(id);
-        await this.usersRepository.softDelete(id);
-        await this.refreshTokenService.revokeAllUserTokens(id);
+        await this.findOne(id)
+        await this.usersRepository.softDelete(id)
+        await this.refreshTokenService.revokeAllUserTokens(id)
     }
 }

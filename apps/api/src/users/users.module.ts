@@ -8,11 +8,14 @@ import { RetentionService } from './services/users-retention.service'
 import { RefreshTokenModule } from '../auth/refresh-token/refresh-token.module'
 
 @Module({
-    imports: [
-        ScheduleModule.forRoot(),
-        RefreshTokenModule
+    imports: [ScheduleModule.forRoot(), RefreshTokenModule],
+    providers: [
+        UsersResolver,
+        UsersService,
+        UsersRepository,
+        RetentionService,
+        PrismaService,
     ],
-    providers: [UsersResolver, UsersService, UsersRepository, RetentionService, PrismaService],
     exports: [UsersService, UsersRepository],
 })
 export class UsersModule {}

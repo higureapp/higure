@@ -1,29 +1,30 @@
-import { Injectable, Logger } from "@nestjs/common";
-import { Cron } from "@nestjs/schedule";
-import { UsersRepository } from "../users.repository";
+import { Injectable, Logger } from '@nestjs/common'
+import { Cron } from '@nestjs/schedule'
+import { UsersRepository } from '../users.repository'
 
 @Injectable()
 export class RetentionService {
-    private logger = new Logger(RetentionService.name);
+    private logger = new Logger(RetentionService.name)
 
-    constructor(private readonly usersRepository: UsersRepository) { }
+    constructor(private readonly usersRepository: UsersRepository) {}
 
     @Cron('0 3 * * *') // avery day at 3 am
     async runRetention() {
-        this.logger.log('Executing Retention task...');
+        this.logger.log('Executing Retention task...')
 
-        const retentionDate = new Date();
-        retentionDate.setDate(retentionDate.getDate() - 30);
+        const retentionDate = new Date()
+        retentionDate.setDate(retentionDate.getDate() - 30)
 
-        const users = await this.usersRepository.getAllSoftDeletedUsers(retentionDate);
+        const users =
+            await this.usersRepository.getAllSoftDeletedUsers(retentionDate)
 
-        let deletedUsers = 0;
+        let deletedUsers = 0
         for (const user of users) {
-            await this.anonymizeUser(user.id);
+            await this.anonymizeUser(user.id)
             deletedUsers++
         }
 
-        this.logger.log(`Redacted sensitive data from ${deletedUsers} users.`);
+        this.logger.log(`Redacted sensitive data from ${deletedUsers} users.`)
     }
 
     private async anonymizeUser(userId: string) {
@@ -35,7 +36,7 @@ export class RetentionService {
             avatarUrl: null,
             timezone: '',
             locale: '',
-            password: 'ANONYMIZED'
-        });
+            password: 'ANONYMIZED',
+        })
     }
 }
