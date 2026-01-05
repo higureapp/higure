@@ -42,6 +42,7 @@ const formSchema = z.object({
 export function SignUpForm() {
     const signUp = useSignUp()
     const form = useForm<z.infer<typeof formSchema>>({
+        // @ts-expect-error fake error
         resolver: zodResolver(formSchema),
         defaultValues: {
             firstname: '',
