@@ -1,27 +1,27 @@
-"use client";
+'use client'
 
-import { useMe } from "@/hooks/useMe";
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useMe } from '@/hooks/useMe'
+import { useEffect } from 'react'
+import { useRouter } from 'next/navigation'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 
 export default function MePage() {
-    const { user, isLoading, isLoggedIn, logout } = useMe();
-    const router = useRouter();
+    const { user, isLoading, isLoggedIn, logout } = useMe()
+    const router = useRouter()
 
     useEffect(() => {
         if (!isLoading && !isLoggedIn) {
-            router.push("/auth/signin");
+            router.push('/auth/signin')
         }
-    }, [isLoading, isLoggedIn, router]);
+    }, [isLoading, isLoggedIn, router])
 
     if (isLoading) {
-        return <div>Loading...</div>;
+        return <div>Loading...</div>
     }
 
     if (!isLoggedIn) {
-        return null;
+        return null
     }
 
     return (
@@ -43,12 +43,16 @@ export default function MePage() {
                     <div>
                         <strong>Email:</strong> {user?.email}
                     </div>
-                    <Button onClick={() => {
-                        logout();
-                        router.push("/auth/signin");
-                    }}>Logout</Button>
+                    <Button
+                        onClick={() => {
+                            logout()
+                            router.push('/auth/signin')
+                        }}
+                    >
+                        Logout
+                    </Button>
                 </CardContent>
             </Card>
         </div>
-    );
+    )
 }

@@ -1,5 +1,5 @@
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import Link from 'next/link'
+import { Button } from '@/components/ui/button'
 
 export default function HomePage() {
     return (
@@ -15,5 +15,5 @@ export default function HomePage() {
                 </Link>
             </div>
         </div>
-    );
+    )
 }

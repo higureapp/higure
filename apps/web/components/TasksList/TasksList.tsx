@@ -1,8 +1,8 @@
-import { Task } from "@/types/Task";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Task } from '@/types/Task'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 
 interface TasksListProps {
-    tasks: Task[];
+    tasks: Task[]
 }
 
 export function TasksList({ tasks }: TasksListProps) {
@@ -17,13 +17,11 @@ export function TasksList({ tasks }: TasksListProps) {
                 ) : (
                     <ul>
                         {tasks.map((task) => (
-                            <li key={task.id}>
-                                {task.title}
-                            </li>
+                            <li key={task.id}>{task.title}</li>
                         ))}
                     </ul>
                 )}
             </CardContent>
         </Card>
-    );
+    )
 }

@@ -10,18 +10,18 @@ const client = new GraphQLClient(
         },
         credentials: 'include',
         requestMiddleware: (req) => {
-            const token = getAccessToken();
+            const token = getAccessToken()
 
             if (token) {
                 req.headers = {
-                    'Content-Type': 'application/json', 
+                    'Content-Type': 'application/json',
                     ...req.headers,
-                    ...(token && { 'Authorization': `Bearer ${token}` })
+                    ...(token && { Authorization: `Bearer ${token}` }),
                 }
             }
 
-            return req;
-        }
+            return req
+        },
     },
 )
 
