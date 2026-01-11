@@ -1,14 +1,14 @@
-import { Field, InputType } from '@nestjs/graphql';
-import { IsEnum, IsUUID } from 'class-validator';
-import { StatsPeriod } from '../models/enums';
+import { Field, InputType } from '@nestjs/graphql'
+import { IsEnum, IsUUID } from 'class-validator'
+import { StatsPeriod } from '../models/enums'
 
 @InputType()
 export class GetHabitStatsInput {
     @Field()
     @IsUUID()
-    habitId: string;
+    habitId: string
 
     @Field(() => StatsPeriod)
     @IsEnum(StatsPeriod)
-    period: StatsPeriod;
+    period: StatsPeriod
 }

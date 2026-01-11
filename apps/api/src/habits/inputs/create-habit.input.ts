@@ -1,4 +1,4 @@
-import { Field, InputType, Int } from '@nestjs/graphql';
+import { Field, InputType, Int } from '@nestjs/graphql'
 import {
     IsString,
     IsOptional,
@@ -8,57 +8,57 @@ import {
     Min,
     IsDate,
     IsObject,
-} from 'class-validator';
-import { DifficultyLevel, FrequencyType } from '../models';
-import { GraphQLJSONObject } from 'graphql-type-json';
+} from 'class-validator'
+import { DifficultyLevel, FrequencyType } from '../models'
+import { GraphQLJSONObject } from 'graphql-type-json'
 
 @InputType()
 export class CreateHabitInput {
     @Field()
     @IsString()
-    title: string;
+    title: string
 
     @Field({ nullable: true })
     @IsOptional()
     @IsString()
-    description?: string;
+    description?: string
 
     @Field({ nullable: true })
     @IsOptional()
     @IsUUID()
-    categoryId?: string;
+    categoryId?: string
 
     @Field(() => FrequencyType)
     @IsEnum(FrequencyType)
-    frequency: FrequencyType;
+    frequency: FrequencyType
 
     @Field(() => GraphQLJSONObject)
     @IsObject()
-    frequencyConfig: object;
+    frequencyConfig: object
 
     @Field(() => Int, { defaultValue: 1 })
     @IsOptional()
     @IsInt()
     @Min(1)
-    dailyRepetitions: number = 1;
+    dailyRepetitions: number = 1
 
     @Field({ nullable: true })
     @IsOptional()
     @IsDate()
-    scheduledTime?: Date;
+    scheduledTime?: Date
 
     @Field({ nullable: true })
     @IsOptional()
     @IsDate()
-    reminderTime?: Date;
+    reminderTime?: Date
 
     @Field(() => DifficultyLevel, { defaultValue: DifficultyLevel.NORMAL })
     @IsOptional()
     @IsEnum(DifficultyLevel)
-    difficulty: DifficultyLevel = DifficultyLevel.NORMAL;
+    difficulty: DifficultyLevel = DifficultyLevel.NORMAL
 
     @Field({ nullable: true })
     @IsOptional()
     @IsDate()
-    dueDate?: Date;
+    dueDate?: Date
 }

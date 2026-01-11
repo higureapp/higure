@@ -1,36 +1,36 @@
-import { Field, Float, Int, ObjectType } from '@nestjs/graphql';
-import { Expose } from 'class-transformer';
+import { Field, Float, Int, ObjectType } from '@nestjs/graphql'
+import { Expose } from 'class-transformer'
 
 @ObjectType()
 export class CompletionByDay {
     @Field()
     @Expose()
-    date: Date;
+    date: Date
 
     @Field()
     @Expose()
-    completed: boolean;
+    completed: boolean
 }
 
 @ObjectType()
 export class HabitStatsResponse {
     @Field(() => Float)
     @Expose()
-    completionRate: number;
+    completionRate: number
 
     @Field(() => Int)
     @Expose()
-    currentStreak: number;
+    currentStreak: number
 
     @Field(() => Int)
     @Expose()
-    longestStreak: number;
+    longestStreak: number
 
     @Field(() => Int)
     @Expose()
-    totalCompletions: number;
+    totalCompletions: number
 
     @Field(() => [CompletionByDay])
     @Expose()
-    completionsByDay: CompletionByDay[];
+    completionsByDay: CompletionByDay[]
 }

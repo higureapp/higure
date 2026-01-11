@@ -1,73 +1,73 @@
-import { Field, ID, Int, ObjectType } from '@nestjs/graphql';
-import { Expose } from 'class-transformer';
-import { GraphQLJSONObject } from 'graphql-type-json';
-import { DifficultyLevel, FrequencyType } from './enums';
-import { HabitCategory } from './habit-category.model';
-import { HabitCompletion } from './habit-completion.model';
+import { Field, ID, Int, ObjectType } from '@nestjs/graphql'
+import { Expose } from 'class-transformer'
+import { GraphQLJSONObject } from 'graphql-type-json'
+import { DifficultyLevel, FrequencyType } from './enums'
+import { HabitCategory } from './habit-category.model'
+import { HabitCompletion } from './habit-completion.model'
 
 @ObjectType()
 export class Habit {
     @Field(() => ID)
     @Expose()
-    id: string;
+    id: string
 
     @Field()
     @Expose()
-    title: string;
+    title: string
 
     @Field({ nullable: true })
     @Expose()
-    description?: string;
+    description?: string
 
     @Field(() => FrequencyType)
     @Expose()
-    frequency: FrequencyType;
+    frequency: FrequencyType
 
     @Field(() => GraphQLJSONObject)
     @Expose()
-    frequencyConfig: object;
+    frequencyConfig: object
 
     @Field(() => Int)
     @Expose()
-    dailyRepetitions: number;
+    dailyRepetitions: number
 
     @Field({ nullable: true })
     @Expose()
-    scheduledTime?: Date;
+    scheduledTime?: Date
 
     @Field({ nullable: true })
     @Expose()
-    reminderTime?: Date;
+    reminderTime?: Date
 
     @Field(() => DifficultyLevel)
     @Expose()
-    difficulty: DifficultyLevel;
+    difficulty: DifficultyLevel
 
     @Field({ nullable: true })
     @Expose()
-    dueDate?: Date;
+    dueDate?: Date
 
     @Field()
     @Expose()
-    isActive: boolean;
+    isActive: boolean
 
     @Field(() => Int)
     @Expose()
-    streakCount: number;
+    streakCount: number
 
     @Field(() => HabitCategory, { nullable: true })
     @Expose()
-    category?: HabitCategory;
+    category?: HabitCategory
 
     @Field(() => [HabitCompletion], { nullable: 'itemsAndList' })
     @Expose()
-    completions?: HabitCompletion[];
+    completions?: HabitCompletion[]
 
     @Field()
     @Expose()
-    createdAt: Date;
+    createdAt: Date
 
     @Field()
     @Expose()
-    updatedAt: Date;
+    updatedAt: Date
 }

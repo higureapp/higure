@@ -5,7 +5,7 @@ import useLocalStorage from './useLocalStorage'
 
 export function useSignIn() {
     const queryClient = useQueryClient()
-    const [, setToken] = useLocalStorage<string>('access_token', '');
+    const [, setToken] = useLocalStorage<string>('access_token', '')
 
     return useMutation({
         mutationFn: async (variables: { input: SignInInput }) => {

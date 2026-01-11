@@ -1,22 +1,22 @@
-import { gql } from "graphql-request";
+import { gql } from 'graphql-request'
 
 export const GET_HABITS_QUERY = gql`
     query GetHabits {
-      	habits {
+        habits {
             id
-    	    title
-    	    description
-    	    frequency
-    	    frequencyConfig
-    	    dailyRepetitions
-    	    scheduledTime
-    	    reminderTime
-    	    difficulty
-    	    dueDate
-    	    isActive
-    	    streakCount
-    	    createdAt
-    	    updatedAt
+            title
+            description
+            frequency
+            frequencyConfig
+            dailyRepetitions
+            scheduledTime
+            reminderTime
+            difficulty
+            dueDate
+            isActive
+            streakCount
+            createdAt
+            updatedAt
         }
     }
 `

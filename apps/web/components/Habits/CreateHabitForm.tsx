@@ -1,10 +1,10 @@
-'use client';
+'use client'
 
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
-import { toast } from 'sonner';
-import { Button } from '@/components/ui/button';
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
+import { z } from 'zod'
+import { toast } from 'sonner'
+import { Button } from '@/components/ui/button'
 import {
     Form,
     FormControl,
@@ -12,19 +12,25 @@ import {
     FormItem,
     FormLabel,
     FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
+} from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
 import {
     Dialog,
     DialogContent,
     DialogDescription,
     DialogHeader,
     DialogTitle,
-} from '@/components/ui/dialog';
-import { DifficultyLevel, FrequencyType } from '@/gql_generated/graphql';
-import { useCreateHabitMutation } from '@/hooks/useCreateHabitMutation';
-import { Textarea } from '@/components/ui/textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+} from '@/components/ui/dialog'
+import { DifficultyLevel, FrequencyType } from '@/gql_generated/graphql'
+import { useCreateHabitMutation } from '@/hooks/useCreateHabitMutation'
+import { Textarea } from '@/components/ui/textarea'
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from '@/components/ui/select'
 
 // Define the form schema
 const formSchema = z.object({
@@ -38,17 +44,18 @@ const formSchema = z.object({
     reminderTime: z.string().optional(), // Convert to Date before sending
     difficulty: z.enum(DifficultyLevel).optional(),
     dueDate: z.string().optional(), // Convert to Date before sending
-});
+})
 
-type FormValues = z.infer<typeof formSchema>;
+type FormValues = z.infer<typeof formSchema>
 
 interface CreateHabitFormProps {
-    onOpenChange: (open: boolean) => void;
-    open: boolean;
+    onOpenChange: (open: boolean) => void
+    open: boolean
 }
 
 export function CreateHabitForm({ onOpenChange, open }: CreateHabitFormProps) {
-    const { mutateAsync: createHabit, isPending: loading } = useCreateHabitMutation();
+    const { mutateAsync: createHabit, isPending: loading } =
+        useCreateHabitMutation()
     const form = useForm<FormValues>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -63,28 +70,32 @@ export function CreateHabitForm({ onOpenChange, open }: CreateHabitFormProps) {
             difficulty: DifficultyLevel.Normal,
             dueDate: undefined,
         },
-    });
+    })
 
     async function onSubmit(values: FormValues) {
         try {
-            const { scheduledTime, reminderTime, dueDate, ...rest } = values;
+            const { scheduledTime, reminderTime, dueDate, ...rest } = values
 
             await createHabit({
                 input: {
                     ...rest,
-                    scheduledTime: scheduledTime ? new Date(scheduledTime) : undefined,
-                    reminderTime: reminderTime ? new Date(reminderTime) : undefined,
+                    scheduledTime: scheduledTime
+                        ? new Date(scheduledTime)
+                        : undefined,
+                    reminderTime: reminderTime
+                        ? new Date(reminderTime)
+                        : undefined,
                     dueDate: dueDate ? new Date(dueDate) : undefined,
                 },
-            });
-            toast.success('Habit created successfully!');
-            onOpenChange(false);
-            form.reset(); // Reset form after successful submission
+            })
+            toast.success('Habit created successfully!')
+            onOpenChange(false)
+            form.reset() // Reset form after successful submission
         } catch (error: unknown) {
             if (error instanceof Error) {
-                toast.error(error.message);
+                toast.error(error.message)
             } else {
-                toast.error('An unknown error occurred.');
+                toast.error('An unknown error occurred.')
             }
         }
     }
@@ -99,7 +110,10 @@ export function CreateHabitForm({ onOpenChange, open }: CreateHabitFormProps) {
                     </DialogDescription>
                 </DialogHeader>
                 <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-4 py-4">
+                    <form
+                        onSubmit={form.handleSubmit(onSubmit)}
+                        className="grid gap-4 py-4"
+                    >
                         <FormField
                             control={form.control}
                             name="title"
@@ -107,7 +121,10 @@ export function CreateHabitForm({ onOpenChange, open }: CreateHabitFormProps) {
                                 <FormItem>
                                     <FormLabel>Title</FormLabel>
                                     <FormControl>
-                                        <Input placeholder="Read a book" {...field} />
+                                        <Input
+                                            placeholder="Read a book"
+                                            {...field}
+                                        />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
@@ -120,7 +137,10 @@ export function CreateHabitForm({ onOpenChange, open }: CreateHabitFormProps) {
                                 <FormItem>
                                     <FormLabel>Description</FormLabel>
                                     <FormControl>
-                                        <Textarea placeholder="Read 1 chapter daily" {...field} />
+                                        <Textarea
+                                            placeholder="Read 1 chapter daily"
+                                            {...field}
+                                        />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
@@ -134,18 +154,29 @@ export function CreateHabitForm({ onOpenChange, open }: CreateHabitFormProps) {
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>Frequency</FormLabel>
-                                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                    <Select
+                                        onValueChange={field.onChange}
+                                        defaultValue={field.value}
+                                    >
                                         <FormControl>
                                             <SelectTrigger>
                                                 <SelectValue placeholder="Select frequency" />
                                             </SelectTrigger>
                                         </FormControl>
                                         <SelectContent>
-                                            {Object.values(FrequencyType).map((type) => (
-                                                <SelectItem key={type} value={type}>
-                                                    {type.replace(/_/g, ' ')}
-                                                </SelectItem>
-                                            ))}
+                                            {Object.values(FrequencyType).map(
+                                                (type) => (
+                                                    <SelectItem
+                                                        key={type}
+                                                        value={type}
+                                                    >
+                                                        {type.replace(
+                                                            /_/g,
+                                                            ' ',
+                                                        )}
+                                                    </SelectItem>
+                                                ),
+                                            )}
                                         </SelectContent>
                                     </Select>
                                     <FormMessage />
@@ -160,28 +191,41 @@ export function CreateHabitForm({ onOpenChange, open }: CreateHabitFormProps) {
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>Difficulty</FormLabel>
-                                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                    <Select
+                                        onValueChange={field.onChange}
+                                        defaultValue={field.value}
+                                    >
                                         <FormControl>
                                             <SelectTrigger>
                                                 <SelectValue placeholder="Select difficulty" />
                                             </SelectTrigger>
                                         </FormControl>
                                         <SelectContent>
-                                            {Object.values(DifficultyLevel).map((level) => (
-                                                <SelectItem key={level} value={level}>
-                                                    {level.replace(/_/g, ' ')}
-                                                </SelectItem>
-                                            ))}
+                                            {Object.values(DifficultyLevel).map(
+                                                (level) => (
+                                                    <SelectItem
+                                                        key={level}
+                                                        value={level}
+                                                    >
+                                                        {level.replace(
+                                                            /_/g,
+                                                            ' ',
+                                                        )}
+                                                    </SelectItem>
+                                                ),
+                                            )}
                                         </SelectContent>
                                     </Select>
                                     <FormMessage />
                                 </FormItem>
                             )}
                         />
-                        <Button type="submit" disabled={loading}>Create Habit</Button>
+                        <Button type="submit" disabled={loading}>
+                            Create Habit
+                        </Button>
                     </form>
                 </Form>
             </DialogContent>
         </Dialog>
-    );
+    )
 }

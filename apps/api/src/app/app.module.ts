@@ -12,7 +12,7 @@ import KeyvRedis from '@keyv/redis'
 import { Keyv } from 'keyv'
 import { CacheableMemory } from 'cacheable'
 import { CacheModule } from '@nestjs/cache-manager'
-import { HabitsModule } from '../habits/habits.module';
+import { HabitsModule } from '../habits/habits.module'
 import { AppConfiguration } from '../config/app.config'
 
 @Module({

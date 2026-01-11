@@ -1,26 +1,26 @@
-import { Field, ID, ObjectType } from '@nestjs/graphql';
-import { Expose } from 'class-transformer';
-import { Habit } from './habit.model';
+import { Field, ID, ObjectType } from '@nestjs/graphql'
+import { Expose } from 'class-transformer'
+import { Habit } from './habit.model'
 
 @ObjectType()
 export class HabitCategory {
     @Field(() => ID)
     @Expose()
-    id: string;
+    id: string
 
     @Field()
     @Expose()
-    name: string;
+    name: string
 
     @Field({ nullable: true })
     @Expose()
-    color?: string;
+    color?: string
 
     @Field({ nullable: true })
     @Expose()
-    icon?: string;
+    icon?: string
 
     @Field(() => [Habit], { nullable: 'itemsAndList' })
     @Expose()
-    habits?: Habit[];
+    habits?: Habit[]
 }

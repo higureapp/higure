@@ -1,9 +1,9 @@
 import { sdk } from '@/lib/graphql-client'
 import { useQuery } from '@tanstack/react-query'
-import useLocalStorage from './useLocalStorage';
+import useLocalStorage from './useLocalStorage'
 
 export function useGetHabitsQuery() {
-    const [token,] = useLocalStorage<string>('access_token', '');
+    const [token] = useLocalStorage<string>('access_token', '')
 
     const { data, isLoading, isError, error } = useQuery({
         queryKey: ['habits'],
@@ -13,7 +13,6 @@ export function useGetHabitsQuery() {
         },
         enabled: !!token,
     })
-
 
     return {
         data,
