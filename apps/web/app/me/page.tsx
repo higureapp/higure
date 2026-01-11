@@ -44,7 +44,7 @@ export default function MePage() {
                         <strong>Email:</strong> {user?.email}
                     </div>
                     <Button
-                        className='cursor-pointer'
+                        className="cursor-pointer"
                         onClick={() => {
                             logout()
                             router.push('/auth/signin')

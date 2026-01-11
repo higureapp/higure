@@ -1,10 +1,10 @@
 import { sdk } from '@/lib/graphql-client'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
-import { getAccessToken, clearAccessToken } from '@/lib/auth-store'
+import useLocalStorage from './useLocalStorage';
 
 export function useMe() {
     const queryClient = useQueryClient()
-    const token = getAccessToken()
+    const [token, setToken] = useLocalStorage<string>('access_token', '');
 
     const { data, isLoading, isError, error } = useQuery({
         queryKey: ['me'],
@@ -16,7 +16,7 @@ export function useMe() {
     })
 
     const logout = () => {
-        clearAccessToken()
+        setToken('')
         queryClient.setQueryData(['me'], null)
     }
 

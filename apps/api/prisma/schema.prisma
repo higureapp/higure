@@ -35,9 +35,20 @@ enum TaskPriority {
   high
 }
 
-enum HabitFrequency {
-  daily
-  weekly
+enum FrequencyType {
+  SPECIFIC_DAYS_OF_WEEK
+  DAILY
+  SPECIFIC_DAYS_OF_MONTH
+  EVERY_N_DAYS
+  N_TIMES_PER_WEEK
+}
+
+enum DifficultyLevel {
+  EASY
+  NORMAL
+  HARD
+  DEMANDING
+  CHALLENGING
 }
 
 //////////////////////
@@ -63,12 +74,14 @@ model User {
   deletedAt     DateTime?
 
   // Relations
-  refreshTokens  RefreshToken[]
-  tasks          Task[]
-  taskCategories TaskCategory[]
-  events         Event[]
-  habits         Habit[]
-  sleeps         Sleep[]
+  refreshTokens   RefreshToken[]
+  tasks           Task[]
+  taskCategories  TaskCategory[]
+  events          Event[]
+  habits          Habit[]
+  habitCategories HabitCategory[]
+  habitCompletions HabitCompletion[]
+  sleeps          Sleep[]
 }
 
 model RefreshToken {
@@ -144,17 +157,73 @@ model Event {
 }
 
 model Habit {
-  id        String         @id @default(uuid())
-  userId    String
-  name      String
-  frequency HabitFrequency
-  isActive  Boolean        @default(true)
-  createdAt DateTime       @default(now())
+  id          String   @id @default(uuid())
+  userId      String
+  categoryId  String?
+
+  // Core fields
+  title       String
+  description String?
+
+  // Frequency configuration
+  frequency   FrequencyType
+  frequencyConfig Json
+
+  // Repetition and timing
+  dailyRepetitions Int @default(1)
+  scheduledTime    DateTime?
+  reminderTime     DateTime?
+
+  // Additional details
+  difficulty  DifficultyLevel @default(NORMAL)
+  dueDate     DateTime?
+
+  // Tracking
+  isActive    Boolean  @default(true)
+  streakCount Int      @default(0)
 
   // Relations
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  category    HabitCategory? @relation(fields: [categoryId], references: [id])
+  completions HabitCompletion[]
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
   @@index([userId])
+  @@index([categoryId])
+}
+
+model HabitCategory {
+  id          String   @id @default(uuid())
+  userId      String
+  name        String
+  color       String?
+  icon        String?
+
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  habits      Habit[]
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@unique([userId, name])
+  @@index([userId])
+}
+
+model HabitCompletion {
+  id          String   @id @default(uuid())
+  habitId     String
+  userId      String
+  completedAt DateTime @default(now())
+  notes       String?
+
+  habit       Habit    @relation(fields: [habitId], references: [id], onDelete: Cascade)
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([habitId])
+  @@index([userId])
+  @@index([completedAt])
 }
 
 model Sleep {

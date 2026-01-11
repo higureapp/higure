@@ -1,6 +1,12 @@
 import { getSdk } from '@/gql_generated/graphql'
 import { GraphQLClient } from 'graphql-request'
-import { getAccessToken } from './auth-store'
+
+const getAccessToken = () => {
+    if (typeof window !== 'undefined') {
+        return localStorage.getItem('access_token') || ''
+    }
+    return ''
+}
 
 const client = new GraphQLClient(
     process.env.NEXT_PUBLIC_GRAPHQL_URL || 'http://localhost:3000/graphql',

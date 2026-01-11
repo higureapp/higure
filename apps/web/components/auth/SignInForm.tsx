@@ -3,7 +3,7 @@
 import { useSignIn } from '@/hooks/useSignIn'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import { z } from 'zod/v4'
+import { z } from 'zod'
 import { useRouter } from 'next/navigation'
 
 import { Button } from '@/components/ui/button'
@@ -38,7 +38,6 @@ export function SignInForm() {
     const signIn = useSignIn()
     const router = useRouter()
     const form = useForm<z.infer<typeof formSchema>>({
-        // @ts-expect-error fake error
         resolver: zodResolver(formSchema),
         defaultValues: {
             email: '',
@@ -62,7 +61,7 @@ export function SignInForm() {
     }
 
     return (
-        <Card className='px-8'>
+        <Card className="px-8">
             <CardHeader>
                 <CardTitle>Sign In</CardTitle>
                 <CardDescription>

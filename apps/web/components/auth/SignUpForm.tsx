@@ -3,7 +3,7 @@
 import { useSignUp } from '@/hooks/useSignUp'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import { z } from 'zod/v4'
+import { z } from 'zod'
 import { toast } from 'sonner'
 
 import { Button } from '@/components/ui/button'
@@ -42,7 +42,6 @@ const formSchema = z.object({
 export function SignUpForm() {
     const signUp = useSignUp()
     const form = useForm<z.infer<typeof formSchema>>({
-        // @ts-expect-error fake error
         resolver: zodResolver(formSchema),
         defaultValues: {
             firstname: '',

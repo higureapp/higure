@@ -35,8 +35,95 @@ type SignUpResponse {
   user: User!
 }
 
+type HabitCompletion {
+  id: ID!
+  completedAt: DateTime!
+  notes: String
+  habit: Habit!
+}
+
+type Habit {
+  id: ID!
+  title: String!
+  description: String
+  frequency: FrequencyType!
+  frequencyConfig: JSONObject!
+  dailyRepetitions: Int!
+  scheduledTime: DateTime
+  reminderTime: DateTime
+  difficulty: DifficultyLevel!
+  dueDate: DateTime
+  isActive: Boolean!
+  streakCount: Int!
+  category: HabitCategory
+  completions: [HabitCompletion]
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""The frequency type of a habit."""
+enum FrequencyType {
+  SPECIFIC_DAYS_OF_WEEK
+  DAILY
+  SPECIFIC_DAYS_OF_MONTH
+  EVERY_N_DAYS
+  N_TIMES_PER_WEEK
+}
+
+"""
+The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSONObject
+
+"""The difficulty level of a habit."""
+enum DifficultyLevel {
+  EASY
+  NORMAL
+  HARD
+  DEMANDING
+  CHALLENGING
+}
+
+type HabitCategory {
+  id: ID!
+  name: String!
+  color: String
+  icon: String
+  habits: [Habit]
+}
+
+type CompletionByDay {
+  date: DateTime!
+  completed: Boolean!
+}
+
+type HabitStatsResponse {
+  completionRate: Float!
+  currentStreak: Int!
+  longestStreak: Int!
+  totalCompletions: Int!
+  completionsByDay: [CompletionByDay!]!
+}
+
 type Query {
   me: User!
+  habitStats(input: GetHabitStatsInput!): HabitStatsResponse!
+  habits(filters: HabitFilters): [Habit!]!
+}
+
+input GetHabitStatsInput {
+  habitId: String!
+  period: StatsPeriod!
+}
+
+enum StatsPeriod {
+  WEEK
+  MONTH
+  YEAR
+}
+
+input HabitFilters {
+  isActive: Boolean
 }
 
 type Mutation {
@@ -46,6 +133,8 @@ type Mutation {
   refreshToken(refreshTokenInput: RefreshTokenInput!): AuthResponse!
   logout(refreshToken: String): String!
   logoutAllDevices: String!
+  completeHabit(input: CompleteHabitInput!): HabitCompletion!
+  createHabit(input: CreateHabitInput!): Habit!
 }
 
 input SignUpInput {
@@ -64,4 +153,22 @@ input SignInInput {
 input RefreshTokenInput {
   """The refresh token to use for re-authentication"""
   refreshToken: String!
+}
+
+input CompleteHabitInput {
+  habitId: String!
+  notes: String
+}
+
+input CreateHabitInput {
+  title: String!
+  description: String
+  categoryId: String
+  frequency: FrequencyType!
+  frequencyConfig: JSONObject!
+  dailyRepetitions: Int! = 1
+  scheduledTime: DateTime
+  reminderTime: DateTime
+  difficulty: DifficultyLevel! = NORMAL
+  dueDate: DateTime
 }
