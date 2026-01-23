@@ -7,7 +7,7 @@ import {
     ResizableHandle,
     ResizablePanel,
     ResizablePanelGroup,
-} from "@/components/ui/resizable"
+} from '@/components/ui/resizable'
 
 const geistSans = localFont({
     src: './fonts/GeistVF.woff',
@@ -22,7 +22,7 @@ const geistMono = localFont({
 const charterRegular = localFont({
     src: './fonts/CharterRegular.woff2',
     variable: '--font-charter',
-    display: 'swap'
+    display: 'swap',
 })
 
 export const metadata: Metadata = {

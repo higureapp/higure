@@ -7,9 +7,8 @@ import { setupApollo } from './plugins/apollo'
 
 const app = createApp(App)
 
-
 app.use(createPinia())
 app.use(router)
 
-setupApollo(app);
+setupApollo(app)
 app.mount('#app')

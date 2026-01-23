@@ -12,14 +12,14 @@ const config: CodegenConfig = {
             plugins: [
                 'typescript',
                 'typescript-operations',
-                "typescript-vue-apollo"
+                'typescript-vue-apollo',
             ],
             config: {
                 rawRequest: false,
                 exposeQueryKeys: true,
                 exposeDocument: true,
                 withCompositionFunctions: true,
-                vueCompositionApiImportFrom: 'vue'
+                vueCompositionApiImportFrom: 'vue',
             },
         },
     },

@@ -27,8 +27,11 @@ export default function MePage() {
 
     return (
         <div className="flex p-6 justify-center min-h-screen">
-            <div className='bg-black w-[50%]'>
-                <Greeting firstName={user?.firstname} timeZone={user?.timezone} />
+            <div className="bg-black w-[50%]">
+                <Greeting
+                    firstName={user?.firstname}
+                    timeZone={user?.timezone}
+                />
             </div>
         </div>
     )
