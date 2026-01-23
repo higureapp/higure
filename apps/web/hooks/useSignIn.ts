@@ -1,7 +1,7 @@
 import { sdk } from '@/lib/graphql-client'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { setAccessToken } from '@/lib/auth-store'
 import { SignInInput } from '@/gql_generated/graphql'
+import { setAuthToken } from './useAuthStore'
 
 export function useSignIn() {
     const queryClient = useQueryClient()
@@ -12,7 +12,8 @@ export function useSignIn() {
         },
         onSuccess: (data) => {
             if (data.signIn.access_token) {
-                setAccessToken(data.signIn.access_token)
+                
+                setAuthToken(data.signIn.access_token)
                 queryClient.invalidateQueries({ queryKey: ['me'] })
             }
         },

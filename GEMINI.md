@@ -16,7 +16,6 @@
 ├── apps/
 │   ├── api/                # NestJS API
 │   ├── web/                # Next.js frontend
-│   └── mobile/             # React Native app
 ├── packages/
 │   ├── api/                # Api types (not used)
 │   ├── eslint-config/      # Es lint config
@@ -39,14 +38,6 @@
 
 - Framework: Next.js (App Router)
 - UI: Shadcn and tailwindcss
-- GraphQL Client: React-query Client
-- Code Generation: GraphQL Code Generator
-
-### Frontend Mobile (React Native)
-
-- Framework: React Native & Expo
-- UI: Shadcn and nativewind
-- Navigation: React Navigation
 - GraphQL Client: React-query Client
 - Code Generation: GraphQL Code Generator
 
@@ -76,6 +67,8 @@
 - Mutations: create*, update*, delete\*
 - Input types suffix: Input
 - Return types suffix: Response (if wrapper needed)
+- Use graphql-request and tenstack/react-query
+- Generate types in frontend by running `bun generate`
 
 ### Prisma Schema Conventions
 

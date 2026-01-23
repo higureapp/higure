@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import localFont from 'next/font/local'
 import './globals.css'
 import { Providers } from './providers'
+import { Toaster } from '@/components/ui/sonner'
 
 const geistSans = localFont({
     src: './fonts/GeistVF.woff',
@@ -11,8 +12,6 @@ const geistMono = localFont({
     src: './fonts/GeistMonoVF.woff',
     variable: '--font-geist-mono',
 })
-
-import { Toaster } from '@/components/ui/sonner'
 
 export const metadata: Metadata = {
     title: 'Higure',
@@ -24,6 +23,8 @@ export default function RootLayout({
 }: Readonly<{
     children: React.ReactNode
 }>) {
+
+
     return (
         <html lang="en">
             <body className={`${geistSans.variable} ${geistMono.variable}`}>
