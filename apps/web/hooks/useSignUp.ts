@@ -12,7 +12,7 @@ export function useSignUp() {
         },
         onSuccess: (data) => {
             if (data.signUp.access_token) {
-                setAuthToken(data.signUp.access_token);
+                setAuthToken(data.signUp.access_token)
                 queryClient.invalidateQueries({ queryKey: ['me'] })
             }
         },

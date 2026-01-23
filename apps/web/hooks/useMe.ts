@@ -4,8 +4,8 @@ import { useAuthStore, useHasHydrated } from './useAuthStore'
 
 export function useMe() {
     const queryClient = useQueryClient()
-    const token = useAuthStore(state => state.token);
-    const clearToken = useAuthStore(state => state.clearToken)
+    const token = useAuthStore((state) => state.token)
+    const clearToken = useAuthStore((state) => state.clearToken)
     const hasHydrated = useHasHydrated()
     console.log(token)
 
@@ -13,14 +13,14 @@ export function useMe() {
         queryKey: ['me'],
         queryFn: async () => {
             const result = await sdk.GetMe()
-            console.log(token);
+            console.log(token)
             return result.me
         },
         enabled: !!token && hasHydrated,
     })
 
     const logout = () => {
-        clearToken();
+        clearToken()
         queryClient.setQueryData(['me'], null)
         queryClient.removeQueries({ queryKey: ['me'] })
     }

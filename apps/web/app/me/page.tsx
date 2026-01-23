@@ -5,6 +5,7 @@ import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Greeting } from '@/components/home/Greeting'
 
 export default function MePage() {
     const { user, isLoading, isLoggedIn, logout } = useMe()
@@ -25,35 +26,10 @@ export default function MePage() {
     }
 
     return (
-        <div className="flex items-center justify-center min-h-screen">
-            <Card>
-                <CardHeader>
-                    <CardTitle>My Profile</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                    <div>
-                        <strong>ID:</strong> {user?.id}
-                    </div>
-                    <div>
-                        <strong>First Name:</strong> {user?.firstname}
-                    </div>
-                    <div>
-                        <strong>Last Name:</strong> {user?.lastname}
-                    </div>
-                    <div>
-                        <strong>Email:</strong> {user?.email}
-                    </div>
-                    <Button
-                        className='cursor-pointer'
-                        onClick={() => {
-                            logout()
-                            router.push('/auth/signin')
-                        }}
-                    >
-                        Logout
-                    </Button>
-                </CardContent>
-            </Card>
+        <div className="flex p-6 justify-center min-h-screen">
+            <div className='bg-black w-[50%]'>
+                <Greeting firstName={user?.firstname} timeZone={user?.timezone} />
+            </div>
         </div>
     )
 }

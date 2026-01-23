@@ -12,7 +12,6 @@ export function useSignIn() {
         },
         onSuccess: (data) => {
             if (data.signIn.access_token) {
-                
                 setAuthToken(data.signIn.access_token)
                 queryClient.invalidateQueries({ queryKey: ['me'] })
             }

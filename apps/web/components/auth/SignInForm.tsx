@@ -38,7 +38,7 @@ export function SignInForm() {
     const signIn = useSignIn()
     const router = useRouter()
     const form = useForm<z.infer<typeof formSchema>>({
-        // @ts-expect-error fake error
+        // @ts-ignore
         resolver: zodResolver(formSchema),
         defaultValues: {
             email: '',
@@ -62,7 +62,7 @@ export function SignInForm() {
     }
 
     return (
-        <Card className='px-8'>
+        <Card className="px-8">
             <CardHeader>
                 <CardTitle>Sign In</CardTitle>
                 <CardDescription>
