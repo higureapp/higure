@@ -3,7 +3,7 @@ import { DefaultApolloClient } from '@vue/apollo-composable'
 import type { App } from 'vue'
 
 const httpLink = new HttpLink({
-    uri: 'https://api.example.com/graphql',
+    uri: 'http://localhost:3000/graphql',
 })
 
 const cache = new InMemoryCache()
