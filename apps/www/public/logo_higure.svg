@@ -1,0 +1,53 @@
+<svg width="288" xmlns="http://www.w3.org/2000/svg" height="174" id="screenshot-8caede81-f104-80ca-8007-5220f03e3f6d" viewBox="436 398 288 174" style="-webkit-print-color-adjust::exact" xmlns:xlink="http://www.w3.org/1999/xlink" fill="none" version="1.1">
+  <style>
+  </style>
+  <g id="shape-8caede81-f104-80ca-8007-5220f03e3f6d">
+    <defs>
+      <filter id="filter-render-5" x="-0.17499999999999996" y="-0.313953488372093" width="1.3299999999999996" height="1.7674418604651163" filterUnits="objectBoundingBox" color-interpolation-filters="sRGB">
+        <feFlood flood-opacity="0" result="BackgroundImageFix">
+        </feFlood>
+        <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0">
+        </feColorMatrix>
+        <feOffset dx="-4" dy="4">
+        </feOffset>
+        <feGaussianBlur stdDeviation="2">
+        </feGaussianBlur>
+        <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.3 0">
+        </feColorMatrix>
+        <feBlend mode="normal" in2="BackgroundImageFix" result="filter_8caede81-f104-80ca-8007-52215283303b">
+        </feBlend>
+        <feBlend mode="normal" in="SourceGraphic" in2="filter_8caede81-f104-80ca-8007-52215283303b" result="shape">
+        </feBlend>
+      </filter>
+      <filter id="filter-shadow-render-5" x="-0.17499999999999996" y="-0.313953488372093" width="1.3299999999999996" height="1.7674418604651163" filterUnits="objectBoundingBox" color-interpolation-filters="sRGB">
+        <feFlood flood-opacity="0" result="BackgroundImageFix">
+        </feFlood>
+        <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0">
+        </feColorMatrix>
+        <feOffset dx="-4" dy="4">
+        </feOffset>
+        <feGaussianBlur stdDeviation="2">
+        </feGaussianBlur>
+        <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.3 0">
+        </feColorMatrix>
+        <feBlend mode="normal" in2="BackgroundImageFix" result="filter_8caede81-f104-80ca-8007-52215283303b">
+        </feBlend>
+        <feBlend mode="normal" in="SourceGraphic" in2="filter_8caede81-f104-80ca-8007-52215283303b" result="shape">
+        </feBlend>
+      </filter>
+    </defs>
+    <g transform="matrix(1.000000, 0.000000, 0.000000, 1.000000, 0.000000, 0.000000)" class="text-container" x="484" y="430" width="200.00000000000006" height="86" filter="url(#filter-render-5)" rx="0" ry="0">
+      <defs>
+        <pattern patternUnits="objectBoundingBox" width="197.640625" height="74" id="fill-0-render-5-0">
+          <g>
+            <rect width="197.640625" height="74" style="fill:#000000;fill-opacity:1">
+            </rect>
+          </g>
+        </pattern>
+      </defs>
+      <g class="fills" id="fills-8caede81-f104-80ca-8007-5220f03e3f6d">
+        <text x="484" y="510" dominant-baseline="ideographic" textLength="197.640625" lengthAdjust="spacingAndGlyphs" style="text-transform:none;font-family:Regiko;letter-spacing:normal;font-style:normal;font-weight:400;white-space:pre;font-size:72px;text-decoration:none;direction:ltr;fill:#000000;fill-opacity:1">Higure</text>
+      </g>
+    </g>
+  </g>
+</svg>
