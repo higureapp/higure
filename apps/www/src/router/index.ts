@@ -41,7 +41,7 @@ router.beforeEach(async (to, from, next) => {
     }
 
     if (auth.isLoading) {
-        await new Promise(resolve => {
+        await new Promise((resolve) => {
             const unwatch = auth.$subscribe(() => {
                 if (!auth.isLoading) {
                     unwatch()
@@ -58,7 +58,7 @@ router.beforeEach(async (to, from, next) => {
     if (to.meta.requiresAuth && !auth.isLoggedIn) {
         return next({
             name: 'signin',
-            query: { redirect: to.fullPath }
+            query: { redirect: to.fullPath },
         })
     }
 

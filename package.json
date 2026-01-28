@@ -2,8 +2,8 @@
   "name": "higure",
   "version": "0.0.0",
   "private": true,
-  "description": "",
-  "author": "",
+  "description": "Your complete daily reflections and self-analysis application.",
+  "author": "UsboKirishima <usbertibox@gmail.com>",
   "license": "AGPL-3.0-only",
   "scripts": {
     "dev": "turbo run dev",

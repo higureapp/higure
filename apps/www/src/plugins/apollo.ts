@@ -1,4 +1,9 @@
-import { ApolloClient, InMemoryCache, HttpLink, ApolloLink } from '@apollo/client'
+import {
+    ApolloClient,
+    InMemoryCache,
+    HttpLink,
+    ApolloLink,
+} from '@apollo/client'
 import { setContext } from '@apollo/client/link/context'
 import { DefaultApolloClient } from '@vue/apollo-composable'
 import type { App } from 'vue'
@@ -13,10 +18,9 @@ const authLink = setContext((_, { headers }) => {
         headers: {
             ...headers,
             authorization: token ? `Bearer ${token}` : '',
-        }
+        },
     }
 })
-
 
 const cache = new InMemoryCache()
 

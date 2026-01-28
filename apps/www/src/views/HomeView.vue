@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import Greeting from '@/components/Greeting.vue';
+import PlusButton from '@/components/PlusButton.vue';
 import SideBar from '@/components/sidebar/SideBar.vue';
 import WeekMenu from '@/components/WeekMenu.vue';
 import { useAuthStore } from '@/stores/auth-store';
@@ -26,6 +27,9 @@ const me = ref(authStore.me);
                     </div>
                 </div>
             </div>
+            <div class="plus-wrapper">
+                <PlusButton />
+            </div>
         </div>
     </div>
 </template>
@@ -42,6 +46,7 @@ const me = ref(authStore.me);
     width: 100%;
     display: flex;
     justify-content: center;
+    position: relative;
 }
 
 .base {
@@ -53,5 +58,11 @@ const me = ref(authStore.me);
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+}
+
+.plus-wrapper {
+    position: absolute;
+    bottom: 2rem;
+    right: 2rem;
 }
 </style>

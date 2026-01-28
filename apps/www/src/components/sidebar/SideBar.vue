@@ -32,7 +32,7 @@ const actions = ref([
             </div>
             <div class="actions">
                 <RouterLink class="action-item" :to="action.src" v-for="action in actions">
-                    <component :is="action.icon" color="#000000" :size="20" />
+                    <component class="action-icon" :is="action.icon" color="#000000" :size="20" />
                 </RouterLink>
             </div>
         </div>
@@ -43,8 +43,8 @@ const actions = ref([
 .container {
     background: linear-gradient(90deg, #CFD9DF 0%, #FED6E3 100%);
     height: 100vh;
-    width: 15vw;
-    min-width: 120px; 
+    width: clamp(260px, 17vw, 300px);
+    min-width: 120px;
 }
 
 .header {
@@ -67,6 +67,10 @@ const actions = ref([
     align-items: center;
     justify-content: center;
     transition: transform 300ms ease;
+}
+
+.action-item .action-icon {
+    filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.5));
 }
 
 .action-item:hover {
