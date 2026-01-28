@@ -5,7 +5,6 @@ import {
     NotFoundException,
 } from '@nestjs/common'
 import { Prisma } from 'src/generated/prisma/client'
-import { PrismaService } from 'src/database/prisma.service'
 import * as bcrypt from 'bcrypt'
 import { UsersRepository } from '../users.repository'
 import { UsersMapper } from '../mappers/users.mapper'

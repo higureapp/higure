@@ -35,6 +35,18 @@ type SignUpResponse {
   user: User!
 }
 
+type Journal {
+  id: String!
+  userId: String!
+  date: DateTime!
+  time: DateTime
+  location: String
+  content: String!
+  mood: Float!
+  lastModified: DateTime!
+  createdAt: DateTime!
+}
+
 type Query {
   me: User!
 }
@@ -46,6 +58,7 @@ type Mutation {
   refreshToken(refreshTokenInput: RefreshTokenInput!): AuthResponse!
   logout(refreshToken: String): String!
   logoutAllDevices: String!
+  createJournalPage(createJournalInput: CreateJournalInput!): Journal!
 }
 
 input SignUpInput {
@@ -64,4 +77,13 @@ input SignInInput {
 input RefreshTokenInput {
   """The refresh token to use for re-authentication"""
   refreshToken: String!
+}
+
+input CreateJournalInput {
+  date: DateTime!
+  time: DateTime!
+  location: String!
+  content: String!
+  mood: Float!
+  tagIds: String!
 }

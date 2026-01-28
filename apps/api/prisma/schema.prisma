@@ -45,20 +45,20 @@ enum HabitFrequency {
 //////////////////////
 
 model User {
-  id            String    @id @default(uuid())
+  id            String     @id @default(uuid())
   firstname     String
   lastname      String
-  email         String    @unique
-  phone         String?   @unique
+  email         String     @unique
+  phone         String?    @unique
   password      String
   avatarUrl     String?
   timezone      String
   locale        String
-  emailVerified Boolean   @default(false)
-  phoneVerified Boolean   @default(false)
+  emailVerified Boolean    @default(false)
+  phoneVerified Boolean    @default(false)
   lastLoginAt   DateTime?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
   status        UserStatus @default(active)
   deletedAt     DateTime?
 
@@ -69,6 +69,9 @@ model User {
   events         Event[]
   habits         Habit[]
   sleeps         Sleep[]
+
+  journalTags  JournalTag[]
+  journalPages JournalPage[]
 }
 
 model RefreshToken {
@@ -81,7 +84,7 @@ model RefreshToken {
   expireAt    DateTime
 
   // Relations
-  User        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  User User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
   @@index([hashedToken])
@@ -169,4 +172,113 @@ model Sleep {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
+}
+
+model JournalPage {
+  id     String @id @default(uuid())
+  userId String
+
+  // Core fields
+  date     DateTime
+  time     DateTime?
+  location String?
+  content  String    @db.Text
+
+  // Metadata
+  mood         Int      @default(5) // 1-10 scale
+  isActive     Boolean  @default(true)
+  lastModified DateTime @updatedAt
+
+  // Relations
+  user       User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tags       JournalTag[]
+  aiAnalysis JournalAIAnalysis?
+  metrics    JournalMetrics?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId, date])
+  @@index([userId, isActive])
+}
+
+model JournalTag {
+  id     String  @id @default(uuid())
+  name   String
+  color  String?
+  userId String
+
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  journalPages JournalPage[]
+
+  createdAt DateTime @default(now())
+
+  @@unique([userId, name])
+  @@index([userId])
+}
+
+model JournalAIAnalysis {
+  id            String @id @default(uuid())
+  journalPageId String @unique
+
+  // AI-generated content
+  criticalAnalysis String  @db.Text
+  suggestedSongs   Json // Array of {title, artist, reason}
+  quote            String?
+  quoteAuthor      String?
+
+  // Generation metadata
+  generatedAt  DateTime @default(now())
+  modelVersion String   @default("claude-sonnet-4-5")
+
+  journalPage JournalPage @relation(fields: [journalPageId], references: [id], onDelete: Cascade)
+
+  @@index([journalPageId])
+}
+
+model JournalMetrics {
+  id            String @id @default(uuid())
+  journalPageId String @unique
+
+  // 1. Structural Parameters
+  wordCount             Int
+  sentenceCount         Int
+  averageSentenceLength Float
+  paragraphCount        Int
+  textDensity           Float
+
+  // 2. Temporal Parameters
+  estimatedWritingTime    Int // minutes
+  temporalReferencesCount Int
+  temporalFocus           Float // 0-10
+
+  // 3. Emotional Parameters
+  emotionalValence     Float // -10 to +10
+  emotionalIntensity   Float // 0-10
+  emotionalVariability Float // 0-10
+  emotionalWordsCount  Int
+
+  // 4. Cognitive/Reflective Parameters
+  introspectionIndex Float // 0-10
+  questionsCount     Int
+  causeEffectCount   Int
+
+  // 5. Narrative Parameters
+  eventsCount            Int
+  charactersCount        Int
+  firstPersonUsage       Float // percentage
+  narrativeSequentiality Float // 0-10
+
+  // 6. Stylistic Parameters
+  lexicalRichness     Float // 0-1
+  keyRepetitionsCount Int
+  metaphorsCount      Int
+  formality           Float // 0-10
+
+  // Metadata
+  calculatedAt DateTime @default(now())
+
+  journalPage JournalPage @relation(fields: [journalPageId], references: [id], onDelete: Cascade)
+
+  @@index([journalPageId])
 }

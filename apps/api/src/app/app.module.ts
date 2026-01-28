@@ -13,6 +13,7 @@ import { Keyv } from 'keyv'
 import { CacheableMemory } from 'cacheable'
 import { CacheModule } from '@nestjs/cache-manager'
 import { AppConfiguration } from '../config/app.config'
+import { JournalsModule } from '../journals/journals.module'
 
 @Module({
     imports: [
@@ -41,6 +42,7 @@ import { AppConfiguration } from '../config/app.config'
         }),
         UsersModule,
         AuthModule,
+        JournalsModule,
     ],
     providers: [
         AppService,
