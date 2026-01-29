@@ -2,9 +2,9 @@ import { Module } from '@nestjs/common'
 import { JournalsService } from './services/journals.service'
 import { JournalsResolver } from './journals.resolver'
 import { JournalsRepository } from './journals.repository'
-import { UsersService } from '../users/services/users.service'
 import { UsersModule } from '../users/users.module'
 import { PrismaService } from '../database/prisma.service'
+import { JournalPageMapper } from './mappers/journals.mapper'
 
 @Module({
     imports: [UsersModule],
@@ -12,6 +12,7 @@ import { PrismaService } from '../database/prisma.service'
         JournalsService,
         JournalsResolver,
         JournalsRepository,
+        JournalPageMapper,
         PrismaService,
     ],
     exports: [JournalsRepository],

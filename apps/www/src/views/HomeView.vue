@@ -4,11 +4,15 @@ import PlusButton from '@/components/PlusButton.vue';
 import SideBar from '@/components/sidebar/SideBar.vue';
 import WeekMenu from '@/components/WeekMenu.vue';
 import { useAuthStore } from '@/stores/auth-store';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
+import { useGetJournalPagesQuery } from '../../gql_generated/graphql';
 
 const authStore = useAuthStore();
 
 const me = ref(authStore.me);
+
+const { result: getJournalsResult, refetch: refetchMe } = useGetJournalPagesQuery()
+const journals = computed(() => getJournalsResult.value?.journalPages ?? null)
 </script>
 
 <template>

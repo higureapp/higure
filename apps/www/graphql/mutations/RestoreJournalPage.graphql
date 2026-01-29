@@ -1,0 +1,6 @@
+mutation RestoreJournalPage($id: ID!) {
+  restoreJournalPage(id: $id) {
+    id
+    isActive
+  }
+}

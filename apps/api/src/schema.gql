@@ -35,20 +35,101 @@ type SignUpResponse {
   user: User!
 }
 
+type JournalTag {
+  id: ID!
+  name: String!
+  color: String
+}
+
+type SuggestedSong {
+  title: String!
+  artist: String!
+  reason: String!
+}
+
+type JournalAIAnalysis {
+  criticalAnalysis: String!
+  suggestedSongs: [SuggestedSong!]!
+  quote: String
+  quoteAuthor: String
+  generatedAt: DateTime!
+  modelVersion: String!
+}
+
+type JournalMetrics {
+  wordCount: Int!
+  sentenceCount: Int!
+  averageSentenceLength: Float!
+  paragraphCount: Int!
+  textDensity: Float!
+  estimatedWritingTime: Int!
+  temporalReferencesCount: Int!
+  temporalFocus: Float!
+  emotionalValence: Float!
+  emotionalIntensity: Float!
+  emotionalVariability: Float!
+  emotionalWordsCount: Int!
+  introspectionIndex: Float!
+  questionsCount: Int!
+  causeEffectCount: Int!
+  eventsCount: Int!
+  charactersCount: Int!
+  firstPersonUsage: Float!
+  narrativeSequentiality: Float!
+  lexicalRichness: Float!
+  keyRepetitionsCount: Int!
+  metaphorsCount: Int!
+  formality: Float!
+}
+
 type Journal {
-  id: String!
-  userId: String!
+  id: ID!
   date: DateTime!
   time: DateTime
   location: String
   content: String!
-  mood: Float!
+  mood: Int!
+  isActive: Boolean!
   lastModified: DateTime!
   createdAt: DateTime!
+  updatedAt: DateTime!
+  tags: [JournalTag!]!
+  metrics: JournalMetrics
+  aiAnalysis: JournalAIAnalysis
+}
+
+type GetJournalPagesOutput {
+  pages: [Journal!]!
+  totalCount: Int!
+  hasMore: Boolean!
+  currentPage: Int!
+  totalPages: Int!
 }
 
 type Query {
   me: User!
+
+  """Get a single journal page by ID"""
+  journalPage(id: ID!): Journal!
+
+  """Get journal pages with filters and pagination"""
+  journalPages(filters: JournalPageFilters, pagination: JournalPaginationInput): GetJournalPagesOutput!
+}
+
+input JournalPageFilters {
+  dateFrom: DateTime
+  dateTo: DateTime
+  moodMin: Int
+  moodMax: Int
+  location: String
+  tags: [String!]
+  searchTerm: String
+  isActive: Boolean
+}
+
+input JournalPaginationInput {
+  page: Int = 1
+  limit: Int = 10
 }
 
 type Mutation {
@@ -58,7 +139,21 @@ type Mutation {
   refreshToken(refreshTokenInput: RefreshTokenInput!): AuthResponse!
   logout(refreshToken: String): String!
   logoutAllDevices: String!
-  createJournalPage(createJournalInput: CreateJournalInput!): Journal!
+
+  """Create a new journal page"""
+  createJournalPage(input: CreateJournalInput!): Journal!
+
+  """Update an existing journal page"""
+  updateJournalPage(id: ID!, input: UpdateJournalInput!): Journal!
+
+  """Soft delete a journal page (set isActive to false)"""
+  softDeleteJournalPage(id: ID!): Journal!
+
+  """Permanently delete a journal page"""
+  deleteJournalPage(id: ID!): Boolean!
+
+  """Restore a soft-deleted journal page"""
+  restoreJournalPage(id: ID!): Journal!
 }
 
 input SignUpInput {
@@ -81,9 +176,19 @@ input RefreshTokenInput {
 
 input CreateJournalInput {
   date: DateTime!
-  time: DateTime!
-  location: String!
+  time: DateTime
+  location: String
   content: String!
-  mood: Float!
-  tagIds: String!
+  mood: Int! = 5
+  tagIds: [String!]
+}
+
+input UpdateJournalInput {
+  date: DateTime
+  time: DateTime
+  location: String
+  content: String
+  mood: Int
+  isActive: Boolean
+  tagIds: [String!]
 }

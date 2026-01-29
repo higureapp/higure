@@ -1,22 +1,23 @@
-import { Field, InputType, Int } from '@nestjs/graphql'
-import { Type } from 'class-transformer'
+import { Field, InputType, Int, PartialType } from '@nestjs/graphql'
 import {
     IsArray,
+    IsBoolean,
     IsDate,
     IsInt,
-    IsNotEmpty,
     IsOptional,
     IsString,
     Max,
     Min,
 } from 'class-validator'
+import { Type } from 'class-transformer'
 
 @InputType()
-export class CreateJournalInput {
-    @Field()
+export class UpdateJournalInput {
+    @Field({ nullable: true })
+    @IsOptional()
     @IsDate()
     @Type(() => Date)
-    date: Date
+    date?: Date
 
     @Field({ nullable: true })
     @IsOptional()
@@ -29,17 +30,22 @@ export class CreateJournalInput {
     @IsString()
     location?: string
 
-    @Field()
+    @Field({ nullable: true })
+    @IsOptional()
     @IsString()
-    @IsNotEmpty()
-    content: string
+    content?: string
 
-    @Field(() => Int, { defaultValue: 5 })
+    @Field(() => Int, { nullable: true })
     @IsOptional()
     @IsInt()
     @Min(1)
     @Max(10)
     mood?: number
+
+    @Field({ nullable: true })
+    @IsOptional()
+    @IsBoolean()
+    isActive?: boolean
 
     @Field(() => [String], { nullable: true })
     @IsOptional()

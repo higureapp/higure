@@ -1,0 +1,26 @@
+query GetJournalPages(
+  $filters: JournalPageFilters
+  $pagination: JournalPaginationInput
+) {
+  journalPages(filters: $filters, pagination: $pagination) {
+    pages {
+      id
+      date
+      location
+      mood
+      content
+      tags {
+        name
+        color
+      }
+      metrics {
+        wordCount
+        emotionalValence
+      }
+    }
+    totalCount
+    hasMore
+    currentPage
+    totalPages
+  }
+}

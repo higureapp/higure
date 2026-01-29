@@ -1,0 +1,6 @@
+mutation SoftDeleteJournalPage($id: ID!) {
+  softDeleteJournalPage(id: $id) {
+    id
+    isActive
+  }
+}

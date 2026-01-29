@@ -1,0 +1,13 @@
+mutation UpdateJournalPage($id: ID!, $input: UpdateJournalInput!) {
+  updateJournalPage(id: $id, input: $input) {
+    id
+    date
+    content
+    mood
+    lastModified
+    tags {
+      name
+      color
+    }
+  }
+}

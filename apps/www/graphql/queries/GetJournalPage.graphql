@@ -1,0 +1,31 @@
+query GetJournalPage($id: ID!) {
+  journalPage(id: $id) {
+    id
+    date
+    time
+    location
+    content
+    mood
+    isActive
+    tags {
+      id
+      name
+      color
+    }
+    metrics {
+      wordCount
+      emotionalValence
+      introspectionIndex
+    }
+    aiAnalysis {
+      criticalAnalysis
+      suggestedSongs {
+        title
+        artist
+        reason
+      }
+      quote
+      quoteAuthor
+    }
+  }
+}

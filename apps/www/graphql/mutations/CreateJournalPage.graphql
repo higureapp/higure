@@ -1,0 +1,13 @@
+mutation CreateJournalPage($input: CreateJournalInput!) {
+  createJournalPage(input: $input) {
+    id
+    date
+    content
+    mood
+    tags {
+      id
+      name
+      color
+    }
+  }
+}
