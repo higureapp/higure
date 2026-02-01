@@ -6,17 +6,17 @@ import {
     useGetJournalPagesQuery,
     useUpdateJournalPageMutation,
     type CreateJournalInput,
-    type UpdateJournalInput
+    type UpdateJournalInput,
 } from '../../gql_generated/graphql'
 
 export const useJournalStore = defineStore('journal', () => {
     const {
         result: getJournalPagesResult,
         loading: loadingPages,
-        refetch: refetchPages
+        refetch: refetchPages,
     } = useGetJournalPagesQuery()
-    const { mutate: updateJournalMutation } = useUpdateJournalPageMutation();
-    const { mutate: createJournalMutation } = useCreateJournalPageMutation();
+    const { mutate: updateJournalMutation } = useUpdateJournalPageMutation()
+    const { mutate: createJournalMutation } = useCreateJournalPageMutation()
 
     const pages = computed(() => getJournalPagesResult.value ?? null)
 
@@ -25,16 +25,18 @@ export const useJournalStore = defineStore('journal', () => {
     const {
         result: singleResult,
         loading: loadingSingle,
-        error: singleError
+        error: singleError,
     } = useGetJournalPageQuery(
         () => ({ id: activeJournalId.value || 'placeholder' }),
         {
             enabled: computed(() => !!activeJournalId.value),
-            fetchPolicy: 'cache-and-network'
-        }
+            fetchPolicy: 'cache-and-network',
+        },
     )
 
-    const currentJournal = computed(() => singleResult.value?.journalPage ?? null)
+    const currentJournal = computed(
+        () => singleResult.value?.journalPage ?? null,
+    )
 
     function setSelectedJournal(id: string | null) {
         activeJournalId.value = id
@@ -44,24 +46,24 @@ export const useJournalStore = defineStore('journal', () => {
         try {
             await updateJournalMutation({
                 id,
-                input
+                input,
             })
             await refetchPages()
         } catch (e) {
-            console.error("Update failed:", e);
-            throw e;
+            console.error('Update failed:', e)
+            throw e
         }
     }
 
     async function createJournal(input: CreateJournalInput) {
         try {
             await createJournalMutation({
-                input
+                input,
             })
             await refetchPages()
         } catch (e) {
-            console.error("Creation failed:", e);
-            throw e;
+            console.error('Creation failed:', e)
+            throw e
         }
     }
 
@@ -70,7 +72,6 @@ export const useJournalStore = defineStore('journal', () => {
         return loading
     })
 
-
     return {
         pages,
         currentJournal,
@@ -78,8 +79,8 @@ export const useJournalStore = defineStore('journal', () => {
         loadingSingle,
         activeJournalId,
         setSelectedJournal,
-        refetchPages, 
+        refetchPages,
         updateJournal,
-        createJournal
+        createJournal,
     }
 })

@@ -25,9 +25,9 @@ export const useAuthStore = defineStore('auth', () => {
     })
     const me = computed(() => getMeResult.value?.me ?? null)
     const isLoggedIn = computed(() => {
-        if (!token.value) return false;
-        return !!getMeResult.value?.me;
-    });
+        if (!token.value) return false
+        return !!getMeResult.value?.me
+    })
 
     window.addEventListener('storage', (event) => {
         if (event.key === 'token' && !event.newValue) {
