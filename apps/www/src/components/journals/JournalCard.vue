@@ -21,7 +21,7 @@ const numToWeekDay: Record<number, string> = {
 
 <template>
     <RouterLink :to="`/journal/${page.id}`" class="jcard">
-        <div class="jdate">
+        <div class="jdate" :style="new Date(page.date).getDate().toString().length == 1 ? { alignItems: 'center' } : { alignItems: 'start' }">
             <p class="dayofweek">{{ numToWeekDay[new Date(page.date).getDay()]?.toUpperCase() }}</p>
             <p class="dayofmonth">{{ new Date(page.date).getDate() }}</p>
         </div>
@@ -55,7 +55,7 @@ const numToWeekDay: Record<number, string> = {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: start;
     width: 5%;
 }
 
