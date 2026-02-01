@@ -6,6 +6,7 @@ import WeekMenu from '@/components/WeekMenu.vue';
 import { useAuthStore } from '@/stores/auth-store';
 import { computed, ref } from 'vue';
 import { useGetJournalPagesQuery } from '../../gql_generated/graphql';
+import HomeJournal from '@/components/journals/HomeJournal.vue';
 
 const authStore = useAuthStore();
 
@@ -30,6 +31,7 @@ const journals = computed(() => getJournalsResult.value?.journalPages ?? null)
                         <WeekMenu show-streak />
                     </div>
                 </div>
+                <HomeJournal/>
             </div>
             <div class="plus-wrapper">
                 <PlusButton />
@@ -43,18 +45,22 @@ const journals = computed(() => getJournalsResult.value?.journalPages ?? null)
     display: flex;
     flex-direction: row;
     height: 100vh;
+    overflow: hidden;
 }
 
 .main {
     background: #EDEDED;
-    width: 100%;
+    flex: 1;
     display: flex;
     justify-content: center;
-    position: relative;
+    overflow: hidden;
 }
 
 .base {
-    width: 50vw;
+    width: 45vw;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
     padding: 1rem;
 }
 
@@ -62,11 +68,17 @@ const journals = computed(() => getJournalsResult.value?.journalPages ?? null)
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    flex-shrink: 0;
+    padding-bottom: 1rem;
+    margin-top: 1rem;
 }
 
-.plus-wrapper {
-    position: absolute;
-    bottom: 2rem;
-    right: 2rem;
+:deep(.journals-container) {
+    flex-grow: 1;
+    overflow-y: auto;
+    scrollbar-width: none; 
+}
+:deep(.journals-container::-webkit-scrollbar) {
+    display: none;
 }
 </style>

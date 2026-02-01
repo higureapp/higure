@@ -1,5 +1,7 @@
 import { useAuthStore } from '@/stores/auth-store'
 import HomeView from '@/views/HomeView.vue'
+import JournalNewView from '@/views/JournalNewView.vue'
+import JournalView from '@/views/JournalView.vue'
 import SignInView from '@/views/SignInView.vue'
 import SignUpView from '@/views/SignUpView.vue'
 import { createRouter, createWebHistory } from 'vue-router'
@@ -15,15 +17,27 @@ const router = createRouter({
         },
         {
             path: '/signin',
-            name: 'Sign in',
+            name: 'signin',
             component: SignInView,
-            meta: { requiresAuth: false },
+            meta: { requiresAuth: false, guestOnly: true },
         },
         {
             path: '/signup',
-            name: 'Sign up',
+            name: 'signup',
             component: SignUpView,
-            meta: { requiresAuth: false },
+            meta: { requiresAuth: false, guestOnly: true },
+        },
+        {
+            path: '/journal/:id',
+            name: 'journal',
+            component: JournalView,
+            meta: { requiresAuth: true },
+        },
+        {
+            path: '/journal/new',
+            name: 'newjournal',
+            component: JournalNewView,
+            meta: { requiresAuth: true },
         },
     ],
 })
@@ -55,11 +69,25 @@ router.beforeEach(async (to, from, next) => {
         return next('/')
     }
 
+
+    if (to.meta.requiresAuth && !auth.token) {
+        return next({ name: 'signin' })
+    }
+
     if (to.meta.requiresAuth && !auth.isLoggedIn) {
         return next({
             name: 'signin',
             query: { redirect: to.fullPath },
         })
+    }
+
+    if (auth.token && !auth.me) {
+        try {
+            await auth.refetchMe()
+        } catch (e) {
+            auth.logout()
+            return next({ name: 'signin' })
+        }
     }
 
     next()

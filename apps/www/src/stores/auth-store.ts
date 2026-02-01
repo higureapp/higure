@@ -24,7 +24,16 @@ export const useAuthStore = defineStore('auth', () => {
         fetchPolicy: 'network-only',
     })
     const me = computed(() => getMeResult.value?.me ?? null)
-    const isLoggedIn = computed(() => !!token.value && !!getMeResult.value?.me)
+    const isLoggedIn = computed(() => {
+        if (!token.value) return false;
+        return !!getMeResult.value?.me;
+    });
+
+    window.addEventListener('storage', (event) => {
+        if (event.key === 'token' && !event.newValue) {
+            token.value = null
+        }
+    })
 
     watch(token, async (newToken) => {
         if (newToken) {

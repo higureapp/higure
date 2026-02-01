@@ -1,39 +1,86 @@
 <script setup lang="ts">
-import { Circle } from 'lucide-vue-next';
-import { ref } from 'vue';
+import { Circle, CheckCircle2, CheckCircle, CircleCheck } from 'lucide-vue-next';
+import { computed } from 'vue';
+import { useJournalStore } from '@/stores/journal-store';
+import dayjs from 'dayjs';
+import isToday from 'dayjs/plugin/isToday';
+import weekday from 'dayjs/plugin/weekday';
+
+dayjs.extend(isToday);
+dayjs.extend(weekday);
 
 defineProps<{
     showStreak?: boolean;
-}>()
+}>();
 
-const days = ref([
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-    "Sunday"
-]);
+const journalStore = useJournalStore();
 
-const todayIndex = new Date().getDay() - 1;
-const streak = ref<number>(0);
+const daysLabels = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 
+const startOfWeek = computed(() => {
+    const today = dayjs();
+    const dayOfWeek = today.day();
+    const daysToSubtract = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
+    
+    return today.subtract(daysToSubtract, 'day').startOf('day');
+});
+
+const weekDays = computed(() => {
+    return daysLabels.map((label, index) => {
+        const dateOfEntry = startOfWeek.value.add(index, 'day');
+        const hasPost = journalStore.pages?.journalPages?.pages?.some(page =>
+            dayjs(page.date).isSame(dateOfEntry, 'day')
+        );
+
+        return {
+            label: label[0],
+            isToday: dateOfEntry.isToday(),
+            completed: hasPost
+        };
+    });
+});
+
+const currentStreak = computed(() => {
+    const posts = journalStore.pages?.journalPages?.pages || [];
+    if (posts.length === 0) return 0;
+
+    const dates = [...new Set(posts.map(p => dayjs(p.date).format('YYYY-MM-DD')))]
+        .sort((a, b) => dayjs(b).diff(dayjs(a)));
+
+    let streak = 0;
+    let checkDate = dayjs().startOf('day');
+
+    const hasPostToday = dates.includes(checkDate.format('YYYY-MM-DD'));
+    if (!hasPostToday) {
+        checkDate = checkDate.subtract(1, 'day');
+    }
+
+    for (const date of dates) {
+        if (dayjs(date).isSame(checkDate, 'day')) {
+            streak++;
+            checkDate = checkDate.subtract(1, 'day');
+        } else if (dayjs(date).isBefore(checkDate, 'day')) {
+            break; 
+        }
+    }
+    return streak;
+});
 </script>
 
 <template>
     <div class="week-container">
         <div v-if="showStreak" class="streak">
-            <p>{{ streak }} days streak</p>
+            <p>{{ currentStreak }} days streak</p>
         </div>
 
         <div class="days-wrapper">
-            <div v-for="(day, index) in days" :key="index" :class="{ day }">
-
-                <div class="icon-wrapper" :class="{ today: todayIndex === index }">
-                    <component :is="Circle" :size="18" color="#000" />
+            <div v-for="(day, index) in weekDays" :key="index" class="day">
+                <div class="icon-wrapper" :class="{ today: day.isToday }">
+                    <component :is="day.completed ? CircleCheck : Circle" :size="18"
+                        :color="day.completed ? '#000' : '#888'" :fill="day.completed ? '#000' : 'none'"
+                        style="color: white;" />
                 </div>
-                <p class="day-label">{{ day[0] }}</p>
+                <p class="day-label">{{ day.label }}</p>
             </div>
         </div>
     </div>
@@ -73,10 +120,10 @@ const streak = ref<number>(0);
     width: 1rem;
 }
 
-.day-label {
-    margin: 0;
-    font-size: 0.75rem;
-    font-weight: 600;
+.today {
+    background-color: #FFBDD2;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.2);
+    border-radius: 50%;
 }
 
 .icon-wrapper {
@@ -85,11 +132,13 @@ const streak = ref<number>(0);
     justify-content: center;
     width: 26px;
     height: 26px;
+    transition: all 0.3s ease;
 }
 
-.today {
-    background-color: #FFBDD2;
-    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 50%;
+.day-label {
+    margin: 0;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #444;
 }
 </style>
