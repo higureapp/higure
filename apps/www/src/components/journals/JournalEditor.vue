@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue';
 import dayjs from 'dayjs';
-import { ArrowLeft, Check, Save } from 'lucide-vue-next';
+import { ArrowLeft, Check, Save, Trash, Trash2 } from 'lucide-vue-next';
 import JournalTagsViewer from './JournalTagsViewer.vue';
 import router from '@/router';
 import { useJournalStore } from '@/stores/journal-store';
+import { useAlertStore } from '@/stores/alert-store';
 
 const props = defineProps<{
     id?: string;
@@ -15,6 +16,8 @@ const props = defineProps<{
     location?: string;
     isNew: boolean;
 }>();
+
+const isToCreate = ref<boolean>(props.isNew);
 
 const journal = ref({
     id: props.id || '',
@@ -70,17 +73,23 @@ const journalStore = useJournalStore();
 const handleSave = async () => {
     if (isSaved.value) return;
     try {
-        if (props.isNew || !journal.value.id) {
-            await journalStore.createJournal({
+        if (isToCreate.value || !journal.value.id) {
+            const newEntry = await journalStore.createJournal({
                 content: journal.value.content,
                 location: journal.value.location,
                 date: journal.value.date.toISOString()
             });
+
+            if (newEntry?.data && newEntry.data?.createJournalPage.id) {
+                journal.value.id = newEntry.data.createJournalPage.id;
+            }
+
+            isToCreate.value = false;
         } else {
             await journalStore.updateJournal(journal.value.id, {
                 content: journal.value.content,
                 location: journal.value.location
-            })
+            });
         }
         isSaved.value = true;
     } catch (e) {
@@ -91,6 +100,17 @@ const handleSave = async () => {
 const handleBack = () => {
     router.go(-1);
 };
+
+const alertStore = useAlertStore();
+
+async function deleteAccount() {
+    const confirmed = await alertStore.askConfirmation("You want to delete this journal?");
+
+    if (confirmed) {
+        await journalStore.deleteJournal(journal.value.id);
+        handleBack();
+    }
+}
 </script>
 
 <template>
@@ -103,6 +123,9 @@ const handleBack = () => {
             <button class="btn-save" @click="handleSave">
                 <component :is="isSaved ? Check : Save" :size="18" />
                 {{ isSaved ? 'Saved' : 'Save' }}
+            </button>
+            <button class="btn-delete" @click="deleteAccount">
+                <component :is="Trash2" :size="18" />
             </button>
         </div>
 
@@ -130,6 +153,8 @@ const handleBack = () => {
 .journal-editor-page {
     padding: 2rem;
     width: 40vw;
+    min-height: 100vh;
+    height: 100%;
     margin: 0 auto;
     font-family: "Ibarra Real Nova", serif;
     color: #000000;
@@ -246,7 +271,8 @@ b {
     width: 100%;
 }
 
-.journal-editor, .journal-preview {
+.journal-editor,
+.journal-preview {
     font-family: "Ibarra Real Nova", serif;
     font-size: 1.1rem;
     line-height: 1.8;
@@ -254,7 +280,7 @@ b {
     margin: 0;
     border: none;
     width: 100%;
-    box-sizing: border-box; 
+    box-sizing: border-box;
     white-space: pre-wrap;
     word-wrap: break-word;
 }
@@ -270,15 +296,16 @@ b {
     resize: none;
     z-index: 2;
     outline: none;
-    overflow: hidden; 
+    overflow: hidden;
 }
+
 .journal-preview {
     position: relative;
     min-height: 50vh;
     color: #000000;
     z-index: 1;
     pointer-events: none;
-    overflow: hidden; 
+    overflow: hidden;
 }
 
 .journal-preview :deep(strong) {

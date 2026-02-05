@@ -21,12 +21,12 @@ const numToWeekDay: Record<number, string> = {
 
 <template>
     <RouterLink :to="`/journal/${page.id}`" class="jcard">
-        <div class="jdate" :style="new Date(page.date).getDate().toString().length == 1 ? { alignItems: 'center' } : { alignItems: 'start' }">
-            <p class="dayofweek">{{ numToWeekDay[new Date(page.date).getDay()]?.toUpperCase() }}</p>
-            <p class="dayofmonth">{{ new Date(page.date).getDate() }}</p>
+        <div class="jdate">
+            <span class="dayofweek">{{ numToWeekDay[new Date(page.date).getDay()]?.toUpperCase() }}</span>
+            <span class="dayofmonth">{{ new Date(page.date).getDate() }}</span>
         </div>
         <div class="jbody">
-            <p class="content">{{ page.content.slice(0, Math.floor(Math.random() * 70 + 125)) }}...</p>
+            <p class="content">{{ page.content.slice(0, 150) }}...</p>
         </div>
     </RouterLink>
 </template>
@@ -38,38 +38,45 @@ const numToWeekDay: Record<number, string> = {
     border-radius: 14px;
     display: flex;
     flex-direction: row;
-    gap: 2rem;
+    gap: 1rem;
+    align-items: center;
     transition: 300ms;
-    cursor: pointer;
-    box-shadow: 0 0 3px 0 #00000000;
     text-decoration: none;
+}
+
+.jdate {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 3.5rem;
+    flex-shrink: 0;
+    text-align: center;
+}
+
+.dayofweek {
+    font-family: "Ibarra Real Nova", serif;
+    font-size: 0.7rem;
+    margin: 0;
+    line-height: 1;
+    color: #666;
+}
+
+.dayofmonth {
+    font-family: "Glory", sans-serif;
+    font-weight: bold;
+    font-size: 1.8rem;
+    margin: 0;
+    line-height: 1.1;
+}
+
+.jbody {
+    flex-grow: 1;
 }
 
 .jcard:hover {
     box-shadow: 0 0 3px 0 #000;
     background-color: #FDC3C3;
     transition: 300ms;
-}
-
-.jdate {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: start;
-    width: 5%;
-}
-
-.jdate>.dayofweek {
-    font-family: "Ibarra Real Nova", serif;
-    font-weight: normal;
-    font-optical-sizing: auto;
-    font-style: normal;
-    font-size: 0.7rem
-}
-
-.dayofmonth {
-    font-family: "Glory", sans-serif;
-    font-weight: bold;
-    font-size: 1.5rem;
 }
 </style>

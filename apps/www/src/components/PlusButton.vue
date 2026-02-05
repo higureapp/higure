@@ -2,6 +2,7 @@
 import { Plus, TypeIcon, XIcon, Image as ImageIcon, FileText } from 'lucide-vue-next';
 import ActionButton from './ActionButton.vue';
 import { ref } from 'vue';
+import { onClickOutside } from '@vueuse/core';
 
 const actions = ref([
     { icon: TypeIcon, label: 'Journal', path: '/journal/new' },
@@ -10,10 +11,13 @@ const actions = ref([
 ]);
 
 const isOpen = ref(false);
+const fabRef = ref(null); 
+
+onClickOutside(fabRef, () => (isOpen.value = false));
 </script>
 
 <template>
-    <div class="fab-container">
+    <div class="fab-container" ref="fabRef">
         <TransitionGroup name="stack">
             <div v-if="isOpen" class="actions" key="actions-list">
                 <ActionButton 
