@@ -1,25 +1,24 @@
-import { ObjectType, Field, Int, Float } from "@nestjs/graphql";
-import { IsOptional } from "class-validator";
+import { ObjectType, Field, Int, Float } from '@nestjs/graphql'
+import { IsOptional } from 'class-validator'
 
 @ObjectType()
 export class SongsModel {
     @Field(() => String)
-    spotifyUrl: string;
+    spotifyUrl: string
 
     @Field(() => String)
-    title: string;
+    title: string
 
     @Field(() => String)
-    album: string;
+    album: string
 
     @Field(() => String)
-    author: string;
+    author: string
 
     @Field(() => Float)
-    minutes: number;
+    minutes: number
 
     @Field(() => String, { nullable: true })
     @IsOptional()
-    coverUrl?: string | null;
-
+    coverUrl?: string | null
 }

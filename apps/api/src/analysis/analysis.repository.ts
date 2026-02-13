@@ -1,12 +1,9 @@
-import { PrismaService } from "../database/prisma.service";
-import { JournalAIAnalysis } from "../generated/prisma/client";
-import { JournalAIAnalysisUpdateInput } from "../generated/prisma/models";
+import { PrismaService } from '../database/prisma.service'
+import { JournalAIAnalysis } from '../generated/prisma/client'
+import { JournalAIAnalysisUpdateInput } from '../generated/prisma/models'
 
 export class AnalysisRepository {
-
-    constructor(
-        private readonly prisma: PrismaService,
-    ) { }
+    constructor(private readonly prisma: PrismaService) {}
 
     async createAnalysis(
         journalPageId: string,
@@ -23,7 +20,7 @@ export class AnalysisRepository {
                 quote,
                 quoteAuthor,
             },
-        });
+        })
     }
 
     async getAnalysisByJournalPageId(
@@ -31,7 +28,7 @@ export class AnalysisRepository {
     ): Promise<JournalAIAnalysis | null> {
         return this.prisma.journalAIAnalysis.findUnique({
             where: { journalPageId },
-        });
+        })
     }
 
     async updateAnalysis(
@@ -41,12 +38,12 @@ export class AnalysisRepository {
         return this.prisma.journalAIAnalysis.update({
             where: { id },
             data,
-        });
+        })
     }
 
     async deleteAnalysis(id: string): Promise<JournalAIAnalysis> {
         return this.prisma.journalAIAnalysis.delete({
             where: { id },
-        });
+        })
     }
 }

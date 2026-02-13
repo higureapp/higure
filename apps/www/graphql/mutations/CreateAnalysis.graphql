@@ -1,0 +1,5 @@
+mutation CreateAnalysis($journalId: ID!) {
+  createAnalysis(journalId: $journalId) {
+    ...AnalysisFields
+  }
+}

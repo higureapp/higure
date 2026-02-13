@@ -1,6 +1,6 @@
-import { generateText } from "ai";
-import { z } from "zod";
-import { google } from "@ai-sdk/google";
+import { generateText } from 'ai'
+import { z } from 'zod'
+import { google } from '@ai-sdk/google'
 
 /**
  * Runtime schema validation to prevent LLM hallucinations from breaking the type safety.
@@ -12,22 +12,22 @@ export const SongSuggestionSchema = z.object({
     author: z.string(),
     minutes: z.number().nonnegative(),
     coverUrl: z.string().nullable(),
-});
+})
 
-export type SongSuggestion = z.infer<typeof SongSuggestionSchema>;
+export type SongSuggestion = z.infer<typeof SongSuggestionSchema>
 
 export interface SuggestionOptions {
-    quantity?: number;
-    temperature?: number;
+    quantity?: number
+    temperature?: number
 }
 
 export class MusicCuratorService {
-    private readonly context: string;
-    private readonly referenceDate: string;
+    private readonly context: string
+    private readonly referenceDate: string
 
     constructor(context: string, referenceDate: Date = new Date()) {
-        this.context = context.trim();
-        this.referenceDate = referenceDate.toISOString();
+        this.context = context.trim()
+        this.referenceDate = referenceDate.toISOString()
     }
 
     /**
@@ -51,7 +51,7 @@ Reference date: ${this.referenceDate}
 # DATA INTEGRITY
 - Minutes must be a numeric value (e.g., 3.5).
 - If a cover URL is unavailable, use null.
-`.trim();
+`.trim()
     }
 
     /**
@@ -59,11 +59,13 @@ Reference date: ${this.referenceDate}
      */
     private parseResponse(raw: string): SongSuggestion[] {
         try {
-            const sanitized = raw.replace(/```json|```/g, "").trim();
-            const data = JSON.parse(sanitized);
-            return z.array(SongSuggestionSchema).parse(data);
+            const sanitized = raw.replace(/```json|```/g, '').trim()
+            const data = JSON.parse(sanitized)
+            return z.array(SongSuggestionSchema).parse(data)
         } catch (error) {
-            throw new Error(`AI response failed validation: ${error instanceof Error ? error.message : "Invalid JSON"}`);
+            throw new Error(
+                `AI response failed validation: ${error instanceof Error ? error.message : 'Invalid JSON'}`,
+            )
         }
     }
 
@@ -71,15 +73,15 @@ Reference date: ${this.referenceDate}
      * Orchestrates the suggestion process.
      */
     public async suggest(
-        opts: SuggestionOptions = {}
+        opts: SuggestionOptions = {},
     ): Promise<SongSuggestion[]> {
-        const quantity = opts.quantity ?? 1;
+        const quantity = opts.quantity ?? 1
 
         const response = await generateText({
             model: google('gemini-2.5-flash-lite'),
-            prompt: this.buildPrompt(quantity)
-        });
+            prompt: this.buildPrompt(quantity),
+        })
 
-        return this.parseResponse(response.text);
+        return this.parseResponse(response.text)
     }
 }

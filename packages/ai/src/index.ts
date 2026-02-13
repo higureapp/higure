@@ -1,2 +1,2 @@
-export * from './music-curator.js';
-export * from './analysis.js';
+export * from './music-curator.js'
+export * from './analysis.js'

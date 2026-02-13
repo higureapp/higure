@@ -1,0 +1,5 @@
+query GetAnalysisByJournalPage($journalPageId: ID!) {
+  getAnalysisByJournalPage(journalPageId: $journalPageId) {
+    ...AnalysisFields
+  }
+}

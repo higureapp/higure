@@ -1,0 +1,17 @@
+fragment AnalysisFields on AnalysisModel {
+  id
+  journalPageId
+  criticalAnalysis
+  quote
+  quoteAuthor
+  generatedAt
+  modelVersion
+  suggestedSongs {
+    spotifyUrl
+    title
+    album
+    author
+    minutes
+    coverUrl
+  }
+}

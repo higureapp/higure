@@ -44,7 +44,7 @@ import { AnalysisModule } from '../analysis/analysis.module'
         UsersModule,
         AuthModule,
         JournalsModule,
-        AnalysisModule
+        AnalysisModule,
     ],
     providers: [
         AppService,
