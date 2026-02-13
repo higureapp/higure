@@ -50,10 +50,25 @@ const formattedTime = computed(() => {
 });
 
 const formattedContent = computed(() => {
-    let text = journal.value.content;
-    text = text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
-    text = text.replace(/(?<!\*)\*(?!\*)(.+?)(?<!\*)\*(?!\*)/g, '<em>$1</em>');
-    return text;
+    let html = journal.value.content;
+
+    html = html
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+
+    html = html.replace(/\*\*(.+?)\*\*/g, (match, content) => {
+        return `<strong>${content}</strong>`;
+    });
+
+    html = html.replace(/(?<!\*)\*(?!\*)([^*]+?)(?<!\*)\*(?!\*)/g, (match, content) => {
+        return `<em>${content}</em>`;
+    });
+
+    html = html.replace(/^([\-\*])\s/gm, '<span class="bullet">•</span> ');
+    html = html.replace(/^(\d+)\.\s/gm, '<span class="number">$1.</span> ');
+
+    return html;
 });
 
 const isSaved = ref<boolean>(true);
@@ -152,7 +167,7 @@ async function deleteAccount() {
 <style scoped>
 .journal-editor-page {
     padding: 2rem;
-    width: 40vw;
+    width: clamp(320px, 40vw, 800px);
     min-height: 100vh;
     height: 100%;
     margin: 0 auto;
@@ -203,6 +218,19 @@ async function deleteAccount() {
     transform: translateY(1px);
 }
 
+.btn-delete {
+    background-color: transparent;
+    color: #dc2626;
+}
+
+.btn-delete:hover {
+    color: #991b1b;
+}
+
+.btn-delete:active {
+    transform: translateY(1px);
+}
+
 b {
     font-weight: 600;
 }
@@ -210,7 +238,7 @@ b {
 .content {
     animation: fadeIn 0.5s ease-in-out;
     width: 98%;
-    max-width: 40vw;
+    max-width: clamp(320px, 40vw, 800px);
     margin: 0 auto;
 }
 
@@ -283,6 +311,7 @@ b {
     box-sizing: border-box;
     white-space: pre-wrap;
     word-wrap: break-word;
+    letter-spacing: 0;
 }
 
 .journal-editor {
@@ -314,6 +343,13 @@ b {
 
 .journal-preview :deep(em) {
     font-style: italic;
+    font-weight: 400;
+}
+
+.journal-preview :deep(.bullet),
+.journal-preview :deep(.number) {
+    color: #666;
+    font-weight: 600;
 }
 
 .journal-editor::placeholder {
