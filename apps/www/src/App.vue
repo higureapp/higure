@@ -4,12 +4,14 @@ import LoadingPage from './components/LoadingPage.vue';
 import { useAuthStore } from './stores/auth-store';
 import { useJournalStore } from './stores/journal-store';
 import router from './router';
-import { useAlertStore } from './stores/alert-store';
 import ConfirmationAlert from './components/alerts/ConfirmationAlert.vue';
+import Modal from './components/modals/Modal.vue';
+import { useSettingsStore } from './stores/settings-store';
+import SettingsModal from './components/modals/SettingsModal.vue';
 
 const auth = useAuthStore();
 const journal = useJournalStore();
-const alertStore = useAlertStore();
+const settingsStore = useSettingsStore();
 
 watch(() => auth.token, (token) => {
     if (!token) {
@@ -23,6 +25,7 @@ watch(() => auth.token, (token) => {
     <RouterView v-else class="page" />
 
     <ConfirmationAlert />
+    <SettingsModal />
 </template>
 
 <style scoped>

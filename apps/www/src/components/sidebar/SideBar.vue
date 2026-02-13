@@ -2,25 +2,30 @@
 import { Calendar, Icon, Moon, Search, Settings } from 'lucide-vue-next';
 import Logo from '../Logo.vue';
 import { ref } from 'vue';
+import { useSettingsStore } from '@/stores/settings-store';
+import router from '@/router';
+
+const settingsStore = useSettingsStore();
 
 const actions = ref([
     {
         icon: Calendar,
-        src: '/signin'
+        click: () => router.push('/signin')
     },
     {
         icon: Search,
-        src: '#'
+        click: () => router.push('#')
     },
     {
         icon: Settings,
-        src: '#'
+        click: () => settingsStore.openModal()
     },
     {
         icon: Moon,
-        src: '#'
+        click: () => router.push('#')
     },
 ])
+
 
 </script>
 
@@ -31,9 +36,9 @@ const actions = ref([
                 <Logo format="png" size="140px" />
             </div>
             <div class="actions">
-                <RouterLink class="action-item" :to="action.src" v-for="action in actions">
+                <div class="action-item" v-for="action in actions" @click="action.click">
                     <component class="action-icon" :is="action.icon" color="#000000" :size="20" />
-                </RouterLink>
+                </div>
             </div>
         </div>
     </div>
@@ -67,6 +72,7 @@ const actions = ref([
     align-items: center;
     justify-content: center;
     transition: transform 300ms ease;
+    cursor: pointer;
 }
 
 .action-item .action-icon {

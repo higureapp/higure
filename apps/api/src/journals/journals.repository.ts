@@ -10,7 +10,7 @@ import { UpdateJournalInput } from './inputs/update-journal.input'
 
 @Injectable()
 export class JournalsRepository implements IJournalsRepository {
-    constructor(private readonly prisma: PrismaService) { }
+    constructor(private readonly prisma: PrismaService) {}
 
     private readonly includeRelations = {
         tags: {
@@ -95,7 +95,7 @@ export class JournalsRepository implements IJournalsRepository {
             where: {
                 id,
                 userId,
-                isActive: true
+                isActive: true,
             },
             include: this.includeRelations,
         })
@@ -174,7 +174,7 @@ export class JournalsRepository implements IJournalsRepository {
         return this.prisma.journalPage.findMany({
             where: {
                 ...where,
-                isActive: true
+                isActive: true,
             },
             skip,
             take: limit,
@@ -190,8 +190,8 @@ export class JournalsRepository implements IJournalsRepository {
         return this.prisma.journalPage.count({
             where: {
                 ...where,
-                isActive: true
-            }
+                isActive: true,
+            },
         })
     }
 

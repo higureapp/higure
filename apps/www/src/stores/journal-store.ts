@@ -18,7 +18,8 @@ export const useJournalStore = defineStore('journal', () => {
     } = useGetJournalPagesQuery()
     const { mutate: updateJournalMutation } = useUpdateJournalPageMutation()
     const { mutate: createJournalMutation } = useCreateJournalPageMutation()
-    const { mutate: softDeleteJournalMutation } = useSoftDeleteJournalPageMutation()
+    const { mutate: softDeleteJournalMutation } =
+        useSoftDeleteJournalPageMutation()
 
     const pages = computed(() => getJournalPagesResult.value ?? null)
 
@@ -57,14 +58,15 @@ export const useJournalStore = defineStore('journal', () => {
         }
     }
 
-    async function createJournal(input: CreateJournalInput)
-        : Promise<ReturnType<typeof createJournalMutation>> {
+    async function createJournal(
+        input: CreateJournalInput,
+    ): Promise<ReturnType<typeof createJournalMutation>> {
         try {
             const j = await createJournalMutation({
                 input,
             })
             await refetchPages()
-            return j;
+            return j
         } catch (e) {
             console.error('Creation failed:', e)
             throw e
@@ -74,12 +76,12 @@ export const useJournalStore = defineStore('journal', () => {
     async function deleteJournal(journalId: string) {
         try {
             await softDeleteJournalMutation({
-                id: journalId
+                id: journalId,
             })
             await refetchPages()
         } catch (e) {
-            console.error('Deletation failed:', e);
-            throw e;
+            console.error('Deletation failed:', e)
+            throw e
         }
     }
 
@@ -98,6 +100,6 @@ export const useJournalStore = defineStore('journal', () => {
         refetchPages,
         updateJournal,
         createJournal,
-        deleteJournal
+        deleteJournal,
     }
 })

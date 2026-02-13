@@ -1,31 +1,31 @@
 <script setup lang="ts">
-import { useAlertStore } from '@/stores/alert-store';
 import { onClickOutside } from '@vueuse/core';
+import { X } from 'lucide-vue-next';
 import { ref } from 'vue';
-const alertStore = useAlertStore();
 
+const props = defineProps<{
+    closeFn: () => void
+}>();
 
 const fabRef = ref(null); 
 
-onClickOutside(fabRef, () => (alertStore.isShowed = false));
+onClickOutside(fabRef, () => (props.closeFn()));
 </script>
 
 <template>
     <Teleport to="body">
         <Transition name="fade-slide">
-            <div v-if="alertStore.isShowed" class="alert-overlay">
+            <div class="alert-overlay">
                 <div class="alert-box" ref="fabRef">
-                    <p class="alert-message">{{ alertStore.message }}</p>
-                    <div class="alert-actions">
-                        <button @click="alertStore.cancel" class="btn-cancel">Dismiss</button>
-                        <button @click="alertStore.confirm" class="btn-confirm">Yes</button>
+                    <div class="close-modal" @click="closeFn">
+                        <X :size="24" color="#000" />
                     </div>
+                    <slot></slot>
                 </div>
             </div>
         </Transition>
     </Teleport>
 </template>
-
 
 <style scoped>
 .fade-slide-enter-active,
@@ -61,6 +61,14 @@ onClickOutside(fabRef, () => (alertStore.isShowed = false));
     max-width: 400px;
     text-align: center;
     box-shadow: 0 0 3px 0 #000;
+    position: relative;
+}
+
+.close-modal {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    cursor: pointer;
 }
 
 .alert-message {
