@@ -1,5 +1,4 @@
-import { Field, ID, Int, NumberScalarMode, ObjectType } from '@nestjs/graphql'
-import { Expose } from 'class-transformer'
+import { Field, ID, Int, ObjectType } from '@nestjs/graphql'
 import { JournalTag } from './journal-tag.model'
 import { JournalAIAnalysis } from './journal-ai-analysis.model'
 import { JournalMetrics } from './journal-metrics.model'

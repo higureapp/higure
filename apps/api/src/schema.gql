@@ -106,6 +106,26 @@ type GetJournalPagesOutput {
   totalPages: Int!
 }
 
+type SongsModel {
+  spotifyUrl: String!
+  title: String!
+  album: String!
+  author: String!
+  minutes: Float!
+  coverUrl: String
+}
+
+type AnalysisModel {
+  id: String!
+  journalPageId: String!
+  criticalAnalysis: String!
+  suggestedSongs: [SongsModel!]!
+  quote: String
+  quoteAuthor: String
+  generatedAt: DateTime!
+  modelVersion: String!
+}
+
 type Query {
   me: User!
 
@@ -114,6 +134,7 @@ type Query {
 
   """Get journal pages with filters and pagination"""
   journalPages(filters: JournalPageFilters, pagination: JournalPaginationInput): GetJournalPagesOutput!
+  getAnalysisByJournalPage(journalPageId: ID!): AnalysisModel
 }
 
 input JournalPageFilters {
@@ -154,6 +175,9 @@ type Mutation {
 
   """Restore a soft-deleted journal page"""
   restoreJournalPage(id: ID!): Journal!
+  createAnalysis(journalId: ID!): AnalysisModel!
+  regenerateAnalysis(analysisId: ID!): AnalysisModel!
+  deleteAnalysis(id: ID!): AnalysisModel!
 }
 
 input SignUpInput {

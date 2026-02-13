@@ -20,6 +20,7 @@
   "dependencies": {
     "@apollo/server": "^5.2.0",
     "@as-integrations/express5": "^1.1.2",
+    "@higure/ai": "*",
     "@higure/api": "*",
     "@itgorillaz/configify": "^4.0.2",
     "@keyv/redis": "^5.1.5",

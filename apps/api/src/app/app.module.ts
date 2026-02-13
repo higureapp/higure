@@ -14,6 +14,7 @@ import { CacheableMemory } from 'cacheable'
 import { CacheModule } from '@nestjs/cache-manager'
 import { AppConfiguration } from '../config/app.config'
 import { JournalsModule } from '../journals/journals.module'
+import { AnalysisModule } from '../analysis/analysis.module'
 
 @Module({
     imports: [
@@ -43,6 +44,7 @@ import { JournalsModule } from '../journals/journals.module'
         UsersModule,
         AuthModule,
         JournalsModule,
+        AnalysisModule
     ],
     providers: [
         AppService,

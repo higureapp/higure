@@ -30,7 +30,7 @@ onClickOutside(fabRef, () => (props.closeFn()));
 <style scoped>
 .fade-slide-enter-active,
 .fade-slide-leave-active {
-    transition: opacity 0.1s ease, transform 0.1s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: opacity 0.2s ease, transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .fade-slide-enter-from,
@@ -68,7 +68,13 @@ onClickOutside(fabRef, () => (props.closeFn()));
     position: absolute;
     top: 0.5rem;
     right: 0.5rem;
+    transition: 300ms;
     cursor: pointer;
+}
+
+.close-modal:hover {
+    opacity: 75%;
+    transition: 300ms;
 }
 
 .alert-message {
@@ -92,17 +98,4 @@ button {
     transition: background 0.2s;
 }
 
-.btn-cancel {
-    background: #e0e0e0;
-    color: #333;
-}
-
-.btn-confirm {
-    background: #000;
-    color: #fff;
-}
-
-.btn-confirm:hover {
-    background: #333;
-}
 </style>

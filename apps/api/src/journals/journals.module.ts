@@ -15,6 +15,6 @@ import { JournalPageMapper } from './mappers/journals.mapper'
         JournalPageMapper,
         PrismaService,
     ],
-    exports: [JournalsRepository],
+    exports: [JournalsRepository, JournalsService],
 })
 export class JournalsModule {}
