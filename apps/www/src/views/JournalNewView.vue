@@ -5,7 +5,7 @@ import JournalEditor from '@/components/journals/JournalEditor.vue';
 
 <template>
     <div class="journal-detail-page">
-        <JournalEditor is-new />
+        <JournalEditor class="journal-detail-new" is-new />
     </div>
 </template>
 
@@ -18,6 +18,19 @@ import JournalEditor from '@/components/journals/JournalEditor.vue';
     background-color: #EDEDED;
     display: flex;
     justify-content: center;
+    animation: fadeIn 0.5s ease-in-out;
 }
 
+.journal-detail-new {
+    padding: 2rem;
+    animation: fadeIn 0.5s ease-in-out;
+    width: 100%;
+    width: 40vw;
+}
+
+@media (max-width: 640px) {
+    .journal-detail-new {
+        width: 100vw;
+    }
+}
 </style>

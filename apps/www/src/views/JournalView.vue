@@ -75,6 +75,13 @@ watch(
     max-width: 40vw;
 }
 
+
+@media (max-width: 640px) {
+    .content {
+        max-width: 100vw;
+    }
+}
+
 .not-found {
     text-align: center;
     width: 100%;

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue';
 import dayjs from 'dayjs';
-import { ArrowLeft, Check, Save, Trash, Trash2 } from 'lucide-vue-next';
+import { ArrowLeft, Check, Save, Trash2, MapPin, Calendar, Clock } from 'lucide-vue-next';
 import JournalTagsViewer from './JournalTagsViewer.vue';
 import router from '@/router';
 import { useJournalStore } from '@/stores/journal-store';
@@ -41,7 +41,7 @@ watch(() => props.id, () => {
 
 const formattedDate = computed(() => {
     if (!journal.value.date) return '';
-    return dayjs(props.date).format('dddd, DD MMMM YYYY');
+    return dayjs(props.date).format('dddd, DD MMM YYYY');
 });
 
 const formattedTime = computed(() => {
@@ -51,23 +51,11 @@ const formattedTime = computed(() => {
 
 const formattedContent = computed(() => {
     let html = journal.value.content;
-
-    html = html
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;');
-
-    html = html.replace(/\*\*(.+?)\*\*/g, (match, content) => {
-        return `<strong>${content}</strong>`;
-    });
-
-    html = html.replace(/(?<!\*)\*(?!\*)([^*]+?)(?<!\*)\*(?!\*)/g, (match, content) => {
-        return `<em>${content}</em>`;
-    });
-
+    html = html.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    html = html.replace(/\*\*(.+?)\*\*/g, (match, content) => `<strong>${content}</strong>`);
+    html = html.replace(/(?<!\*)\*(?!\*)([^*]+?)(?<!\*)\*(?!\*)/g, (match, content) => `<em>${content}</em>`);
     html = html.replace(/^([\-\*])\s/gm, '<span class="bullet">•</span> ');
     html = html.replace(/^(\d+)\.\s/gm, '<span class="number">$1.</span> ');
-
     return html;
 });
 
@@ -94,11 +82,9 @@ const handleSave = async () => {
                 location: journal.value.location,
                 date: journal.value.date.toISOString()
             });
-
             if (newEntry?.data && newEntry.data?.createJournalPage.id) {
                 journal.value.id = newEntry.data.createJournalPage.id;
             }
-
             isToCreate.value = false;
         } else {
             await journalStore.updateJournal(journal.value.id, {
@@ -120,7 +106,6 @@ const alertStore = useAlertStore();
 
 async function deleteAccount() {
     const confirmed = await alertStore.askConfirmation("You want to delete this journal?");
-
     if (confirmed) {
         await journalStore.deleteJournal(journal.value.id);
         handleBack();
@@ -130,188 +115,178 @@ async function deleteAccount() {
 
 <template>
     <div class="journal-editor-page">
-        <div class="action-buttons">
+        <header class="page-header">
             <button class="btn-back" @click="handleBack">
-                <component :is="ArrowLeft" :size="18" />
-                Back
+                <component :is="ArrowLeft" :size="20" />
+                <span>Back</span>
             </button>
-            <button class="btn-save" @click="handleSave">
-                <component :is="isSaved ? Check : Save" :size="18" />
-                {{ isSaved ? 'Saved' : 'Save' }}
-            </button>
-            <button class="btn-delete" @click="deleteAccount">
-                <component :is="Trash2" :size="18" />
-            </button>
-        </div>
 
-        <div class="content">
-            <div class="journal-header">
-                <h1>{{ formattedDate }}</h1>
-                <p class="time">
-                    <b>{{ formattedTime }}</b>
-                    <textarea v-model="journal.location" class="location" spellcheck="false"
-                        placeholder="Add location..." @input="handleLocation" maxlength="64"></textarea>
-                </p>
-                <JournalTagsViewer :tags="journal.tags" class="tags" />
+            <div class="header-actions">
+                <button class="btn-save" @click="handleSave" :class="{ saved: isSaved, unsaved: !isSaved }">
+                    <component :is="isSaved ? Check : Save" :size="18" />
+                    <span>{{ isSaved ? 'Saved' : 'Save' }}</span>
+                </button>
+                <button class="btn-delete" @click="deleteAccount">
+                    <component :is="Trash2" :size="18" />
+                </button>
+            </div>
+        </header>
+
+        <article class="journal-content">
+            <div class="journal-meta">
+                <h1 class="journal-date">{{ formattedDate }}</h1>
+
+                <div class="meta-details">
+                    <div class="meta-item">
+                        <component :is="Clock" :size="16" class="meta-icon" />
+                        <span class="meta-text">{{ formattedTime }}</span>
+                    </div>
+
+                    <div class="meta-item location-item">
+                        <component :is="MapPin" :size="16" class="meta-icon" />
+                        <input v-model="journal.location" class="location-input" spellcheck="false"
+                            placeholder="Add location..." @input="handleLocation" maxlength="64" />
+                    </div>
+                </div>
+
+                <JournalTagsViewer v-if="journal.tags.length" :tags="journal.tags" class="journal-tags" />
             </div>
 
-            <div class="editor-container">
+            <div class="editor-wrapper">
                 <textarea v-model="journal.content" @input="handleInput" class="journal-editor"
-                    placeholder="Start to write..." spellcheck="false"></textarea>
+                    placeholder="Start writing your thoughts..." spellcheck="false"></textarea>
                 <div class="journal-preview" v-html="formattedContent"></div>
             </div>
-        </div>
+        </article>
     </div>
 </template>
 
 <style scoped>
 .journal-editor-page {
-    padding: 2rem;
-    width: clamp(320px, 40vw, 800px);
     min-height: 100vh;
-    height: 100%;
-    margin: 0 auto;
+    width: 100%;
     font-family: "Ibarra Real Nova", serif;
     color: #000000;
-    position: relative;
+    background: #EDEDED;
 }
 
-.action-buttons {
+.page-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 1rem;
-    gap: 1rem;
-    border-bottom: 1px solid #000000;
-    padding-bottom: 1rem;
+    padding: 1rem 1.5rem;
+    background: rgba(237, 237, 237, 0.7);
+    backdrop-filter: blur(8px);
 }
 
-.action-buttons button {
+.header-actions {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+}
+
+.page-header button {
     display: flex;
     align-items: center;
     gap: 0.5rem;
     border: none;
-    border-radius: 6px;
-    font-family: "Ibarra Real Nova", serif;
-    font-size: 1rem;
+    background: transparent;
+    font-family: inherit;
+    font-size: 0.95rem;
     font-weight: 500;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 8px;
+    padding: 0.5rem 0.75rem;
 }
 
-.btn-back {
-    background-color: transparent;
-    color: #000000;
+.btn-back:hover {
+    background: rgba(0, 0, 0, 0.05);
+    transform: translateX(-2px);
 }
 
-.btn-back:active {
-    transform: translateY(1px);
+.btn-save.unsaved:hover {
+    background: rgba(0, 0, 0, 0.05);
+    color: #000;
 }
 
-.btn-save {
-    background-color: transparent;
-    color: #2d2d2d;
-    margin-left: auto;
-}
-
-.btn-save:active {
-    transform: translateY(1px);
+.btn-save.saved {
+    color: #059669;
+    cursor: default;
 }
 
 .btn-delete {
-    background-color: transparent;
     color: #dc2626;
 }
 
 .btn-delete:hover {
-    color: #991b1b;
+    background: rgba(220, 38, 38, 0.1);
+    transform: scale(1.05);
 }
 
-.btn-delete:active {
-    transform: translateY(1px);
-}
-
-b {
-    font-weight: 600;
-}
-
-.content {
-    animation: fadeIn 0.5s ease-in-out;
-    width: 98%;
-    max-width: clamp(320px, 40vw, 800px);
+.journal-content {
     margin: 0 auto;
+    padding: 2rem 1.5rem 6rem;
+    min-height: calc(100vh - 70px);
+    width: 90%;
 }
 
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
-}
-
-.journal-header {
-    margin-top: 2rem;
-    margin-bottom: 2rem;
-    padding-bottom: 1rem;
-}
-
-.journal-header h1 {
-    font-size: 2rem;
+.journal-date {
+    font-size: clamp(1.75rem, 5vw, 2.25rem);
     font-weight: 600;
-    margin: 0 0 0.5rem 0;
+    margin: 0 0 1.5rem 0;
     color: #1a1a1a;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
 }
 
-.journal-header .time {
+.meta-details {
     display: flex;
-    align-items: start;
-    gap: 8px;
-    font-size: 1.1rem;
-    color: #000000;
-    margin: 0;
-    font-weight: 400;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
 }
 
-.time .location {
-    color: #000;
+.meta-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.25rem 0;
+}
+
+.location-input {
+    flex: 1;
     border: none;
     outline: none;
-    resize: none;
-    font-family: "Ibarra Real Nova", serif;
-    font-size: 1.1rem;
     background: transparent;
     padding: 0;
-    font-weight: 400;
-    caret-color: #000000;
-    width: 100%;
-    height: 1.5em;
+    font-size: 1rem;
+    color: #000000;
+    font-family: inherit;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s;
 }
 
-.tags {
-    margin-top: 2rem;
-}
-
-.editor-container {
+.editor-wrapper {
     position: relative;
     width: 100%;
+    margin-top: 1rem;
 }
 
 .journal-editor,
 .journal-preview {
-    font-family: "Ibarra Real Nova", serif;
-    font-size: 1.1rem;
+    font-family: inherit;
+    font-size: 1.125rem;
     line-height: 1.8;
+    width: 100%;
+    min-height: 60vh;
     padding: 0;
     margin: 0;
-    border: none;
-    width: 100%;
-    box-sizing: border-box;
     white-space: pre-wrap;
     word-wrap: break-word;
-    letter-spacing: 0;
 }
 
 .journal-editor {
@@ -321,39 +296,42 @@ b {
     height: 100%;
     color: transparent;
     background: transparent;
-    caret-color: #000000;
+    caret-color: #000;
     resize: none;
     z-index: 2;
+    border: none;
     outline: none;
     overflow: hidden;
 }
 
 .journal-preview {
     position: relative;
-    min-height: 50vh;
-    color: #000000;
+    color: #1a1a1a;
     z-index: 1;
     pointer-events: none;
-    overflow: hidden;
 }
 
-.journal-preview :deep(strong) {
-    font-weight: 700;
-}
+.journal-preview :deep(strong) { font-weight: 700; }
+.journal-preview :deep(em) { font-style: italic; }
 
-.journal-preview :deep(em) {
-    font-style: italic;
-    font-weight: 400;
-}
+@media (max-width: 640px) {
+    .btn-back span,
+    .btn-save span {
+        display: none;
+    }
 
-.journal-preview :deep(.bullet),
-.journal-preview :deep(.number) {
-    color: #666;
-    font-weight: 600;
-}
+    .page-header {
+        padding: 0.75rem 1rem;
+    }
 
-.journal-editor::placeholder {
-    color: #999;
-    font-style: italic;
+    .journal-content {
+        padding: 1rem 1rem 4rem;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .journal-date {
+        margin-bottom: 1rem;
+    }
 }
 </style>
