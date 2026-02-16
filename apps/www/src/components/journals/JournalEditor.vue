@@ -6,6 +6,7 @@ import JournalTagsViewer from './JournalTagsViewer.vue';
 import router from '@/router';
 import { useJournalStore } from '@/stores/journal-store';
 import { useAlertStore } from '@/stores/alert-store';
+import AiActions from '../ai/AiActions.vue';
 
 const props = defineProps<{
     id?: string;
@@ -158,10 +159,21 @@ async function deleteAccount() {
                 <div class="journal-preview" v-html="formattedContent"></div>
             </div>
         </article>
+
+        <div class="side-actions">
+            <AiActions />
+        </div>
     </div>
 </template>
 
 <style scoped>
+.journal-view-container {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    overflow: hidden;
+}
+
 .journal-editor-page {
     min-height: 100vh;
     width: 100%;
@@ -311,10 +323,16 @@ async function deleteAccount() {
     pointer-events: none;
 }
 
-.journal-preview :deep(strong) { font-weight: 700; }
-.journal-preview :deep(em) { font-style: italic; }
+.journal-preview :deep(strong) {
+    font-weight: 700;
+}
+
+.journal-preview :deep(em) {
+    font-style: italic;
+}
 
 @media (max-width: 640px) {
+
     .btn-back span,
     .btn-save span {
         display: none;
@@ -333,5 +351,11 @@ async function deleteAccount() {
     .journal-date {
         margin-bottom: 1rem;
     }
+}
+
+.side-actions {
+    position: fixed;
+    top: 40vh;
+    right: 2rem;
 }
 </style>

@@ -77,7 +77,7 @@ const currentStreak = computed(() => {
             <div v-for="(day, index) in weekDays" :key="index" class="day">
                 <div class="icon-wrapper" :class="{ today: day.isToday }">
                     <component :is="day.completed ? CircleCheck : Circle" :size="18"
-                        :color="day.completed ? '#000' : '#888'" :fill="day.completed ? '#000' : 'none'"
+                        :color="day.completed ? '#FDC3C3' : '#888'" :fill="day.completed ? '#000' : 'none'"
                         style="color: white;" />
                 </div>
                 <p class="day-label">{{ day.label }}</p>

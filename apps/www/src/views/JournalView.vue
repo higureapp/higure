@@ -5,9 +5,12 @@ import { ref, watch } from 'vue';
 import { storeToRefs } from 'pinia';
 import { RouterLink } from 'vue-router';
 import JournalEditor from '@/components/journals/JournalEditor.vue';
+import AiBar from '@/components/ai/AiBar.vue';
+import { useAiStore } from '@/stores/ai-store';
 
 const route = useRoute();
 const journalStore = useJournalStore();
+const aiStore = useAiStore()
 const { currentJournal, isLoading } = storeToRefs(journalStore);
 const { setSelectedJournal } = journalStore;
 
@@ -39,11 +42,21 @@ watch(
 <template>
     <div class="journal-detail-page">
         <div v-if="isLoading" class="loader">Loading..</div>
+
         <div v-else-if="currentJournal" class="content">
-            <JournalEditor :id="currentJournal.id" :content="currentJournal.content" :date="currentJournal.date"
-                :time="currentJournal.time" :location="currentJournal.location || ''"
-                :tags="currentJournal.tags.map(t => t.name)" :is-new="false" />
+            <div class="editor-column">
+                <div :class="{ editor_wrapper: aiStore.isShowed, editor: !aiStore.isShowed }">
+                    <JournalEditor :id="currentJournal.id" :content="currentJournal.content" :date="currentJournal.date"
+                        :time="currentJournal.time" :location="currentJournal.location || ''"
+                        :tags="currentJournal.tags.map(t => t.name)" :is-new="false" />
+                </div>
+            </div>
+
+            <aside v-if="aiStore.isShowed" class="ai-column">
+                <AiBar />
+            </aside>
         </div>
+
         <div v-else class="not-found">
             <p class="err-name">404</p>
             <p>Journal not found.</p>
@@ -54,39 +67,58 @@ watch(
 
 <style scoped>
 .journal-detail-page {
-    margin: 0 auto;
     font-family: "Ibarra Real Nova", serif;
     color: #000000;
     background-color: #EDEDED;
-    display: flex;
-    justify-content: center;
-}
-
-.loader {
-    text-align: center;
-    color: #666;
-    font-size: 1.2rem;
+    height: 100vh;
+    width: 100%;
+    overflow: hidden;
 }
 
 .content {
-    padding: 2rem;
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    width: 100%;
     animation: fadeIn 0.5s ease-in-out;
-    width: 100%;
-    max-width: 40vw;
 }
 
 
-@media (max-width: 640px) {
-    .content {
-        max-width: 100vw;
-    }
-}
-
-.not-found {
-    text-align: center;
-    width: 100%;
-    height: 100vh;
+.editor-column {
+    flex: 1;
+    height: 100%;
+    overflow-y: auto;
+    display: flex;
+    justify-content: center;
     background-color: #EDEDED;
+}
+
+
+.editor {
+    padding: 2rem;
+    width: 100%;
+    margin: 0 auto;
+    max-width: 45vw;
+}
+
+.editor_wrapper {
+    padding: 2rem;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.ai-column {
+    width: 30%;
+    min-width: 300px;
+    height: 100%;
+    border-left: 1px solid #ddd;
+    background-color: #ffffff;
+}
+
+.loader,
+.not-found {
+    height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -95,20 +127,6 @@ watch(
 
 .err-name {
     font-size: 150px;
-}
-
-.not-found p {
-    font-size: 1.2rem;
-    color: #555;
-}
-
-.not-found a {
-    color: #007bff;
-    text-decoration: none;
-    font-weight: 500;
-}
-
-.not-found a:hover {
-    text-decoration: underline;
+    margin: 0;
 }
 </style>

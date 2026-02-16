@@ -6,6 +6,9 @@ import JournalEditor from '@/components/journals/JournalEditor.vue';
 <template>
     <div class="journal-detail-page">
         <JournalEditor class="journal-detail-new" is-new />
+        <div class="bar">
+            <AiBar />
+        </div>
     </div>
 </template>
 
