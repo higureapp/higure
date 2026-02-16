@@ -21,13 +21,42 @@ watch(() => auth.token, (token) => {
 </script>
 
 <template>
-    <LoadingPage v-if="auth.isLoading || journal.isLoading" />
-    <RouterView v-else class="page" />
+  <LoadingPage v-if="auth.isLoading || journal.isLoading" />
+  
+  <router-view v-else v-slot="{ Component, route }">
+    <transition name="fade-slide" mode="out-in">
+      <component :is="Component" :key="route.path" class="page" />
+    </transition>
+  </router-view>
 
-    <ConfirmationAlert />
-    <SettingsModal />
+  <ConfirmationAlert />
+  <SettingsModal />
 </template>
 
 <style scoped>
+.fade-slide-enter-from {
+  opacity: 0;
+  transform: translateY(10px);
+}
 
+.fade-slide-leave-to {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+.fade-slide-enter-active,
+.fade-slide-leave-active {
+  transition: all 0.3s ease-out;
+}
+
+.fade-slide-enter-to,
+.fade-slide-leave-from {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.page {
+  width: 100%;
+  min-height: 100vh;
+}
 </style>
