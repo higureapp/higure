@@ -32,6 +32,7 @@ export class AnalysisMapper {
             songModel.author = song.artist || song.author || ''
             songModel.minutes = song.minutes || 0
             songModel.coverUrl = song.coverUrl || null
+            songModel.reason = song.reason || ''
             return songModel
         })
     }

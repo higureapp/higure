@@ -53,7 +53,7 @@ watch(
             </div>
 
             <aside v-if="aiStore.isShowed" class="ai-column">
-                <AiBar />
+                <AiBar :journal-id="currentJournal.id" />
             </aside>
         </div>
 

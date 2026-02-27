@@ -21,4 +21,7 @@ export class SongsModel {
     @Field(() => String, { nullable: true })
     @IsOptional()
     coverUrl?: string | null
+
+    @Field(() => String)
+    reason: string
 }

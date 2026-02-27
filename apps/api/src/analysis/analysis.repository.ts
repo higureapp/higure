@@ -1,9 +1,11 @@
+import { Injectable } from '@nestjs/common'
 import { PrismaService } from '../database/prisma.service'
 import { JournalAIAnalysis } from '../generated/prisma/client'
 import { JournalAIAnalysisUpdateInput } from '../generated/prisma/models'
 
+@Injectable()
 export class AnalysisRepository {
-    constructor(private readonly prisma: PrismaService) {}
+    constructor(private readonly prisma: PrismaService) { }
 
     async createAnalysis(
         journalPageId: string,

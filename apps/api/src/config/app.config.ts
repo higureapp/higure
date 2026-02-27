@@ -26,4 +26,9 @@ export class AppConfiguration {
         default: 60000,
     })
     redisDefaultTtlMs: number
+
+    @IsString()
+    @IsNotEmpty()
+    @Value('GOOGLE_GENERATIVE_AI_API_KEY')
+    googleGenerativeAiApiKey: string
 }

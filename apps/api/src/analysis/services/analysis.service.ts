@@ -7,16 +7,21 @@ import { Journal } from '@/src/journals/models/journal.model'
 import { AnalysisMapper } from '../mappers/analysis.mapper'
 
 @Injectable()
-export class AnalisysService {
+export class AnalysisService {
     constructor(
         private readonly journalService: JournalsService,
         private readonly analysisRepository: AnalysisRepository,
-    ) {}
+    ) { }
 
     async createAnalysis(
         userId: string,
         journalPageId: string,
     ): Promise<AnalysisModel> {
+        const existingAnalysis = await this.analysisRepository.getAnalysisByJournalPageId(journalPageId);
+        if (existingAnalysis) {
+            return AnalysisMapper.toModel(existingAnalysis);
+        }
+
         const journal = await this.journalService.getJournalPage(
             journalPageId,
             userId,
@@ -26,7 +31,7 @@ export class AnalisysService {
         const newAnalysis = await this.analysisRepository.createAnalysis(
             journalPageId,
             analysis.criticalAnalysis,
-            JSON.parse(analysis.suggestedSongs),
+            analysis.suggestedSongs,
             analysis.quote,
             analysis.quoteAuthor,
         )
@@ -55,7 +60,7 @@ export class AnalisysService {
             existingAnalysis.id,
             {
                 criticalAnalysis: newAnalysisData.criticalAnalysis,
-                suggestedSongs: JSON.parse(newAnalysisData.suggestedSongs),
+                suggestedSongs: newAnalysisData.suggestedSongs,
                 quote: newAnalysisData.quote,
                 quoteAuthor: newAnalysisData.quoteAuthor,
                 generatedAt: new Date(),
