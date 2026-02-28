@@ -99,7 +99,9 @@ export const AnalysisSongSuggestionSchema = z.object({
     artist: z.string(),
     reason: z.string().describe('Why this song was suggested based on the entry'),
     spotifyUrl: z.string().optional(),
+    coverUrl: z.string().optional().describe('URL to the song cover image if available'),
 })
+
 
 export const AiAnalysisResultSchema = z.object({
     criticalAnalysis: z

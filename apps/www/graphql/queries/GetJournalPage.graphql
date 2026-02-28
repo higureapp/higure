@@ -14,9 +14,30 @@ query GetJournalPage($id: ID!) {
     }
     metrics {
       wordCount
+      sentenceCount
+      averageSentenceLength
+      paragraphCount
+      textDensity
+      estimatedWritingTime
+      temporalReferencesCount
+      temporalFocus
       emotionalValence
+      emotionalIntensity
+      emotionalVariability
+      emotionalWordsCount
       introspectionIndex
+      questionsCount
+      causeEffectCount
+      eventsCount
+      charactersCount
+      firstPersonUsage
+      narrativeSequentiality
+      lexicalRichness
+      keyRepetitionsCount
+      metaphorsCount
+      formality
     }
+
     aiAnalysis {
       criticalAnalysis
       suggestedSongs {

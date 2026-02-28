@@ -32,6 +32,7 @@ export class AnalysisService {
             journalPageId,
             analysis.criticalAnalysis,
             analysis.suggestedSongs,
+            analysis.metrics,
             analysis.quote,
             analysis.quoteAuthor,
         )
@@ -65,20 +66,43 @@ export class AnalysisService {
                 quoteAuthor: newAnalysisData.quoteAuthor,
                 generatedAt: new Date(),
             },
+            newAnalysisData.metrics,
         )
 
         return AnalysisMapper.toModel(updatedAnalysis)
     }
+
 
     private async generateAnalysis(journal: Journal) {
         const analysis = await AiAnalysis.generateAnalysis({
             content: journal.content,
             date: journal.date,
             location: journal.location,
+            mood: journal.mood,
         })
+
+        // Enrich songs with real covers if missing
+        if (analysis.suggestedSongs) {
+            for (const song of analysis.suggestedSongs) {
+                if (!song.coverUrl) {
+                    try {
+                        const query = encodeURIComponent(`${song.title} ${song.artist}`);
+                        const response = await fetch(`https://itunes.apple.com/search?term=${query}&entity=song&limit=1`);
+                        const data = await response.json();
+                        if (data.results && data.results.length > 0) {
+                            song.coverUrl = data.results[0].artworkUrl100.replace('100x100bb', '600x600bb');
+                        }
+                    } catch (e) {
+                        console.error('Failed to fetch cover for', song.title, e);
+                    }
+                }
+            }
+        }
 
         return analysis
     }
+
+
 
     async getAnalysisByJournalPageId(
         journalPageId: string,

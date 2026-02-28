@@ -26,6 +26,7 @@ export type AnalysisModel = {
   generatedAt: Scalars['DateTime']['output'];
   id: Scalars['String']['output'];
   journalPageId: Scalars['String']['output'];
+  metrics?: Maybe<JournalMetrics>;
   modelVersion: Scalars['String']['output'];
   quote?: Maybe<Scalars['String']['output']>;
   quoteAuthor?: Maybe<Scalars['String']['output']>;
@@ -314,14 +315,14 @@ export type User = {
   updatedAt: Scalars['DateTime']['output'];
 };
 
-export type AnalysisFieldsFragment = { __typename?: 'AnalysisModel', id: string, journalPageId: string, criticalAnalysis: string, quote?: string | null, quoteAuthor?: string | null, generatedAt: any, modelVersion: string, suggestedSongs: Array<{ __typename?: 'SongsModel', spotifyUrl: string, title: string, album: string, author: string, minutes: number, coverUrl?: string | null }> };
+export type AnalysisFieldsFragment = { __typename?: 'AnalysisModel', id: string, journalPageId: string, criticalAnalysis: string, quote?: string | null, quoteAuthor?: string | null, generatedAt: any, modelVersion: string, suggestedSongs: Array<{ __typename?: 'SongsModel', spotifyUrl: string, title: string, album: string, author: string, minutes: number, coverUrl?: string | null }>, metrics?: { __typename?: 'JournalMetrics', wordCount: number, sentenceCount: number, averageSentenceLength: number, paragraphCount: number, textDensity: number, estimatedWritingTime: number, temporalReferencesCount: number, temporalFocus: number, emotionalValence: number, emotionalIntensity: number, emotionalVariability: number, emotionalWordsCount: number, introspectionIndex: number, questionsCount: number, causeEffectCount: number, eventsCount: number, charactersCount: number, firstPersonUsage: number, narrativeSequentiality: number, lexicalRichness: number, keyRepetitionsCount: number, metaphorsCount: number, formality: number } | null };
 
 export type CreateAnalysisMutationVariables = Exact<{
   journalId: Scalars['ID']['input'];
 }>;
 
 
-export type CreateAnalysisMutation = { __typename?: 'Mutation', createAnalysis: { __typename?: 'AnalysisModel', id: string, journalPageId: string, criticalAnalysis: string, quote?: string | null, quoteAuthor?: string | null, generatedAt: any, modelVersion: string, suggestedSongs: Array<{ __typename?: 'SongsModel', spotifyUrl: string, title: string, album: string, author: string, minutes: number, coverUrl?: string | null }> } };
+export type CreateAnalysisMutation = { __typename?: 'Mutation', createAnalysis: { __typename?: 'AnalysisModel', id: string, journalPageId: string, criticalAnalysis: string, quote?: string | null, quoteAuthor?: string | null, generatedAt: any, modelVersion: string, suggestedSongs: Array<{ __typename?: 'SongsModel', spotifyUrl: string, title: string, album: string, author: string, minutes: number, coverUrl?: string | null }>, metrics?: { __typename?: 'JournalMetrics', wordCount: number, sentenceCount: number, averageSentenceLength: number, paragraphCount: number, textDensity: number, estimatedWritingTime: number, temporalReferencesCount: number, temporalFocus: number, emotionalValence: number, emotionalIntensity: number, emotionalVariability: number, emotionalWordsCount: number, introspectionIndex: number, questionsCount: number, causeEffectCount: number, eventsCount: number, charactersCount: number, firstPersonUsage: number, narrativeSequentiality: number, lexicalRichness: number, keyRepetitionsCount: number, metaphorsCount: number, formality: number } | null } };
 
 export type CreateJournalPageMutationVariables = Exact<{
   input: CreateJournalInput;
@@ -335,7 +336,7 @@ export type DeleteAnalysisMutationVariables = Exact<{
 }>;
 
 
-export type DeleteAnalysisMutation = { __typename?: 'Mutation', deleteAnalysis: { __typename?: 'AnalysisModel', id: string, journalPageId: string, criticalAnalysis: string, quote?: string | null, quoteAuthor?: string | null, generatedAt: any, modelVersion: string, suggestedSongs: Array<{ __typename?: 'SongsModel', spotifyUrl: string, title: string, album: string, author: string, minutes: number, coverUrl?: string | null }> } };
+export type DeleteAnalysisMutation = { __typename?: 'Mutation', deleteAnalysis: { __typename?: 'AnalysisModel', id: string, journalPageId: string, criticalAnalysis: string, quote?: string | null, quoteAuthor?: string | null, generatedAt: any, modelVersion: string, suggestedSongs: Array<{ __typename?: 'SongsModel', spotifyUrl: string, title: string, album: string, author: string, minutes: number, coverUrl?: string | null }>, metrics?: { __typename?: 'JournalMetrics', wordCount: number, sentenceCount: number, averageSentenceLength: number, paragraphCount: number, textDensity: number, estimatedWritingTime: number, temporalReferencesCount: number, temporalFocus: number, emotionalValence: number, emotionalIntensity: number, emotionalVariability: number, emotionalWordsCount: number, introspectionIndex: number, questionsCount: number, causeEffectCount: number, eventsCount: number, charactersCount: number, firstPersonUsage: number, narrativeSequentiality: number, lexicalRichness: number, keyRepetitionsCount: number, metaphorsCount: number, formality: number } | null } };
 
 export type DeleteJournalPageMutationVariables = Exact<{
   id: Scalars['ID']['input'];
@@ -349,7 +350,7 @@ export type RegenerateAnalysisMutationVariables = Exact<{
 }>;
 
 
-export type RegenerateAnalysisMutation = { __typename?: 'Mutation', regenerateAnalysis: { __typename?: 'AnalysisModel', id: string, journalPageId: string, criticalAnalysis: string, quote?: string | null, quoteAuthor?: string | null, generatedAt: any, modelVersion: string, suggestedSongs: Array<{ __typename?: 'SongsModel', spotifyUrl: string, title: string, album: string, author: string, minutes: number, coverUrl?: string | null }> } };
+export type RegenerateAnalysisMutation = { __typename?: 'Mutation', regenerateAnalysis: { __typename?: 'AnalysisModel', id: string, journalPageId: string, criticalAnalysis: string, quote?: string | null, quoteAuthor?: string | null, generatedAt: any, modelVersion: string, suggestedSongs: Array<{ __typename?: 'SongsModel', spotifyUrl: string, title: string, album: string, author: string, minutes: number, coverUrl?: string | null }>, metrics?: { __typename?: 'JournalMetrics', wordCount: number, sentenceCount: number, averageSentenceLength: number, paragraphCount: number, textDensity: number, estimatedWritingTime: number, temporalReferencesCount: number, temporalFocus: number, emotionalValence: number, emotionalIntensity: number, emotionalVariability: number, emotionalWordsCount: number, introspectionIndex: number, questionsCount: number, causeEffectCount: number, eventsCount: number, charactersCount: number, firstPersonUsage: number, narrativeSequentiality: number, lexicalRichness: number, keyRepetitionsCount: number, metaphorsCount: number, formality: number } | null } };
 
 export type RestoreJournalPageMutationVariables = Exact<{
   id: Scalars['ID']['input'];
@@ -392,14 +393,14 @@ export type GetAnalysisByJournalPageQueryVariables = Exact<{
 }>;
 
 
-export type GetAnalysisByJournalPageQuery = { __typename?: 'Query', getAnalysisByJournalPage?: { __typename?: 'AnalysisModel', id: string, journalPageId: string, criticalAnalysis: string, quote?: string | null, quoteAuthor?: string | null, generatedAt: any, modelVersion: string, suggestedSongs: Array<{ __typename?: 'SongsModel', spotifyUrl: string, title: string, album: string, author: string, minutes: number, coverUrl?: string | null }> } | null };
+export type GetAnalysisByJournalPageQuery = { __typename?: 'Query', getAnalysisByJournalPage?: { __typename?: 'AnalysisModel', id: string, journalPageId: string, criticalAnalysis: string, quote?: string | null, quoteAuthor?: string | null, generatedAt: any, modelVersion: string, suggestedSongs: Array<{ __typename?: 'SongsModel', spotifyUrl: string, title: string, album: string, author: string, minutes: number, coverUrl?: string | null }>, metrics?: { __typename?: 'JournalMetrics', wordCount: number, sentenceCount: number, averageSentenceLength: number, paragraphCount: number, textDensity: number, estimatedWritingTime: number, temporalReferencesCount: number, temporalFocus: number, emotionalValence: number, emotionalIntensity: number, emotionalVariability: number, emotionalWordsCount: number, introspectionIndex: number, questionsCount: number, causeEffectCount: number, eventsCount: number, charactersCount: number, firstPersonUsage: number, narrativeSequentiality: number, lexicalRichness: number, keyRepetitionsCount: number, metaphorsCount: number, formality: number } | null } | null };
 
 export type GetJournalPageQueryVariables = Exact<{
   id: Scalars['ID']['input'];
 }>;
 
 
-export type GetJournalPageQuery = { __typename?: 'Query', journalPage: { __typename?: 'Journal', id: string, date: any, time?: any | null, location?: string | null, content: string, mood: number, isActive: boolean, tags: Array<{ __typename?: 'JournalTag', id: string, name: string, color?: string | null }>, metrics?: { __typename?: 'JournalMetrics', wordCount: number, emotionalValence: number, introspectionIndex: number } | null, aiAnalysis?: { __typename?: 'JournalAIAnalysis', criticalAnalysis: string, quote?: string | null, quoteAuthor?: string | null, suggestedSongs: Array<{ __typename?: 'SuggestedSong', title: string, artist: string, reason: string }> } | null } };
+export type GetJournalPageQuery = { __typename?: 'Query', journalPage: { __typename?: 'Journal', id: string, date: any, time?: any | null, location?: string | null, content: string, mood: number, isActive: boolean, tags: Array<{ __typename?: 'JournalTag', id: string, name: string, color?: string | null }>, metrics?: { __typename?: 'JournalMetrics', wordCount: number, sentenceCount: number, averageSentenceLength: number, paragraphCount: number, textDensity: number, estimatedWritingTime: number, temporalReferencesCount: number, temporalFocus: number, emotionalValence: number, emotionalIntensity: number, emotionalVariability: number, emotionalWordsCount: number, introspectionIndex: number, questionsCount: number, causeEffectCount: number, eventsCount: number, charactersCount: number, firstPersonUsage: number, narrativeSequentiality: number, lexicalRichness: number, keyRepetitionsCount: number, metaphorsCount: number, formality: number } | null, aiAnalysis?: { __typename?: 'JournalAIAnalysis', criticalAnalysis: string, quote?: string | null, quoteAuthor?: string | null, suggestedSongs: Array<{ __typename?: 'SuggestedSong', title: string, artist: string, reason: string }> } | null } };
 
 export type GetJournalPagesQueryVariables = Exact<{
   filters?: InputMaybe<JournalPageFilters>;
@@ -430,6 +431,31 @@ export const AnalysisFieldsFragmentDoc = gql`
     author
     minutes
     coverUrl
+  }
+  metrics {
+    wordCount
+    sentenceCount
+    averageSentenceLength
+    paragraphCount
+    textDensity
+    estimatedWritingTime
+    temporalReferencesCount
+    temporalFocus
+    emotionalValence
+    emotionalIntensity
+    emotionalVariability
+    emotionalWordsCount
+    introspectionIndex
+    questionsCount
+    causeEffectCount
+    eventsCount
+    charactersCount
+    firstPersonUsage
+    narrativeSequentiality
+    lexicalRichness
+    keyRepetitionsCount
+    metaphorsCount
+    formality
   }
 }
     `;
@@ -788,8 +814,28 @@ export const GetJournalPageDocument = gql`
     }
     metrics {
       wordCount
+      sentenceCount
+      averageSentenceLength
+      paragraphCount
+      textDensity
+      estimatedWritingTime
+      temporalReferencesCount
+      temporalFocus
       emotionalValence
+      emotionalIntensity
+      emotionalVariability
+      emotionalWordsCount
       introspectionIndex
+      questionsCount
+      causeEffectCount
+      eventsCount
+      charactersCount
+      firstPersonUsage
+      narrativeSequentiality
+      lexicalRichness
+      keyRepetitionsCount
+      metaphorsCount
+      formality
     }
     aiAnalysis {
       criticalAnalysis

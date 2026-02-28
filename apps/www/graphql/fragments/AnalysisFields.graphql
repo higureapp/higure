@@ -14,4 +14,29 @@ fragment AnalysisFields on AnalysisModel {
     minutes
     coverUrl
   }
+  metrics {
+    wordCount
+    sentenceCount
+    averageSentenceLength
+    paragraphCount
+    textDensity
+    estimatedWritingTime
+    temporalReferencesCount
+    temporalFocus
+    emotionalValence
+    emotionalIntensity
+    emotionalVariability
+    emotionalWordsCount
+    introspectionIndex
+    questionsCount
+    causeEffectCount
+    eventsCount
+    charactersCount
+    firstPersonUsage
+    narrativeSequentiality
+    lexicalRichness
+    keyRepetitionsCount
+    metaphorsCount
+    formality
+  }
 }

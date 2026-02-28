@@ -1,9 +1,9 @@
-import { JournalAIAnalysis } from '@/src/generated/prisma/client'
 import { AnalysisModel } from '../models/analysis.model'
 import { SongsModel } from '../models/songs.model'
+import { AnalysisWithMetrics } from '../analysis.repository'
 
 export class AnalysisMapper {
-    static toModel(entity: JournalAIAnalysis): AnalysisModel {
+    static toModel(entity: AnalysisWithMetrics): AnalysisModel {
         const model = new AnalysisModel()
 
         model.id = entity.id
@@ -13,6 +13,7 @@ export class AnalysisMapper {
         model.quoteAuthor = entity.quoteAuthor
         model.generatedAt = entity.generatedAt
         model.modelVersion = entity.modelVersion
+        model.metrics = entity.metrics ? { ...entity.metrics } : null
 
         model.suggestedSongs = this.mapSuggestedSongs(entity.suggestedSongs)
 
@@ -37,7 +38,8 @@ export class AnalysisMapper {
         })
     }
 
-    static toModelArray(entities: JournalAIAnalysis[]): AnalysisModel[] {
+    static toModelArray(entities: AnalysisWithMetrics[]): AnalysisModel[] {
         return entities.map((entity) => this.toModel(entity))
     }
 }
+

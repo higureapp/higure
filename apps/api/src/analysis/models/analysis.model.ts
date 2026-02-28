@@ -1,5 +1,6 @@
 import { ObjectType, Field } from '@nestjs/graphql'
 import { SongsModel } from './songs.model'
+import { JournalMetrics } from '../../journals/models/journal-metrics.model'
 
 @ObjectType()
 export class AnalysisModel {
@@ -26,4 +27,8 @@ export class AnalysisModel {
 
     @Field(() => String)
     modelVersion: string
+
+    @Field(() => JournalMetrics, { nullable: true })
+    metrics?: JournalMetrics | null
 }
+

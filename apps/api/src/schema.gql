@@ -125,6 +125,7 @@ type AnalysisModel {
   quoteAuthor: String
   generatedAt: DateTime!
   modelVersion: String!
+  metrics: JournalMetrics
 }
 
 type Query {

@@ -9,10 +9,11 @@ const aiStore = useAiStore();
 
 <template>
     <div class="ai-actions" v-if="!aiStore.isShowed">
-        <AiButton :icon="Stars" label="Insight" :action="() => aiStore.showBar()" />
-        <AiButton :icon="Brain" label="Analysis" :action="() => aiStore.showBar()" />
+        <AiButton :icon="Stars" label="Insight" :action="() => aiStore.showBar('insight')" />
+        <AiButton :icon="Brain" label="Analysis" :action="() => aiStore.showBar('analysis')" />
     </div>
 </template>
+
 
 <style scoped>
 
