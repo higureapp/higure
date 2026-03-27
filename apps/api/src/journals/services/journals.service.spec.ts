@@ -69,23 +69,37 @@ describe('JournalsService', () => {
     describe('getJournalPage', () => {
         it('should return a journal page if found', async () => {
             repository.findById.mockResolvedValue(mockPrismaPage as any)
-            const result = await service.getJournalPage(mockJournalId, mockUserId)
+            const result = await service.getJournalPage(
+                mockJournalId,
+                mockUserId,
+            )
             expect(result.id).toEqual(mockJournalId)
-            expect(repository.findById).toHaveBeenCalledWith(mockJournalId, mockUserId)
+            expect(repository.findById).toHaveBeenCalledWith(
+                mockJournalId,
+                mockUserId,
+            )
         })
 
         it('should throw NotFoundException if not found', async () => {
             repository.findById.mockResolvedValue(null)
-            await expect(service.getJournalPage(mockJournalId, mockUserId)).rejects.toThrow(NotFoundException)
+            await expect(
+                service.getJournalPage(mockJournalId, mockUserId),
+            ).rejects.toThrow(NotFoundException)
         })
     })
 
     describe('createJournalPage', () => {
         it('should create and return a new journal page', async () => {
             const input = { content: 'New content', date: new Date() }
-            repository.create.mockResolvedValue({ ...mockPrismaPage, ...input } as any)
+            repository.create.mockResolvedValue({
+                ...mockPrismaPage,
+                ...input,
+            } as any)
 
-            const result = await service.createJournalPage(mockUserId, input as any)
+            const result = await service.createJournalPage(
+                mockUserId,
+                input as any,
+            )
 
             expect(result.content).toEqual(input.content)
             expect(repository.create).toHaveBeenCalledWith(mockUserId, input)
@@ -108,19 +122,34 @@ describe('JournalsService', () => {
 
     describe('softDeleteJournalPage', () => {
         it('should soft delete and return the page', async () => {
-            repository.softDelete.mockResolvedValue({ ...mockPrismaPage, isActive: false } as any)
-            const result = await service.softDeleteJournalPage(mockJournalId, mockUserId)
+            repository.softDelete.mockResolvedValue({
+                ...mockPrismaPage,
+                isActive: false,
+            } as any)
+            const result = await service.softDeleteJournalPage(
+                mockJournalId,
+                mockUserId,
+            )
             expect(result.isActive).toBe(false)
-            expect(repository.softDelete).toHaveBeenCalledWith(mockJournalId, mockUserId)
+            expect(repository.softDelete).toHaveBeenCalledWith(
+                mockJournalId,
+                mockUserId,
+            )
         })
     })
 
     describe('deleteJournalPage', () => {
         it('should permanently delete and return true', async () => {
             repository.delete.mockResolvedValue(undefined as any)
-            const result = await service.deleteJournalPage(mockJournalId, mockUserId)
+            const result = await service.deleteJournalPage(
+                mockJournalId,
+                mockUserId,
+            )
             expect(result).toBe(true)
-            expect(repository.delete).toHaveBeenCalledWith(mockJournalId, mockUserId)
+            expect(repository.delete).toHaveBeenCalledWith(
+                mockJournalId,
+                mockUserId,
+            )
         })
     })
 })

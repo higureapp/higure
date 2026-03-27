@@ -13,9 +13,9 @@ jest.mock('@higure/ai', () => ({
             suggestedSongs: [],
             metrics: {},
             quote: 'Test quote',
-            quoteAuthor: 'Author'
-        }) as any
-    }
+            quoteAuthor: 'Author',
+        }) as any,
+    },
 }))
 
 describe('AnalysisService', () => {
@@ -32,7 +32,7 @@ describe('AnalysisService', () => {
         content: 'Test content',
         date: new Date(),
         location: 'Italy',
-        mood: 'happy'
+        mood: 'happy',
     } as any
 
     const mockPrismaAnalysis = {
@@ -44,7 +44,7 @@ describe('AnalysisService', () => {
         quote: 'Test quote',
         quoteAuthor: 'Author',
         generatedAt: new Date(),
-        modelVersion: '1.0'
+        modelVersion: '1.0',
     }
 
     beforeEach(async () => {
@@ -78,9 +78,14 @@ describe('AnalysisService', () => {
 
     describe('createAnalysis', () => {
         it('should return existing analysis if found', async () => {
-            repository.getAnalysisByJournalPageId.mockResolvedValue(mockPrismaAnalysis as any)
+            repository.getAnalysisByJournalPageId.mockResolvedValue(
+                mockPrismaAnalysis as any,
+            )
 
-            const result = await service.createAnalysis(mockUserId, mockJournalId)
+            const result = await service.createAnalysis(
+                mockUserId,
+                mockJournalId,
+            )
 
             expect(result.id).toBe(mockAnalysisId)
             expect(journalService.getJournalPage).not.toHaveBeenCalled()
@@ -89,9 +94,14 @@ describe('AnalysisService', () => {
         it('should generate and create new analysis if not found', async () => {
             repository.getAnalysisByJournalPageId.mockResolvedValue(null)
             journalService.getJournalPage.mockResolvedValue(mockJournal)
-            repository.createAnalysis.mockResolvedValue(mockPrismaAnalysis as any)
+            repository.createAnalysis.mockResolvedValue(
+                mockPrismaAnalysis as any,
+            )
 
-            const result = await service.createAnalysis(mockUserId, mockJournalId)
+            const result = await service.createAnalysis(
+                mockUserId,
+                mockJournalId,
+            )
 
             expect(result.id).toBe(mockAnalysisId)
             expect(AiAnalysis.generateAnalysis).toHaveBeenCalled()
@@ -101,14 +111,18 @@ describe('AnalysisService', () => {
 
     describe('getAnalysisByJournalPageId', () => {
         it('should return analysis model if found', async () => {
-            repository.getAnalysisByJournalPageId.mockResolvedValue(mockPrismaAnalysis as any)
-            const result = await service.getAnalysisByJournalPageId(mockJournalId)
+            repository.getAnalysisByJournalPageId.mockResolvedValue(
+                mockPrismaAnalysis as any,
+            )
+            const result =
+                await service.getAnalysisByJournalPageId(mockJournalId)
             expect(result?.id).toBe(mockAnalysisId)
         })
 
         it('should return null if not found', async () => {
             repository.getAnalysisByJournalPageId.mockResolvedValue(null)
-            const result = await service.getAnalysisByJournalPageId(mockJournalId)
+            const result =
+                await service.getAnalysisByJournalPageId(mockJournalId)
             expect(result).toBeNull()
         })
     })

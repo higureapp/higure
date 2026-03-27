@@ -45,7 +45,10 @@ describe('UsersService', () => {
             providers: [
                 UsersService,
                 { provide: UsersRepository, useValue: mockRepository },
-                { provide: RefreshTokenService, useValue: mockRefreshTokenService },
+                {
+                    provide: RefreshTokenService,
+                    useValue: mockRefreshTokenService,
+                },
                 { provide: CACHE_MANAGER, useValue: mockCacheManager },
             ],
         }).compile()
@@ -62,15 +65,25 @@ describe('UsersService', () => {
     describe('create', () => {
         it('should throw ConflictException if email already exists', async () => {
             repository.findOneByEmail.mockResolvedValue(mockUser as any)
-            await expect(service.create({ email: 'test@example.com', password: 'password' } as any)).rejects.toThrow(ConflictException)
+            await expect(
+                service.create({
+                    email: 'test@example.com',
+                    password: 'password',
+                } as any),
+            ).rejects.toThrow(ConflictException)
         })
 
         it('should hash password and create user', async () => {
             repository.findOneByEmail.mockResolvedValue(null)
-                ; (bcrypt.hash as jest.Mock).mockResolvedValue('hashed-password' as never)
+            ;(bcrypt.hash as jest.Mock).mockResolvedValue(
+                'hashed-password' as never,
+            )
             repository.create.mockResolvedValue(mockUser as any)
 
-            const result = await service.create({ email: 'test@example.com', password: 'password' } as any)
+            const result = await service.create({
+                email: 'test@example.com',
+                password: 'password',
+            } as any)
 
             expect(result.email).toBe(mockUser.email)
             expect(bcrypt.hash).toHaveBeenCalledWith('password', 10)
@@ -87,7 +100,9 @@ describe('UsersService', () => {
 
         it('should throw NotFoundException if user not found or inactive', async () => {
             repository.findUnique.mockResolvedValue(null)
-            await expect(service.findOne('user-1')).rejects.toThrow(NotFoundException)
+            await expect(service.findOne('user-1')).rejects.toThrow(
+                NotFoundException,
+            )
         })
     })
 

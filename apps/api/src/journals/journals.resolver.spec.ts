@@ -11,7 +11,10 @@ describe('JournalsResolver', () => {
 
     const mockUser = { userId: 'user-1' } as any
     const mockJournalId = 'journal-1'
-    const mockJournal = { id: mockJournalId, content: 'Test content' } as Journal
+    const mockJournal = {
+        id: mockJournalId,
+        content: 'Test content',
+    } as Journal
 
     beforeEach(async () => {
         const mockService = {
@@ -42,9 +45,15 @@ describe('JournalsResolver', () => {
     describe('getJournalPage', () => {
         it('should call service.getJournalPage and return the result', async () => {
             service.getJournalPage.mockResolvedValue(mockJournal)
-            const result = await resolver.getJournalPage(mockJournalId, mockUser)
+            const result = await resolver.getJournalPage(
+                mockJournalId,
+                mockUser,
+            )
             expect(result).toEqual(mockJournal)
-            expect(service.getJournalPage).toHaveBeenCalledWith(mockJournalId, mockUser.userId)
+            expect(service.getJournalPage).toHaveBeenCalledWith(
+                mockJournalId,
+                mockUser.userId,
+            )
         })
     })
 
@@ -55,31 +64,47 @@ describe('JournalsResolver', () => {
                 totalCount: 1,
                 currentPage: 1,
                 totalPages: 1,
-                hasMore: false
+                hasMore: false,
             }
             service.getJournalPages.mockResolvedValue(paginationOutput)
             const result = await resolver.getJournalPages(mockUser)
             expect(result).toEqual(paginationOutput)
-            expect(service.getJournalPages).toHaveBeenCalledWith(mockUser.userId, undefined, undefined)
+            expect(service.getJournalPages).toHaveBeenCalledWith(
+                mockUser.userId,
+                undefined,
+                undefined,
+            )
         })
     })
 
     describe('createJournalPage', () => {
         it('should call service.createJournalPage and return the result', async () => {
             const input = { content: 'New content', date: new Date() } as any
-            service.createJournalPage.mockResolvedValue({ ...mockJournal, ...input })
+            service.createJournalPage.mockResolvedValue({
+                ...mockJournal,
+                ...input,
+            })
             const result = await resolver.createJournalPage(mockUser, input)
             expect(result.content).toBe(input.content)
-            expect(service.createJournalPage).toHaveBeenCalledWith(mockUser.userId, input)
+            expect(service.createJournalPage).toHaveBeenCalledWith(
+                mockUser.userId,
+                input,
+            )
         })
     })
 
     describe('deleteJournalPage', () => {
         it('should call service.deleteJournalPage and return true', async () => {
             service.deleteJournalPage.mockResolvedValue(true)
-            const result = await resolver.deleteJournalPage(mockJournalId, mockUser)
+            const result = await resolver.deleteJournalPage(
+                mockJournalId,
+                mockUser,
+            )
             expect(result).toBe(true)
-            expect(service.deleteJournalPage).toHaveBeenCalledWith(mockJournalId, mockUser.userId)
+            expect(service.deleteJournalPage).toHaveBeenCalledWith(
+                mockJournalId,
+                mockUser.userId,
+            )
         })
     })
 })

@@ -11,7 +11,8 @@ import { AppConfiguration } from '../config/app.config'
 @Injectable()
 export class PrismaService
     extends PrismaClient
-    implements OnModuleInit, OnModuleDestroy {
+    implements OnModuleInit, OnModuleDestroy
+{
     private logger = new Logger('PrismaService')
 
     constructor(private readonly appConfig: AppConfiguration) {

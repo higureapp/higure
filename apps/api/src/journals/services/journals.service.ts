@@ -20,7 +20,7 @@ export class JournalsService {
         private readonly journalsRepository: JournalsRepository,
         private readonly usersService: UsersService,
         private readonly mapper: JournalPageMapper,
-    ) { }
+    ) {}
 
     async getJournalPages(
         userId: string,

@@ -40,7 +40,7 @@ describe('Journals (e2e)', () => {
                     const ctx = context.switchToHttp().getRequest()
                     ctx.user = { userId: mockUserId }
                     return true
-                }
+                },
             })
             .overrideProvider(PrismaService)
             .useValue({
@@ -48,7 +48,12 @@ describe('Journals (e2e)', () => {
                     findMany: jest.fn().mockResolvedValue([mockJournal]),
                     findUnique: jest.fn().mockResolvedValue(mockJournal),
                     create: jest.fn().mockResolvedValue(mockJournal),
-                    update: jest.fn().mockResolvedValue({ ...mockJournal, content: 'Updated' }),
+                    update: jest
+                        .fn()
+                        .mockResolvedValue({
+                            ...mockJournal,
+                            content: 'Updated',
+                        }),
                     delete: jest.fn().mockResolvedValue(true),
                     count: jest.fn().mockResolvedValue(1),
                 },
@@ -77,11 +82,13 @@ describe('Journals (e2e)', () => {
                             totalCount
                         }
                     }
-                `
+                `,
             })
             .expect(200)
             .expect((res) => {
-                expect(res.body.data.journalPages.pages[0].id).toBe(mockJournalId)
+                expect(res.body.data.journalPages.pages[0].id).toBe(
+                    mockJournalId,
+                )
                 expect(res.body.data.journalPages.totalCount).toBe(1)
             })
     })
@@ -100,7 +107,7 @@ describe('Journals (e2e)', () => {
                             id content
                         }
                     }
-                `
+                `,
             })
             .expect(200)
             .expect((res) => {
@@ -118,7 +125,7 @@ describe('Journals (e2e)', () => {
                             id content
                         }
                     }
-                `
+                `,
             })
             .expect(200)
             .expect((res) => {

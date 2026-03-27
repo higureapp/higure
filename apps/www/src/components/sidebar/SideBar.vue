@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { Calendar, Icon, Moon, Search, Settings } from 'lucide-vue-next';
 import Logo from '../Logo.vue';
-import { ref } from 'vue';
+import { ref, type Ref } from 'vue';
 import { useSettingsStore } from '@/stores/settings-store';
 import router from '@/router';
+import MenuSection from './MenuSection.vue';
+import JournalList from './JournalList.vue';
 
 const settingsStore = useSettingsStore();
 
@@ -26,11 +28,13 @@ const actions = ref([
     },
 ])
 
+const selectFilter: Ref<'YEAR' | 'MONTH'> = ref('YEAR')
+
 
 </script>
 
 <template>
-    <div class="container">
+    <div class="sidebar-container">
         <div class="header">
             <div class="logo">
                 <Logo format="png" size="140px" />
@@ -41,15 +45,22 @@ const actions = ref([
                 </div>
             </div>
         </div>
+        <div class="sidebar-sections">
+            <MenuSection label="Journals" with-order v-model="selectFilter">
+                <JournalList v-model="selectFilter" />
+            </MenuSection>
+        </div>
     </div>
 </template>
 
 <style scoped>
-.container {
+.sidebar-container {
     background: linear-gradient(90deg, #CFD9DF 0%, #FED6E3 100%);
     height: 100vh;
     width: clamp(260px, 17vw, 300px);
-    min-width: 120px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
 }
 
 .header {
@@ -57,6 +68,7 @@ const actions = ref([
     flex-direction: column;
     align-items: center;
     width: 100%;
+    max-height: 30vh;
     padding: 1rem;
 }
 
@@ -65,6 +77,14 @@ const actions = ref([
     flex-direction: row;
     gap: 1rem;
     padding: 0.5rem;
+}
+
+.sidebar-sections {
+    flex-grow: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
 }
 
 .action-item {

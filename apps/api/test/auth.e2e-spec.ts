@@ -60,7 +60,7 @@ describe('Auth (e2e)', () => {
                             accessToken
                         }
                     }
-                `
+                `,
             })
             .expect(200)
             .expect((res) => {
@@ -83,7 +83,7 @@ describe('Auth (e2e)', () => {
                             accessToken
                         }
                     }
-                `
+                `,
             })
             .expect(200)
             .expect((res) => {
@@ -94,7 +94,7 @@ describe('Auth (e2e)', () => {
 
     it('me Query (requires auth)', () => {
         // Since we mocked PrismaService and GqlAuthGuard is global,
-        // we might need a token. For simplicity in this demo E2E, 
+        // we might need a token. For simplicity in this demo E2E,
         // we assume the test environment handles auth or we override the guard.
         return request(app.getHttpServer())
             .post('/graphql')
@@ -104,7 +104,7 @@ describe('Auth (e2e)', () => {
                     query {
                         me { id email }
                     }
-                `
+                `,
             })
             .expect(200)
             .expect((res) => {
