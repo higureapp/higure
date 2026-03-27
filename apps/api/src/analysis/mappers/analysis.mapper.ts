@@ -42,4 +42,3 @@ export class AnalysisMapper {
         return entities.map((entity) => this.toModel(entity))
     }
 }
-

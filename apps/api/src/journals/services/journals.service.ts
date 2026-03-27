@@ -7,7 +7,7 @@ import { Journal } from '../models/journal.model'
 import { JournalsRepository } from '../journals.repository'
 import { JournalPageMapper } from '../mappers/journals.mapper'
 import { CreateJournalInput } from '../inputs/create-journal.input'
-import { UsersService } from '@/src/users/services/users.service'
+import { UsersService } from '../../users/services/users.service'
 import { UpdateJournalInput } from '../inputs/update-journal.input'
 import { GetJournalInput } from '../inputs/get-journal.input'
 import { JournalPageFilters } from '../filters/journal.filter'
@@ -20,7 +20,7 @@ export class JournalsService {
         private readonly journalsRepository: JournalsRepository,
         private readonly usersService: UsersService,
         private readonly mapper: JournalPageMapper,
-    ) {}
+    ) { }
 
     async getJournalPages(
         userId: string,

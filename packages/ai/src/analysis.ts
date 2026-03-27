@@ -60,7 +60,9 @@ export const JournalMetricsSchema = z.object({
     causeEffectCount: z
         .number()
         .int()
-        .describe('Number of logical/causal connections (because, therefore, etc.)'),
+        .describe(
+            'Number of logical/causal connections (because, therefore, etc.)',
+        ),
     eventsCount: z
         .number()
         .int()
@@ -97,11 +99,15 @@ export const JournalMetricsSchema = z.object({
 export const AnalysisSongSuggestionSchema = z.object({
     title: z.string(),
     artist: z.string(),
-    reason: z.string().describe('Why this song was suggested based on the entry'),
+    reason: z
+        .string()
+        .describe('Why this song was suggested based on the entry'),
     spotifyUrl: z.string().optional(),
-    coverUrl: z.string().optional().describe('URL to the song cover image if available'),
+    coverUrl: z
+        .string()
+        .optional()
+        .describe('URL to the song cover image if available'),
 })
-
 
 export const AiAnalysisResultSchema = z.object({
     criticalAnalysis: z
@@ -154,4 +160,3 @@ export class AiAnalysis {
         return object
     }
 }
-

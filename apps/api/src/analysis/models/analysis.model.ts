@@ -31,4 +31,3 @@ export class AnalysisModel {
     @Field(() => JournalMetrics, { nullable: true })
     metrics?: JournalMetrics | null
 }
-

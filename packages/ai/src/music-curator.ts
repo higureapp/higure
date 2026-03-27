@@ -60,7 +60,9 @@ Reference date: ${this.referenceDate}
         const { object } = await generateObject({
             model: google('gemini-2.5-flash-lite'),
             schema: z.object({
-                suggestions: z.array(MusicSongSuggestionSchema).length(quantity),
+                suggestions: z
+                    .array(MusicSongSuggestionSchema)
+                    .length(quantity),
             }),
             prompt: this.buildPrompt(quantity),
         })
@@ -68,4 +70,3 @@ Reference date: ${this.referenceDate}
         return object.suggestions
     }
 }
-

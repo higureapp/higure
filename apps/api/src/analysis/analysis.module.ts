@@ -16,4 +16,4 @@ import { JournalsModule } from '../journals/journals.module'
         PrismaService,
     ],
 })
-export class AnalysisModule { }
+export class AnalysisModule {}

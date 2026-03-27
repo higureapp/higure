@@ -9,7 +9,7 @@ export type AnalysisWithMetrics = JournalAIAnalysis & {
 
 @Injectable()
 export class AnalysisRepository {
-    constructor(private readonly prisma: PrismaService) { }
+    constructor(private readonly prisma: PrismaService) {}
 
     async createAnalysis(
         journalPageId: string,
@@ -94,4 +94,3 @@ export class AnalysisRepository {
         })
     }
 }
-

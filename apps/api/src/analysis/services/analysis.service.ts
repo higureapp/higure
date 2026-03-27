@@ -11,15 +11,18 @@ export class AnalysisService {
     constructor(
         private readonly journalService: JournalsService,
         private readonly analysisRepository: AnalysisRepository,
-    ) { }
+    ) {}
 
     async createAnalysis(
         userId: string,
         journalPageId: string,
     ): Promise<AnalysisModel> {
-        const existingAnalysis = await this.analysisRepository.getAnalysisByJournalPageId(journalPageId);
+        const existingAnalysis =
+            await this.analysisRepository.getAnalysisByJournalPageId(
+                journalPageId,
+            )
         if (existingAnalysis) {
-            return AnalysisMapper.toModel(existingAnalysis);
+            return AnalysisMapper.toModel(existingAnalysis)
         }
 
         const journal = await this.journalService.getJournalPage(
@@ -72,7 +75,6 @@ export class AnalysisService {
         return AnalysisMapper.toModel(updatedAnalysis)
     }
 
-
     private async generateAnalysis(journal: Journal) {
         const analysis = await AiAnalysis.generateAnalysis({
             content: journal.content,
@@ -86,14 +88,26 @@ export class AnalysisService {
             for (const song of analysis.suggestedSongs) {
                 if (!song.coverUrl) {
                     try {
-                        const query = encodeURIComponent(`${song.title} ${song.artist}`);
-                        const response = await fetch(`https://itunes.apple.com/search?term=${query}&entity=song&limit=1`);
-                        const data = await response.json();
+                        const query = encodeURIComponent(
+                            `${song.title} ${song.artist}`,
+                        )
+                        const response = await fetch(
+                            `https://itunes.apple.com/search?term=${query}&entity=song&limit=1`,
+                        )
+                        const data = await response.json()
                         if (data.results && data.results.length > 0) {
-                            song.coverUrl = data.results[0].artworkUrl100.replace('100x100bb', '600x600bb');
+                            song.coverUrl =
+                                data.results[0].artworkUrl100.replace(
+                                    '100x100bb',
+                                    '600x600bb',
+                                )
                         }
                     } catch (e) {
-                        console.error('Failed to fetch cover for', song.title, e);
+                        console.error(
+                            'Failed to fetch cover for',
+                            song.title,
+                            e,
+                        )
                     }
                 }
             }
@@ -101,8 +115,6 @@ export class AnalysisService {
 
         return analysis
     }
-
-
 
     async getAnalysisByJournalPageId(
         journalPageId: string,

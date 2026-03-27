@@ -1,6 +1,6 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql'
 import { Expose } from 'class-transformer'
-import { Sensitive } from 'src/utils/decorators/sensitive.decorator'
+import { Sensitive } from '../../utils/decorators/sensitive.decorator'
 
 @ObjectType()
 export class User {

@@ -1,11 +1,14 @@
 import { Args, ID, Mutation, Query, Resolver } from '@nestjs/graphql'
 import { AnalysisModel } from './models/analysis.model'
-import { CurrentUser, CurrentUserType } from '../auth/decorators/current-user.decorator'
+import {
+    CurrentUser,
+    CurrentUserType,
+} from '../auth/decorators/current-user.decorator'
 import { AnalysisService } from './services/analysis.service'
 
 @Resolver(() => AnalysisModel)
 export class AnalysisResolver {
-    constructor(private readonly analysisService: AnalysisService) { }
+    constructor(private readonly analysisService: AnalysisService) {}
 
     @Mutation(() => AnalysisModel)
     async createAnalysis(
