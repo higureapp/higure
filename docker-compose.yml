@@ -1,0 +1,163 @@
+name: higure
+services:
+    # MySQL Database (matching Prisma schema)
+    db:
+        image: mysql:8.4
+        container_name: higure-db
+        restart: unless-stopped
+        environment:
+            MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-root_password}
+            MYSQL_DATABASE: ${DB_NAME:-higure_db}
+            MYSQL_USER: ${DB_USER:-beekeeper}
+            MYSQL_PASSWORD: ${DB_PASSWORD:-higure_secret_pass}
+        volumes:
+            - mysql_data:/var/lib/mysql
+        ports:
+            - '${DB_PORT:-3306}:3306'
+        healthcheck:
+            test: ['CMD', 'mysqladmin', 'ping', '-h', 'localhost']
+            interval: 10s
+            timeout: 5s
+            retries: 5
+        networks:
+            - higure-network
+
+    # Redis Cache
+    redis:
+        image: redis:7-alpine
+        container_name: higure-redis
+        restart: unless-stopped
+        command: redis-server --appendonly yes --maxmemory 256mb --maxmemory-policy allkeys-lru
+        volumes:
+            - redis_data:/data
+        ports:
+            - '${REDIS_PORT:-6379}:6379'
+        healthcheck:
+            test: ['CMD', 'redis-cli', 'ping']
+            interval: 10s
+            timeout: 5s
+            retries: 5
+        networks:
+            - higure-network
+
+    # NestJS API (development)
+    api:
+        build:
+            context: .
+            dockerfile: Dockerfile.api
+            target: builder
+        container_name: higure-api-dev
+        restart: unless-stopped
+        environment:
+            NODE_ENV: development
+            DATABASE_URL: ${DATABASE_URL:-mysql://beekeeper:higure_secret_pass@db:3306/higure_db}
+            REDIS_URL: ${REDIS_URL:-redis://redis:6379}
+            JWT_SECRET: ${JWT_SECRET:-dev_secret_change_in_production}
+            JWT_REFRESH_SECRET: ${JWT_REFRESH_SECRET:-dev_refresh_secret_change_in_production}
+            JWT_EXPIRES_IN: ${JWT_EXPIRES_IN:-86400000}
+            GOOGLE_GENERATIVE_AI_API_KEY: ${GOOGLE_GENERATIVE_AI_API_KEY:-}
+            PORT: 3000
+        volumes:
+            - ./apps/api:/app/apps/api
+            - ./packages:/app/packages
+            - /app/node_modules
+            - /app/apps/api/node_modules
+        ports:
+            - '${API_PORT:-3000}:3000'
+        depends_on:
+            db:
+                condition: service_healthy
+            redis:
+                condition: service_healthy
+        networks:
+            - higure-network
+        profiles:
+            - api
+
+    # Vue Web App (development)
+    www:
+        build:
+            context: .
+            dockerfile: Dockerfile.www
+            target: builder
+        container_name: higure-www-dev
+        restart: unless-stopped
+        environment:
+            NODE_ENV: development
+            VITE_API_URL: ${VITE_API_URL:-http://localhost:3000}
+            VITE_WS_URL: ${VITE_WS_URL:-ws://localhost:3000}
+            PORT: 5173
+        volumes:
+            - ./apps/www:/app/apps/www
+            - ./packages:/app/packages
+            - /app/node_modules
+            - /app/apps/www/node_modules
+        ports:
+            - '${WWW_PORT:-5173}:5173'
+        depends_on:
+            api:
+                condition: service_started
+        networks:
+            - higure-network
+        profiles:
+            - www
+
+    # API production build
+    api-prod:
+        build:
+            context: .
+            dockerfile: Dockerfile.api
+            target: runner
+        container_name: higure-api-prod
+        restart: unless-stopped
+        environment:
+            DATABASE_URL: ${DATABASE_URL:-mysql://beekeeper:higure_secret_pass@db:3306/higure_db}
+            REDIS_URL: ${REDIS_URL:-redis://redis:6379}
+            JWT_SECRET: ${JWT_SECRET:-dev_secret_change_in_production}
+            JWT_REFRESH_SECRET: ${JWT_REFRESH_SECRET:-dev_refresh_secret_change_in_production}
+            JWT_EXPIRES_IN: ${JWT_EXPIRES_IN:-86400000}
+            GOOGLE_GENERATIVE_AI_API_KEY: ${GOOGLE_GENERATIVE_AI_API_KEY:-}
+            PORT: 3000
+        ports:
+            - '${API_PORT:-3000}:3000'
+        depends_on:
+            db:
+                condition: service_healthy
+            redis:
+                condition: service_healthy
+        networks:
+            - higure-network
+        profiles:
+            - prod
+
+    # Web App production build
+    www-prod:
+        build:
+            context: .
+            dockerfile: Dockerfile.www
+            target: runner
+        container_name: higure-www-prod
+        restart: unless-stopped
+        environment:
+            NODE_ENV: production
+            VITE_API_URL: ${VITE_API_URL:-http://localhost:3000}
+            PORT: 5173
+        ports:
+            - '${WWW_PORT:-5173}:5173'
+        depends_on:
+            api-prod:
+                condition: service_started
+        networks:
+            - higure-network
+        profiles:
+            - prod
+
+volumes:
+    mysql_data:
+        driver: local
+    redis_data:
+        driver: local
+
+networks:
+    higure-network:
+        driver: bridge

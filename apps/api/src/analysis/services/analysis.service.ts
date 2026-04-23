@@ -2,8 +2,8 @@ import { Injectable } from '@nestjs/common'
 import { AnalysisModel } from '../models/analysis.model'
 import { AnalysisRepository } from '../analysis.repository'
 import { AiAnalysis } from '@higure/ai'
-import { JournalsService } from '@/src/journals/services/journals.service'
-import { Journal } from '@/src/journals/models/journal.model'
+import { JournalsService } from '@/journals/services/journals.service'
+import { Journal } from '@/journals/models/journal.model'
 import { AnalysisMapper } from '../mappers/analysis.mapper'
 
 @Injectable()

@@ -4,7 +4,7 @@ import {
     Injectable,
     NotFoundException,
 } from '@nestjs/common'
-import { Prisma } from 'src/generated/prisma/client'
+import { Prisma } from '@/generated/prisma/client'
 import * as bcrypt from 'bcrypt'
 import { UsersRepository } from '../users.repository'
 import { UsersMapper } from '../mappers/users.mapper'

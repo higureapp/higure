@@ -1,4 +1,4 @@
-import { User } from '@/src/generated/prisma/client'
+import { User } from '@/generated/prisma/client'
 import { User as UserModel } from '../models/user.model'
 
 export class UsersMapper {

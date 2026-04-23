@@ -1,7 +1,7 @@
 import { Field, InputType } from '@nestjs/graphql'
 import { Transform } from 'class-transformer'
 import { IsEmail, IsNotEmpty, MaxLength, MinLength } from 'class-validator'
-import { lowerCaseTransformer } from 'src/utils/transformers/lower-case.transformer'
+import { lowerCaseTransformer } from '@/utils/transformers/lower-case.transformer'
 
 @InputType()
 export class SignInInput {

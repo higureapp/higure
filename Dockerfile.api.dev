@@ -1,0 +1,37 @@
+# Dockerfile.api.dev - Development Docker configuration with hot reload
+FROM node:22-alpine
+
+WORKDIR /app
+
+# Install pnpm
+RUN corepack enable && corepack prepare pnpm@10.33.0 --activate
+
+# Install global dependencies
+RUN apk add --no-cache dumb-init curl mysql-client
+
+# Copy package files
+COPY apps/api/package.json apps/api/pnpm-lock.yaml* ./
+COPY packages/*/package.json packages/*/pnpm-lock.yaml* packages/
+
+# Install dependencies
+RUN --mount=type=cache,target=/root/.pnpm-store \
+    pnpm install --frozen-lockfile
+
+# Copy source and generate Prisma client
+COPY apps/api/ .
+COPY packages/ ./packages/
+
+RUN npx prisma generate
+
+# Create volume mount points
+VOLUME ["/app/apps/api/src", "/app/packages"]
+
+# Expose port
+EXPOSE 3000
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+    CMD curl -f http://localhost:3000/health || exit 1
+
+# Start with hot reload
+CMD ["dumb-init", "--", "pnpm", "run", "dev"]

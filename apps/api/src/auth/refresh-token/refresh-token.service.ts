@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import { PrismaService } from '../../database/prisma.service'
 import * as bcrypt from 'bcrypt'
-import { RefreshToken } from 'src/generated/prisma/client'
+import { RefreshToken } from '@/generated/prisma/client'
 
 @Injectable()
 export class RefreshTokenService {

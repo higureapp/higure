@@ -6,7 +6,7 @@ import { RefreshTokenService } from './refresh-token/refresh-token.service'
 import { SignInInput } from './inputs/sign-in.input'
 import { AuthConfiguration } from './config/auth.config'
 import { SignUpInput } from './inputs/sign-up.input'
-import { User } from 'src/users/models/user.model'
+import { User } from '@/users/models/user.model'
 
 @Injectable()
 export class AuthService {

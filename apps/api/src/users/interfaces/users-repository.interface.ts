@@ -1,4 +1,4 @@
-import { Prisma } from '@/src/generated/prisma/client'
+import { Prisma } from '@/generated/prisma/client'
 import { User } from '../models/user.model'
 
 export interface IUsersRepository {

@@ -5,7 +5,7 @@ import { JwtModule } from '@nestjs/jwt'
 import { AuthConfiguration } from './config/auth.config'
 import { UsersModule } from '../users/users.module'
 import { PassportModule } from '@nestjs/passport'
-import { PrismaService } from 'src/database/prisma.service'
+import { PrismaService } from '@/database/prisma.service'
 import { JwtStrategy } from './strategies/jwt.strategy'
 import { RefreshTokenModule } from './refresh-token/refresh-token.module'
 

@@ -1,0 +1,43 @@
+# ---- Builder Stage ----
+FROM node:20-alpine AS builder
+
+# Enable Corepack for deterministic pnpm version management
+ENV COREPACK_ENABLE_DOWNLOAD_PROMPT=0
+RUN corepack enable && corepack prepare pnpm@latest --activate
+
+WORKDIR /usr/src/app
+
+# Copy dependency manifests first to leverage Docker layer caching
+COPY package.json pnpm-lock.yaml ./
+
+# Install ALL dependencies (dev + prod) needed for the build step
+RUN pnpm install --frozen-lockfile
+
+# 3. Copy source code & build
+COPY . .
+RUN pnpm run build
+
+# ---- Production Stage ----
+FROM node:20-alpine AS production
+
+ENV NODE_ENV=production
+ENV COREPACK_ENABLE_DOWNLOAD_PROMPT=0
+RUN corepack enable && corepack prepare pnpm@latest --activate
+
+WORKDIR /usr/src/app
+
+# Copy only production artifacts & dependency manifests
+COPY --from=builder /usr/src/app/dist ./dist
+COPY --from=builder /usr/src/app/package.json ./
+COPY --from=builder /usr/src/app/pnpm-lock.yaml ./
+
+# Install ONLY production dependencies
+RUN pnpm install --frozen-lockfile --production
+
+# Security: Run as non-root user
+RUN addgroup -g 1001 -S nodejs && \
+    adduser -S nodejs -u 1001
+USER nodejs
+
+EXPOSE 3000
+CMD ["node", "dist/main"]

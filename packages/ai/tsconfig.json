@@ -2,7 +2,7 @@
   "extends": "@higure/typescript-config/base.json",
   "compilerOptions": {
     "allowJs": true,
-    "baseUrl": "src",
+    "rootDir": "src",
     "esModuleInterop": true,
     "incremental": false,
     "outDir": "dist",

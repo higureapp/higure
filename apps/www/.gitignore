@@ -26,6 +26,12 @@ coverage
 
 *.tsbuildinfo
 
+# vue-tsc generated files
+src/**/*.d.ts
+src/**/*.js
+src/**/*.js.map
+src/**/*.d.ts.map
+
 .eslintcache
 
 # Cypress

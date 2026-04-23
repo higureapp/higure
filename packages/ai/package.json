@@ -1,40 +1,42 @@
 {
-  "name": "@higure/ai",
-  "scripts": {
-    "dev": "pnpm build --watch",
-    "build": "tsc -b -v",
-    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\""
-  },
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
-  "files": [
-    "./dist/**"
-  ],
-  "publishConfig": {
-    "access": "public"
-  },
-  "exports": {
-    ".": {
-      "import": "./dist/index.js",
-      "require": "./dist/index.js"
+    "name": "@higure/ai",
+    "scripts": {
+        "dev": "pnpm build --watch",
+        "build": "tsc -b -v",
+        "lint": "eslint \"{src,apps,libs,test}/**/*.ts\""
     },
-    "./*": {
-      "import": "./dist/*.js",
-      "require": "./dist/*.js"
+    "main": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "files": [
+        "./dist/**"
+    ],
+    "publishConfig": {
+        "access": "public"
+    },
+    "exports": {
+        ".": {
+            "import": "./dist/index.js",
+            "require": "./dist/index.js"
+        },
+        "./*": {
+            "import": "./dist/*.js",
+            "require": "./dist/*.js"
+        }
+    },
+    "type": "module",
+    "devDependencies": {
+        "@higure/eslint-config": "*",
+        "@higure/typescript-config": "*",
+        "@types/node": "^22.10.7",
+        "dotenv": "^17.4.2",
+        "typescript": "^5.8.2"
+    },
+    "peerDependencies": {
+        "typescript": "^5"
+    },
+    "dependencies": {
+        "@ai-sdk/google": "^3.0.18",
+        "ai": "^6.0.62",
+        "zod": "^4.3.6"
     }
-  },
-  "type": "module",
-  "devDependencies": {
-    "@types/bun": "latest",
-    "@types/node": "^25.2.3"
-  },
-  "peerDependencies": {
-    "typescript": "^5"
-  },
-  "dependencies": {
-    "@higure/typescript-config": "*",
-    "@ai-sdk/google": "^3.0.18",
-    "ai": "^6.0.62",
-    "zod": "^4.3.6"
-  }
 }

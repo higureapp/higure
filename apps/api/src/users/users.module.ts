@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common'
 import { UsersResolver } from './users.resolver'
 import { UsersService } from './services/users.service'
-import { PrismaService } from 'src/database/prisma.service'
+import { PrismaService } from '@/database/prisma.service'
 import { UsersRepository } from './users.repository'
 import { ScheduleModule } from '@nestjs/schedule'
 import { RetentionService } from './services/users-retention.service'

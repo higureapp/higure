@@ -1,0 +1,64 @@
+# Dockerfile.www - Multi-stage build for Vue/Vite Web App
+# Build stage
+FROM node:22-alpine AS builder
+
+# Install pnpm
+RUN corepack enable && corepack prepare pnpm@10.33.0 --activate
+
+WORKDIR /app
+
+# Copy package files
+COPY apps/www/package.json apps/www/pnpm-lock.yaml* ./
+COPY packages/*/package.json packages/*/pnpm-lock.yaml* packages/
+
+# Install dependencies
+RUN --mount=type=cache,target=/root/.pnpm-store \
+    pnpm install --frozen-lockfile --prod=false
+
+# Copy source code
+COPY apps/www/ .
+COPY packages/ ./packages/
+
+# Build the application
+RUN pnpm run build-only
+
+# Production stage
+FROM node:22-alpine AS runner
+
+WORKDIR /app
+
+# Create non-root user for security
+RUN addgroup -g 1001 -S nodejs && \
+    adduser -S nodejs -u 1001 -G nodejs
+
+# Install dependencies for serving static files
+RUN apk add --no-cache \
+    dumb-init \
+    curl \
+    ca-certificates \
+    && rm -rf /var/cache/apk/*
+
+# Copy built artifacts
+COPY --from=builder /app/dist ./dist
+
+# Set environment
+ENV NODE_ENV=production
+ENV PORT=5173
+ENV HOST=0.0.0.0
+
+# Set ownership
+RUN chown -R nodejs:nodejs /app
+
+# Switch to non-root user
+USER nodejs
+
+# Expose port
+EXPOSE 5173
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+    CMD curl -f http://localhost:5173 || exit 1
+
+# Start the application
+ENTRYPOINT ["dumb-init", "--"]
+CMD ["npx", "vite", "preview", "--host", "--port", "5173"]
