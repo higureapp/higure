@@ -8,14 +8,15 @@
         "forceConsistentCasingInFileNames": false,
         "incremental": true,
         "isolatedModules": false,
-        "module": "commonjs",
-        "moduleResolution": "Node",
+        "module": "NodeNext",
+        "moduleResolution": "NodeNext",
         "noFallthroughCasesInSwitch": false,
         "noImplicitAny": false,
         "removeComments": true,
         "skipLibCheck": true,
         "sourceMap": true,
         "strictNullChecks": false,
-        "strictBindCallApply": false
+        "strictBindCallApply": false,
+        "verbatimModuleSyntax": false
     }
 }

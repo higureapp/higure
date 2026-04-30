@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing'
 import { JournalsService } from './journals.service'
 import { JournalsRepository } from '../journals.repository'
-import { UsersService } from '@/src/users/services/users.service'
+import { UsersService } from '@/users/services/users.service'
 import { JournalPageMapper } from '../mappers/journals.mapper'
 import { NotFoundException } from '@nestjs/common'
 import { describe, it, beforeEach, jest, expect } from '@jest/globals'

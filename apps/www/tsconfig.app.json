@@ -1,11 +1,12 @@
 {
     "extends": "@higure/typescript-config/vite.json",
-    "include": ["env.d.ts", "src/**/*", "src/**/*.vue", "gql_generated/**/*"],
-    "exclude": ["src/**/__tests__/*"],
     "compilerOptions": {
+        "noEmit": true,
         "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
         "paths": {
             "@/*": ["./src/*"]
         }
-    }
+    },
+    "include": ["env.d.ts", "src/**/*", "src/**/*.vue", "gql_generated/**/*"],
+    "exclude": ["src/**/__tests__/*"]
 }

@@ -1,754 +1,763 @@
-import * as VueApolloComposable from '@vue/apollo-composable';
-import * as VueCompositionApi from 'vue';
-export type Maybe<T> = T | null;
-export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends {
-    [key: string]: unknown;
-}> = {
-    [K in keyof T]: T[K];
-};
+import * as VueApolloComposable from '@vue/apollo-composable'
+import * as VueCompositionApi from 'vue'
+export type Maybe<T> = T | null
+export type InputMaybe<T> = Maybe<T>
+export type Exact<
+    T extends {
+        [key: string]: unknown
+    },
+> = {
+    [K in keyof T]: T[K]
+}
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
-    [SubKey in K]?: Maybe<T[SubKey]>;
-};
+    [SubKey in K]?: Maybe<T[SubKey]>
+}
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
-    [SubKey in K]: Maybe<T[SubKey]>;
-};
-export type MakeEmpty<T extends {
-    [key: string]: unknown;
-}, K extends keyof T> = {
-    [_ in K]?: never;
-};
-export type Incremental<T> = T | {
-    [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never;
-};
-export type ReactiveFunction<TParam> = () => TParam;
+    [SubKey in K]: Maybe<T[SubKey]>
+}
+export type MakeEmpty<
+    T extends {
+        [key: string]: unknown
+    },
+    K extends keyof T,
+> = {
+    [_ in K]?: never
+}
+export type Incremental<T> =
+    | T
+    | {
+          [P in keyof T]?: P extends ' $fragmentName' | '__typename'
+              ? T[P]
+              : never
+      }
+export type ReactiveFunction<TParam> = () => TParam
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
     ID: {
-        input: string;
-        output: string;
-    };
+        input: string
+        output: string
+    }
     String: {
-        input: string;
-        output: string;
-    };
+        input: string
+        output: string
+    }
     Boolean: {
-        input: boolean;
-        output: boolean;
-    };
+        input: boolean
+        output: boolean
+    }
     Int: {
-        input: number;
-        output: number;
-    };
+        input: number
+        output: number
+    }
     Float: {
-        input: number;
-        output: number;
-    };
+        input: number
+        output: number
+    }
     /** A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format. */
     DateTime: {
-        input: any;
-        output: any;
-    };
-};
+        input: any
+        output: any
+    }
+}
 export type AnalysisModel = {
-    __typename?: 'AnalysisModel';
-    criticalAnalysis: Scalars['String']['output'];
-    generatedAt: Scalars['DateTime']['output'];
-    id: Scalars['String']['output'];
-    journalPageId: Scalars['String']['output'];
-    metrics?: Maybe<JournalMetrics>;
-    modelVersion: Scalars['String']['output'];
-    quote?: Maybe<Scalars['String']['output']>;
-    quoteAuthor?: Maybe<Scalars['String']['output']>;
-    suggestedSongs: Array<SongsModel>;
-};
+    __typename?: 'AnalysisModel'
+    criticalAnalysis: Scalars['String']['output']
+    generatedAt: Scalars['DateTime']['output']
+    id: Scalars['String']['output']
+    journalPageId: Scalars['String']['output']
+    metrics?: Maybe<JournalMetrics>
+    modelVersion: Scalars['String']['output']
+    quote?: Maybe<Scalars['String']['output']>
+    quoteAuthor?: Maybe<Scalars['String']['output']>
+    suggestedSongs: Array<SongsModel>
+}
 export type AuthResponse = {
-    __typename?: 'AuthResponse';
-    access_token: Scalars['String']['output'];
-    refresh_token: Scalars['String']['output'];
-};
+    __typename?: 'AuthResponse'
+    access_token: Scalars['String']['output']
+    refresh_token: Scalars['String']['output']
+}
 export type CreateJournalInput = {
-    content: Scalars['String']['input'];
-    date: Scalars['DateTime']['input'];
-    location?: InputMaybe<Scalars['String']['input']>;
-    mood?: Scalars['Int']['input'];
-    tagIds?: InputMaybe<Array<Scalars['String']['input']>>;
-    time?: InputMaybe<Scalars['DateTime']['input']>;
-};
+    content: Scalars['String']['input']
+    date: Scalars['DateTime']['input']
+    location?: InputMaybe<Scalars['String']['input']>
+    mood?: Scalars['Int']['input']
+    tagIds?: InputMaybe<Array<Scalars['String']['input']>>
+    time?: InputMaybe<Scalars['DateTime']['input']>
+}
 export type GetJournalPagesOutput = {
-    __typename?: 'GetJournalPagesOutput';
-    currentPage: Scalars['Int']['output'];
-    hasMore: Scalars['Boolean']['output'];
-    pages: Array<Journal>;
-    totalCount: Scalars['Int']['output'];
-    totalPages: Scalars['Int']['output'];
-};
+    __typename?: 'GetJournalPagesOutput'
+    currentPage: Scalars['Int']['output']
+    hasMore: Scalars['Boolean']['output']
+    pages: Array<Journal>
+    totalCount: Scalars['Int']['output']
+    totalPages: Scalars['Int']['output']
+}
 export type Journal = {
-    __typename?: 'Journal';
-    aiAnalysis?: Maybe<JournalAiAnalysis>;
-    content: Scalars['String']['output'];
-    createdAt: Scalars['DateTime']['output'];
-    date: Scalars['DateTime']['output'];
-    id: Scalars['ID']['output'];
-    isActive: Scalars['Boolean']['output'];
-    lastModified: Scalars['DateTime']['output'];
-    location?: Maybe<Scalars['String']['output']>;
-    metrics?: Maybe<JournalMetrics>;
-    mood: Scalars['Int']['output'];
-    tags: Array<JournalTag>;
-    time?: Maybe<Scalars['DateTime']['output']>;
-    updatedAt: Scalars['DateTime']['output'];
-};
+    __typename?: 'Journal'
+    aiAnalysis?: Maybe<JournalAiAnalysis>
+    content: Scalars['String']['output']
+    createdAt: Scalars['DateTime']['output']
+    date: Scalars['DateTime']['output']
+    id: Scalars['ID']['output']
+    isActive: Scalars['Boolean']['output']
+    lastModified: Scalars['DateTime']['output']
+    location?: Maybe<Scalars['String']['output']>
+    metrics?: Maybe<JournalMetrics>
+    mood: Scalars['Int']['output']
+    tags: Array<JournalTag>
+    time?: Maybe<Scalars['DateTime']['output']>
+    updatedAt: Scalars['DateTime']['output']
+}
 export type JournalAiAnalysis = {
-    __typename?: 'JournalAIAnalysis';
-    criticalAnalysis: Scalars['String']['output'];
-    generatedAt: Scalars['DateTime']['output'];
-    modelVersion: Scalars['String']['output'];
-    quote?: Maybe<Scalars['String']['output']>;
-    quoteAuthor?: Maybe<Scalars['String']['output']>;
-    suggestedSongs: Array<SuggestedSong>;
-};
+    __typename?: 'JournalAIAnalysis'
+    criticalAnalysis: Scalars['String']['output']
+    generatedAt: Scalars['DateTime']['output']
+    modelVersion: Scalars['String']['output']
+    quote?: Maybe<Scalars['String']['output']>
+    quoteAuthor?: Maybe<Scalars['String']['output']>
+    suggestedSongs: Array<SuggestedSong>
+}
 export type JournalMetrics = {
-    __typename?: 'JournalMetrics';
-    averageSentenceLength: Scalars['Float']['output'];
-    causeEffectCount: Scalars['Int']['output'];
-    charactersCount: Scalars['Int']['output'];
-    emotionalIntensity: Scalars['Float']['output'];
-    emotionalValence: Scalars['Float']['output'];
-    emotionalVariability: Scalars['Float']['output'];
-    emotionalWordsCount: Scalars['Int']['output'];
-    estimatedWritingTime: Scalars['Int']['output'];
-    eventsCount: Scalars['Int']['output'];
-    firstPersonUsage: Scalars['Float']['output'];
-    formality: Scalars['Float']['output'];
-    introspectionIndex: Scalars['Float']['output'];
-    keyRepetitionsCount: Scalars['Int']['output'];
-    lexicalRichness: Scalars['Float']['output'];
-    metaphorsCount: Scalars['Int']['output'];
-    narrativeSequentiality: Scalars['Float']['output'];
-    paragraphCount: Scalars['Int']['output'];
-    questionsCount: Scalars['Int']['output'];
-    sentenceCount: Scalars['Int']['output'];
-    temporalFocus: Scalars['Float']['output'];
-    temporalReferencesCount: Scalars['Int']['output'];
-    textDensity: Scalars['Float']['output'];
-    wordCount: Scalars['Int']['output'];
-};
+    __typename?: 'JournalMetrics'
+    averageSentenceLength: Scalars['Float']['output']
+    causeEffectCount: Scalars['Int']['output']
+    charactersCount: Scalars['Int']['output']
+    emotionalIntensity: Scalars['Float']['output']
+    emotionalValence: Scalars['Float']['output']
+    emotionalVariability: Scalars['Float']['output']
+    emotionalWordsCount: Scalars['Int']['output']
+    estimatedWritingTime: Scalars['Int']['output']
+    eventsCount: Scalars['Int']['output']
+    firstPersonUsage: Scalars['Float']['output']
+    formality: Scalars['Float']['output']
+    introspectionIndex: Scalars['Float']['output']
+    keyRepetitionsCount: Scalars['Int']['output']
+    lexicalRichness: Scalars['Float']['output']
+    metaphorsCount: Scalars['Int']['output']
+    narrativeSequentiality: Scalars['Float']['output']
+    paragraphCount: Scalars['Int']['output']
+    questionsCount: Scalars['Int']['output']
+    sentenceCount: Scalars['Int']['output']
+    temporalFocus: Scalars['Float']['output']
+    temporalReferencesCount: Scalars['Int']['output']
+    textDensity: Scalars['Float']['output']
+    wordCount: Scalars['Int']['output']
+}
 export type JournalPageFilters = {
-    dateFrom?: InputMaybe<Scalars['DateTime']['input']>;
-    dateTo?: InputMaybe<Scalars['DateTime']['input']>;
-    isActive?: InputMaybe<Scalars['Boolean']['input']>;
-    location?: InputMaybe<Scalars['String']['input']>;
-    moodMax?: InputMaybe<Scalars['Int']['input']>;
-    moodMin?: InputMaybe<Scalars['Int']['input']>;
-    searchTerm?: InputMaybe<Scalars['String']['input']>;
-    tags?: InputMaybe<Array<Scalars['String']['input']>>;
-};
+    dateFrom?: InputMaybe<Scalars['DateTime']['input']>
+    dateTo?: InputMaybe<Scalars['DateTime']['input']>
+    isActive?: InputMaybe<Scalars['Boolean']['input']>
+    location?: InputMaybe<Scalars['String']['input']>
+    moodMax?: InputMaybe<Scalars['Int']['input']>
+    moodMin?: InputMaybe<Scalars['Int']['input']>
+    searchTerm?: InputMaybe<Scalars['String']['input']>
+    tags?: InputMaybe<Array<Scalars['String']['input']>>
+}
 export type JournalPaginationInput = {
-    limit?: InputMaybe<Scalars['Int']['input']>;
-    page?: InputMaybe<Scalars['Int']['input']>;
-};
+    limit?: InputMaybe<Scalars['Int']['input']>
+    page?: InputMaybe<Scalars['Int']['input']>
+}
 export type JournalTag = {
-    __typename?: 'JournalTag';
-    color?: Maybe<Scalars['String']['output']>;
-    id: Scalars['ID']['output'];
-    name: Scalars['String']['output'];
-};
+    __typename?: 'JournalTag'
+    color?: Maybe<Scalars['String']['output']>
+    id: Scalars['ID']['output']
+    name: Scalars['String']['output']
+}
 export type Mutation = {
-    __typename?: 'Mutation';
-    createAnalysis: AnalysisModel;
+    __typename?: 'Mutation'
+    createAnalysis: AnalysisModel
     /** Create a new journal page */
-    createJournalPage: Journal;
-    deleteAccount: Scalars['String']['output'];
-    deleteAnalysis: AnalysisModel;
+    createJournalPage: Journal
+    deleteAccount: Scalars['String']['output']
+    deleteAnalysis: AnalysisModel
     /** Permanently delete a journal page */
-    deleteJournalPage: Scalars['Boolean']['output'];
-    logout: Scalars['String']['output'];
-    logoutAllDevices: Scalars['String']['output'];
-    refreshToken: AuthResponse;
-    regenerateAnalysis: AnalysisModel;
+    deleteJournalPage: Scalars['Boolean']['output']
+    logout: Scalars['String']['output']
+    logoutAllDevices: Scalars['String']['output']
+    refreshToken: AuthResponse
+    regenerateAnalysis: AnalysisModel
     /** Restore a soft-deleted journal page */
-    restoreJournalPage: Journal;
-    signIn: AuthResponse;
-    signUp: SignUpResponse;
+    restoreJournalPage: Journal
+    signIn: AuthResponse
+    signUp: SignUpResponse
     /** Soft delete a journal page (set isActive to false) */
-    softDeleteJournalPage: Journal;
+    softDeleteJournalPage: Journal
     /** Update an existing journal page */
-    updateJournalPage: Journal;
-};
+    updateJournalPage: Journal
+}
 export type MutationCreateAnalysisArgs = {
-    journalId: Scalars['ID']['input'];
-};
+    journalId: Scalars['ID']['input']
+}
 export type MutationCreateJournalPageArgs = {
-    input: CreateJournalInput;
-};
+    input: CreateJournalInput
+}
 export type MutationDeleteAnalysisArgs = {
-    id: Scalars['ID']['input'];
-};
+    id: Scalars['ID']['input']
+}
 export type MutationDeleteJournalPageArgs = {
-    id: Scalars['ID']['input'];
-};
+    id: Scalars['ID']['input']
+}
 export type MutationLogoutArgs = {
-    refreshToken?: InputMaybe<Scalars['String']['input']>;
-};
+    refreshToken?: InputMaybe<Scalars['String']['input']>
+}
 export type MutationRefreshTokenArgs = {
-    refreshTokenInput: RefreshTokenInput;
-};
+    refreshTokenInput: RefreshTokenInput
+}
 export type MutationRegenerateAnalysisArgs = {
-    analysisId: Scalars['ID']['input'];
-};
+    analysisId: Scalars['ID']['input']
+}
 export type MutationRestoreJournalPageArgs = {
-    id: Scalars['ID']['input'];
-};
+    id: Scalars['ID']['input']
+}
 export type MutationSignInArgs = {
-    signInInput: SignInInput;
-};
+    signInInput: SignInInput
+}
 export type MutationSignUpArgs = {
-    signUpInput: SignUpInput;
-};
+    signUpInput: SignUpInput
+}
 export type MutationSoftDeleteJournalPageArgs = {
-    id: Scalars['ID']['input'];
-};
+    id: Scalars['ID']['input']
+}
 export type MutationUpdateJournalPageArgs = {
-    id: Scalars['ID']['input'];
-    input: UpdateJournalInput;
-};
+    id: Scalars['ID']['input']
+    input: UpdateJournalInput
+}
 export type Query = {
-    __typename?: 'Query';
-    getAnalysisByJournalPage?: Maybe<AnalysisModel>;
+    __typename?: 'Query'
+    getAnalysisByJournalPage?: Maybe<AnalysisModel>
     /** Get a single journal page by ID */
-    journalPage: Journal;
+    journalPage: Journal
     /** Get journal pages with filters and pagination */
-    journalPages: GetJournalPagesOutput;
-    me: User;
-};
+    journalPages: GetJournalPagesOutput
+    me: User
+}
 export type QueryGetAnalysisByJournalPageArgs = {
-    journalPageId: Scalars['ID']['input'];
-};
+    journalPageId: Scalars['ID']['input']
+}
 export type QueryJournalPageArgs = {
-    id: Scalars['ID']['input'];
-};
+    id: Scalars['ID']['input']
+}
 export type QueryJournalPagesArgs = {
-    filters?: InputMaybe<JournalPageFilters>;
-    pagination?: InputMaybe<JournalPaginationInput>;
-};
+    filters?: InputMaybe<JournalPageFilters>
+    pagination?: InputMaybe<JournalPaginationInput>
+}
 export type RefreshTokenInput = {
     /** The refresh token to use for re-authentication */
-    refreshToken: Scalars['String']['input'];
-};
+    refreshToken: Scalars['String']['input']
+}
 export type SignInInput = {
-    email: Scalars['String']['input'];
-    password: Scalars['String']['input'];
-};
+    email: Scalars['String']['input']
+    password: Scalars['String']['input']
+}
 export type SignUpInput = {
-    email: Scalars['String']['input'];
-    firstname: Scalars['String']['input'];
-    lastname: Scalars['String']['input'];
-    password: Scalars['String']['input'];
-    phone?: InputMaybe<Scalars['String']['input']>;
-};
+    email: Scalars['String']['input']
+    firstname: Scalars['String']['input']
+    lastname: Scalars['String']['input']
+    password: Scalars['String']['input']
+    phone?: InputMaybe<Scalars['String']['input']>
+}
 export type SignUpResponse = {
-    __typename?: 'SignUpResponse';
-    access_token: Scalars['String']['output'];
-    refresh_token: Scalars['String']['output'];
-    user: User;
-};
+    __typename?: 'SignUpResponse'
+    access_token: Scalars['String']['output']
+    refresh_token: Scalars['String']['output']
+    user: User
+}
 export type SongsModel = {
-    __typename?: 'SongsModel';
-    album: Scalars['String']['output'];
-    author: Scalars['String']['output'];
-    coverUrl?: Maybe<Scalars['String']['output']>;
-    minutes: Scalars['Float']['output'];
-    reason: Scalars['String']['output'];
-    spotifyUrl: Scalars['String']['output'];
-    title: Scalars['String']['output'];
-};
+    __typename?: 'SongsModel'
+    album: Scalars['String']['output']
+    author: Scalars['String']['output']
+    coverUrl?: Maybe<Scalars['String']['output']>
+    minutes: Scalars['Float']['output']
+    reason: Scalars['String']['output']
+    spotifyUrl: Scalars['String']['output']
+    title: Scalars['String']['output']
+}
 export type SuggestedSong = {
-    __typename?: 'SuggestedSong';
-    artist: Scalars['String']['output'];
-    reason: Scalars['String']['output'];
-    title: Scalars['String']['output'];
-};
+    __typename?: 'SuggestedSong'
+    artist: Scalars['String']['output']
+    reason: Scalars['String']['output']
+    title: Scalars['String']['output']
+}
 export type UpdateJournalInput = {
-    content?: InputMaybe<Scalars['String']['input']>;
-    date?: InputMaybe<Scalars['DateTime']['input']>;
-    isActive?: InputMaybe<Scalars['Boolean']['input']>;
-    location?: InputMaybe<Scalars['String']['input']>;
-    mood?: InputMaybe<Scalars['Int']['input']>;
-    tagIds?: InputMaybe<Array<Scalars['String']['input']>>;
-    time?: InputMaybe<Scalars['DateTime']['input']>;
-};
+    content?: InputMaybe<Scalars['String']['input']>
+    date?: InputMaybe<Scalars['DateTime']['input']>
+    isActive?: InputMaybe<Scalars['Boolean']['input']>
+    location?: InputMaybe<Scalars['String']['input']>
+    mood?: InputMaybe<Scalars['Int']['input']>
+    tagIds?: InputMaybe<Array<Scalars['String']['input']>>
+    time?: InputMaybe<Scalars['DateTime']['input']>
+}
 export type User = {
-    __typename?: 'User';
-    avatarUrl?: Maybe<Scalars['String']['output']>;
-    createdAt: Scalars['DateTime']['output'];
-    deletedAt?: Maybe<Scalars['DateTime']['output']>;
-    email: Scalars['String']['output'];
-    emailVerified: Scalars['Boolean']['output'];
-    firstname: Scalars['String']['output'];
-    id: Scalars['ID']['output'];
-    lastLoginAt?: Maybe<Scalars['DateTime']['output']>;
-    lastname: Scalars['String']['output'];
-    locale: Scalars['String']['output'];
-    phone?: Maybe<Scalars['String']['output']>;
-    phoneVerified: Scalars['Boolean']['output'];
-    timezone: Scalars['String']['output'];
-    updatedAt: Scalars['DateTime']['output'];
-};
+    __typename?: 'User'
+    avatarUrl?: Maybe<Scalars['String']['output']>
+    createdAt: Scalars['DateTime']['output']
+    deletedAt?: Maybe<Scalars['DateTime']['output']>
+    email: Scalars['String']['output']
+    emailVerified: Scalars['Boolean']['output']
+    firstname: Scalars['String']['output']
+    id: Scalars['ID']['output']
+    lastLoginAt?: Maybe<Scalars['DateTime']['output']>
+    lastname: Scalars['String']['output']
+    locale: Scalars['String']['output']
+    phone?: Maybe<Scalars['String']['output']>
+    phoneVerified: Scalars['Boolean']['output']
+    timezone: Scalars['String']['output']
+    updatedAt: Scalars['DateTime']['output']
+}
 export type AnalysisFieldsFragment = {
-    __typename?: 'AnalysisModel';
-    id: string;
-    journalPageId: string;
-    criticalAnalysis: string;
-    quote?: string | null;
-    quoteAuthor?: string | null;
-    generatedAt: any;
-    modelVersion: string;
+    __typename?: 'AnalysisModel'
+    id: string
+    journalPageId: string
+    criticalAnalysis: string
+    quote?: string | null
+    quoteAuthor?: string | null
+    generatedAt: any
+    modelVersion: string
     suggestedSongs: Array<{
-        __typename?: 'SongsModel';
-        spotifyUrl: string;
-        title: string;
-        album: string;
-        author: string;
-        minutes: number;
-        coverUrl?: string | null;
-    }>;
+        __typename?: 'SongsModel'
+        spotifyUrl: string
+        title: string
+        album: string
+        author: string
+        minutes: number
+        coverUrl?: string | null
+    }>
     metrics?: {
-        __typename?: 'JournalMetrics';
-        wordCount: number;
-        sentenceCount: number;
-        averageSentenceLength: number;
-        paragraphCount: number;
-        textDensity: number;
-        estimatedWritingTime: number;
-        temporalReferencesCount: number;
-        temporalFocus: number;
-        emotionalValence: number;
-        emotionalIntensity: number;
-        emotionalVariability: number;
-        emotionalWordsCount: number;
-        introspectionIndex: number;
-        questionsCount: number;
-        causeEffectCount: number;
-        eventsCount: number;
-        charactersCount: number;
-        firstPersonUsage: number;
-        narrativeSequentiality: number;
-        lexicalRichness: number;
-        keyRepetitionsCount: number;
-        metaphorsCount: number;
-        formality: number;
-    } | null;
-};
+        __typename?: 'JournalMetrics'
+        wordCount: number
+        sentenceCount: number
+        averageSentenceLength: number
+        paragraphCount: number
+        textDensity: number
+        estimatedWritingTime: number
+        temporalReferencesCount: number
+        temporalFocus: number
+        emotionalValence: number
+        emotionalIntensity: number
+        emotionalVariability: number
+        emotionalWordsCount: number
+        introspectionIndex: number
+        questionsCount: number
+        causeEffectCount: number
+        eventsCount: number
+        charactersCount: number
+        firstPersonUsage: number
+        narrativeSequentiality: number
+        lexicalRichness: number
+        keyRepetitionsCount: number
+        metaphorsCount: number
+        formality: number
+    } | null
+}
 export type CreateAnalysisMutationVariables = Exact<{
-    journalId: Scalars['ID']['input'];
-}>;
+    journalId: Scalars['ID']['input']
+}>
 export type CreateAnalysisMutation = {
-    __typename?: 'Mutation';
+    __typename?: 'Mutation'
     createAnalysis: {
-        __typename?: 'AnalysisModel';
-        id: string;
-        journalPageId: string;
-        criticalAnalysis: string;
-        quote?: string | null;
-        quoteAuthor?: string | null;
-        generatedAt: any;
-        modelVersion: string;
+        __typename?: 'AnalysisModel'
+        id: string
+        journalPageId: string
+        criticalAnalysis: string
+        quote?: string | null
+        quoteAuthor?: string | null
+        generatedAt: any
+        modelVersion: string
         suggestedSongs: Array<{
-            __typename?: 'SongsModel';
-            spotifyUrl: string;
-            title: string;
-            album: string;
-            author: string;
-            minutes: number;
-            coverUrl?: string | null;
-        }>;
+            __typename?: 'SongsModel'
+            spotifyUrl: string
+            title: string
+            album: string
+            author: string
+            minutes: number
+            coverUrl?: string | null
+        }>
         metrics?: {
-            __typename?: 'JournalMetrics';
-            wordCount: number;
-            sentenceCount: number;
-            averageSentenceLength: number;
-            paragraphCount: number;
-            textDensity: number;
-            estimatedWritingTime: number;
-            temporalReferencesCount: number;
-            temporalFocus: number;
-            emotionalValence: number;
-            emotionalIntensity: number;
-            emotionalVariability: number;
-            emotionalWordsCount: number;
-            introspectionIndex: number;
-            questionsCount: number;
-            causeEffectCount: number;
-            eventsCount: number;
-            charactersCount: number;
-            firstPersonUsage: number;
-            narrativeSequentiality: number;
-            lexicalRichness: number;
-            keyRepetitionsCount: number;
-            metaphorsCount: number;
-            formality: number;
-        } | null;
-    };
-};
+            __typename?: 'JournalMetrics'
+            wordCount: number
+            sentenceCount: number
+            averageSentenceLength: number
+            paragraphCount: number
+            textDensity: number
+            estimatedWritingTime: number
+            temporalReferencesCount: number
+            temporalFocus: number
+            emotionalValence: number
+            emotionalIntensity: number
+            emotionalVariability: number
+            emotionalWordsCount: number
+            introspectionIndex: number
+            questionsCount: number
+            causeEffectCount: number
+            eventsCount: number
+            charactersCount: number
+            firstPersonUsage: number
+            narrativeSequentiality: number
+            lexicalRichness: number
+            keyRepetitionsCount: number
+            metaphorsCount: number
+            formality: number
+        } | null
+    }
+}
 export type CreateJournalPageMutationVariables = Exact<{
-    input: CreateJournalInput;
-}>;
+    input: CreateJournalInput
+}>
 export type CreateJournalPageMutation = {
-    __typename?: 'Mutation';
+    __typename?: 'Mutation'
     createJournalPage: {
-        __typename?: 'Journal';
-        id: string;
-        date: any;
-        content: string;
-        mood: number;
+        __typename?: 'Journal'
+        id: string
+        date: any
+        content: string
+        mood: number
         tags: Array<{
-            __typename?: 'JournalTag';
-            id: string;
-            name: string;
-            color?: string | null;
-        }>;
-    };
-};
+            __typename?: 'JournalTag'
+            id: string
+            name: string
+            color?: string | null
+        }>
+    }
+}
 export type DeleteAnalysisMutationVariables = Exact<{
-    id: Scalars['ID']['input'];
-}>;
+    id: Scalars['ID']['input']
+}>
 export type DeleteAnalysisMutation = {
-    __typename?: 'Mutation';
+    __typename?: 'Mutation'
     deleteAnalysis: {
-        __typename?: 'AnalysisModel';
-        id: string;
-        journalPageId: string;
-        criticalAnalysis: string;
-        quote?: string | null;
-        quoteAuthor?: string | null;
-        generatedAt: any;
-        modelVersion: string;
+        __typename?: 'AnalysisModel'
+        id: string
+        journalPageId: string
+        criticalAnalysis: string
+        quote?: string | null
+        quoteAuthor?: string | null
+        generatedAt: any
+        modelVersion: string
         suggestedSongs: Array<{
-            __typename?: 'SongsModel';
-            spotifyUrl: string;
-            title: string;
-            album: string;
-            author: string;
-            minutes: number;
-            coverUrl?: string | null;
-        }>;
+            __typename?: 'SongsModel'
+            spotifyUrl: string
+            title: string
+            album: string
+            author: string
+            minutes: number
+            coverUrl?: string | null
+        }>
         metrics?: {
-            __typename?: 'JournalMetrics';
-            wordCount: number;
-            sentenceCount: number;
-            averageSentenceLength: number;
-            paragraphCount: number;
-            textDensity: number;
-            estimatedWritingTime: number;
-            temporalReferencesCount: number;
-            temporalFocus: number;
-            emotionalValence: number;
-            emotionalIntensity: number;
-            emotionalVariability: number;
-            emotionalWordsCount: number;
-            introspectionIndex: number;
-            questionsCount: number;
-            causeEffectCount: number;
-            eventsCount: number;
-            charactersCount: number;
-            firstPersonUsage: number;
-            narrativeSequentiality: number;
-            lexicalRichness: number;
-            keyRepetitionsCount: number;
-            metaphorsCount: number;
-            formality: number;
-        } | null;
-    };
-};
+            __typename?: 'JournalMetrics'
+            wordCount: number
+            sentenceCount: number
+            averageSentenceLength: number
+            paragraphCount: number
+            textDensity: number
+            estimatedWritingTime: number
+            temporalReferencesCount: number
+            temporalFocus: number
+            emotionalValence: number
+            emotionalIntensity: number
+            emotionalVariability: number
+            emotionalWordsCount: number
+            introspectionIndex: number
+            questionsCount: number
+            causeEffectCount: number
+            eventsCount: number
+            charactersCount: number
+            firstPersonUsage: number
+            narrativeSequentiality: number
+            lexicalRichness: number
+            keyRepetitionsCount: number
+            metaphorsCount: number
+            formality: number
+        } | null
+    }
+}
 export type DeleteJournalPageMutationVariables = Exact<{
-    id: Scalars['ID']['input'];
-}>;
+    id: Scalars['ID']['input']
+}>
 export type DeleteJournalPageMutation = {
-    __typename?: 'Mutation';
-    deleteJournalPage: boolean;
-};
+    __typename?: 'Mutation'
+    deleteJournalPage: boolean
+}
 export type RegenerateAnalysisMutationVariables = Exact<{
-    analysisId: Scalars['ID']['input'];
-}>;
+    analysisId: Scalars['ID']['input']
+}>
 export type RegenerateAnalysisMutation = {
-    __typename?: 'Mutation';
+    __typename?: 'Mutation'
     regenerateAnalysis: {
-        __typename?: 'AnalysisModel';
-        id: string;
-        journalPageId: string;
-        criticalAnalysis: string;
-        quote?: string | null;
-        quoteAuthor?: string | null;
-        generatedAt: any;
-        modelVersion: string;
+        __typename?: 'AnalysisModel'
+        id: string
+        journalPageId: string
+        criticalAnalysis: string
+        quote?: string | null
+        quoteAuthor?: string | null
+        generatedAt: any
+        modelVersion: string
         suggestedSongs: Array<{
-            __typename?: 'SongsModel';
-            spotifyUrl: string;
-            title: string;
-            album: string;
-            author: string;
-            minutes: number;
-            coverUrl?: string | null;
-        }>;
+            __typename?: 'SongsModel'
+            spotifyUrl: string
+            title: string
+            album: string
+            author: string
+            minutes: number
+            coverUrl?: string | null
+        }>
         metrics?: {
-            __typename?: 'JournalMetrics';
-            wordCount: number;
-            sentenceCount: number;
-            averageSentenceLength: number;
-            paragraphCount: number;
-            textDensity: number;
-            estimatedWritingTime: number;
-            temporalReferencesCount: number;
-            temporalFocus: number;
-            emotionalValence: number;
-            emotionalIntensity: number;
-            emotionalVariability: number;
-            emotionalWordsCount: number;
-            introspectionIndex: number;
-            questionsCount: number;
-            causeEffectCount: number;
-            eventsCount: number;
-            charactersCount: number;
-            firstPersonUsage: number;
-            narrativeSequentiality: number;
-            lexicalRichness: number;
-            keyRepetitionsCount: number;
-            metaphorsCount: number;
-            formality: number;
-        } | null;
-    };
-};
+            __typename?: 'JournalMetrics'
+            wordCount: number
+            sentenceCount: number
+            averageSentenceLength: number
+            paragraphCount: number
+            textDensity: number
+            estimatedWritingTime: number
+            temporalReferencesCount: number
+            temporalFocus: number
+            emotionalValence: number
+            emotionalIntensity: number
+            emotionalVariability: number
+            emotionalWordsCount: number
+            introspectionIndex: number
+            questionsCount: number
+            causeEffectCount: number
+            eventsCount: number
+            charactersCount: number
+            firstPersonUsage: number
+            narrativeSequentiality: number
+            lexicalRichness: number
+            keyRepetitionsCount: number
+            metaphorsCount: number
+            formality: number
+        } | null
+    }
+}
 export type RestoreJournalPageMutationVariables = Exact<{
-    id: Scalars['ID']['input'];
-}>;
+    id: Scalars['ID']['input']
+}>
 export type RestoreJournalPageMutation = {
-    __typename?: 'Mutation';
+    __typename?: 'Mutation'
     restoreJournalPage: {
-        __typename?: 'Journal';
-        id: string;
-        isActive: boolean;
-    };
-};
+        __typename?: 'Journal'
+        id: string
+        isActive: boolean
+    }
+}
 export type SignInMutationVariables = Exact<{
-    input: SignInInput;
-}>;
+    input: SignInInput
+}>
 export type SignInMutation = {
-    __typename?: 'Mutation';
+    __typename?: 'Mutation'
     signIn: {
-        __typename?: 'AuthResponse';
-        access_token: string;
-    };
-};
+        __typename?: 'AuthResponse'
+        access_token: string
+    }
+}
 export type SignUpMutationVariables = Exact<{
-    input: SignUpInput;
-}>;
+    input: SignUpInput
+}>
 export type SignUpMutation = {
-    __typename?: 'Mutation';
+    __typename?: 'Mutation'
     signUp: {
-        __typename?: 'SignUpResponse';
-        access_token: string;
-        refresh_token: string;
-    };
-};
+        __typename?: 'SignUpResponse'
+        access_token: string
+        refresh_token: string
+    }
+}
 export type SoftDeleteJournalPageMutationVariables = Exact<{
-    id: Scalars['ID']['input'];
-}>;
+    id: Scalars['ID']['input']
+}>
 export type SoftDeleteJournalPageMutation = {
-    __typename?: 'Mutation';
+    __typename?: 'Mutation'
     softDeleteJournalPage: {
-        __typename?: 'Journal';
-        id: string;
-        isActive: boolean;
-    };
-};
+        __typename?: 'Journal'
+        id: string
+        isActive: boolean
+    }
+}
 export type UpdateJournalPageMutationVariables = Exact<{
-    id: Scalars['ID']['input'];
-    input: UpdateJournalInput;
-}>;
+    id: Scalars['ID']['input']
+    input: UpdateJournalInput
+}>
 export type UpdateJournalPageMutation = {
-    __typename?: 'Mutation';
+    __typename?: 'Mutation'
     updateJournalPage: {
-        __typename?: 'Journal';
-        id: string;
-        date: any;
-        content: string;
-        mood: number;
-        lastModified: any;
+        __typename?: 'Journal'
+        id: string
+        date: any
+        content: string
+        mood: number
+        lastModified: any
         tags: Array<{
-            __typename?: 'JournalTag';
-            name: string;
-            color?: string | null;
-        }>;
-    };
-};
+            __typename?: 'JournalTag'
+            name: string
+            color?: string | null
+        }>
+    }
+}
 export type GetAnalysisByJournalPageQueryVariables = Exact<{
-    journalPageId: Scalars['ID']['input'];
-}>;
+    journalPageId: Scalars['ID']['input']
+}>
 export type GetAnalysisByJournalPageQuery = {
-    __typename?: 'Query';
+    __typename?: 'Query'
     getAnalysisByJournalPage?: {
-        __typename?: 'AnalysisModel';
-        id: string;
-        journalPageId: string;
-        criticalAnalysis: string;
-        quote?: string | null;
-        quoteAuthor?: string | null;
-        generatedAt: any;
-        modelVersion: string;
+        __typename?: 'AnalysisModel'
+        id: string
+        journalPageId: string
+        criticalAnalysis: string
+        quote?: string | null
+        quoteAuthor?: string | null
+        generatedAt: any
+        modelVersion: string
         suggestedSongs: Array<{
-            __typename?: 'SongsModel';
-            spotifyUrl: string;
-            title: string;
-            album: string;
-            author: string;
-            minutes: number;
-            coverUrl?: string | null;
-        }>;
+            __typename?: 'SongsModel'
+            spotifyUrl: string
+            title: string
+            album: string
+            author: string
+            minutes: number
+            coverUrl?: string | null
+        }>
         metrics?: {
-            __typename?: 'JournalMetrics';
-            wordCount: number;
-            sentenceCount: number;
-            averageSentenceLength: number;
-            paragraphCount: number;
-            textDensity: number;
-            estimatedWritingTime: number;
-            temporalReferencesCount: number;
-            temporalFocus: number;
-            emotionalValence: number;
-            emotionalIntensity: number;
-            emotionalVariability: number;
-            emotionalWordsCount: number;
-            introspectionIndex: number;
-            questionsCount: number;
-            causeEffectCount: number;
-            eventsCount: number;
-            charactersCount: number;
-            firstPersonUsage: number;
-            narrativeSequentiality: number;
-            lexicalRichness: number;
-            keyRepetitionsCount: number;
-            metaphorsCount: number;
-            formality: number;
-        } | null;
-    } | null;
-};
+            __typename?: 'JournalMetrics'
+            wordCount: number
+            sentenceCount: number
+            averageSentenceLength: number
+            paragraphCount: number
+            textDensity: number
+            estimatedWritingTime: number
+            temporalReferencesCount: number
+            temporalFocus: number
+            emotionalValence: number
+            emotionalIntensity: number
+            emotionalVariability: number
+            emotionalWordsCount: number
+            introspectionIndex: number
+            questionsCount: number
+            causeEffectCount: number
+            eventsCount: number
+            charactersCount: number
+            firstPersonUsage: number
+            narrativeSequentiality: number
+            lexicalRichness: number
+            keyRepetitionsCount: number
+            metaphorsCount: number
+            formality: number
+        } | null
+    } | null
+}
 export type GetJournalPageQueryVariables = Exact<{
-    id: Scalars['ID']['input'];
-}>;
+    id: Scalars['ID']['input']
+}>
 export type GetJournalPageQuery = {
-    __typename?: 'Query';
+    __typename?: 'Query'
     journalPage: {
-        __typename?: 'Journal';
-        id: string;
-        date: any;
-        time?: any | null;
-        location?: string | null;
-        content: string;
-        mood: number;
-        isActive: boolean;
+        __typename?: 'Journal'
+        id: string
+        date: any
+        time?: any | null
+        location?: string | null
+        content: string
+        mood: number
+        isActive: boolean
         tags: Array<{
-            __typename?: 'JournalTag';
-            id: string;
-            name: string;
-            color?: string | null;
-        }>;
+            __typename?: 'JournalTag'
+            id: string
+            name: string
+            color?: string | null
+        }>
         metrics?: {
-            __typename?: 'JournalMetrics';
-            wordCount: number;
-            sentenceCount: number;
-            averageSentenceLength: number;
-            paragraphCount: number;
-            textDensity: number;
-            estimatedWritingTime: number;
-            temporalReferencesCount: number;
-            temporalFocus: number;
-            emotionalValence: number;
-            emotionalIntensity: number;
-            emotionalVariability: number;
-            emotionalWordsCount: number;
-            introspectionIndex: number;
-            questionsCount: number;
-            causeEffectCount: number;
-            eventsCount: number;
-            charactersCount: number;
-            firstPersonUsage: number;
-            narrativeSequentiality: number;
-            lexicalRichness: number;
-            keyRepetitionsCount: number;
-            metaphorsCount: number;
-            formality: number;
-        } | null;
+            __typename?: 'JournalMetrics'
+            wordCount: number
+            sentenceCount: number
+            averageSentenceLength: number
+            paragraphCount: number
+            textDensity: number
+            estimatedWritingTime: number
+            temporalReferencesCount: number
+            temporalFocus: number
+            emotionalValence: number
+            emotionalIntensity: number
+            emotionalVariability: number
+            emotionalWordsCount: number
+            introspectionIndex: number
+            questionsCount: number
+            causeEffectCount: number
+            eventsCount: number
+            charactersCount: number
+            firstPersonUsage: number
+            narrativeSequentiality: number
+            lexicalRichness: number
+            keyRepetitionsCount: number
+            metaphorsCount: number
+            formality: number
+        } | null
         aiAnalysis?: {
-            __typename?: 'JournalAIAnalysis';
-            criticalAnalysis: string;
-            quote?: string | null;
-            quoteAuthor?: string | null;
+            __typename?: 'JournalAIAnalysis'
+            criticalAnalysis: string
+            quote?: string | null
+            quoteAuthor?: string | null
             suggestedSongs: Array<{
-                __typename?: 'SuggestedSong';
-                title: string;
-                artist: string;
-                reason: string;
-            }>;
-        } | null;
-    };
-};
+                __typename?: 'SuggestedSong'
+                title: string
+                artist: string
+                reason: string
+            }>
+        } | null
+    }
+}
 export type GetJournalPagesQueryVariables = Exact<{
-    filters?: InputMaybe<JournalPageFilters>;
-    pagination?: InputMaybe<JournalPaginationInput>;
-}>;
+    filters?: InputMaybe<JournalPageFilters>
+    pagination?: InputMaybe<JournalPaginationInput>
+}>
 export type GetJournalPagesQuery = {
-    __typename?: 'Query';
+    __typename?: 'Query'
     journalPages: {
-        __typename?: 'GetJournalPagesOutput';
-        totalCount: number;
-        hasMore: boolean;
-        currentPage: number;
-        totalPages: number;
+        __typename?: 'GetJournalPagesOutput'
+        totalCount: number
+        hasMore: boolean
+        currentPage: number
+        totalPages: number
         pages: Array<{
-            __typename?: 'Journal';
-            id: string;
-            date: any;
-            location?: string | null;
-            mood: number;
-            content: string;
+            __typename?: 'Journal'
+            id: string
+            date: any
+            location?: string | null
+            mood: number
+            content: string
             tags: Array<{
-                __typename?: 'JournalTag';
-                name: string;
-                color?: string | null;
-            }>;
+                __typename?: 'JournalTag'
+                name: string
+                color?: string | null
+            }>
             metrics?: {
-                __typename?: 'JournalMetrics';
-                wordCount: number;
-                emotionalValence: number;
-            } | null;
-        }>;
-    };
-};
+                __typename?: 'JournalMetrics'
+                wordCount: number
+                emotionalValence: number
+            } | null
+        }>
+    }
+}
 export type GetMeQueryVariables = Exact<{
-    [key: string]: never;
-}>;
+    [key: string]: never
+}>
 export type GetMeQuery = {
-    __typename?: 'Query';
+    __typename?: 'Query'
     me: {
-        __typename?: 'User';
-        id: string;
-        firstname: string;
-        lastname: string;
-        email: string;
-        phone?: string | null;
-        timezone: string;
-        locale: string;
-        emailVerified: boolean;
-        phoneVerified: boolean;
-        lastLoginAt?: any | null;
-        createdAt: any;
-        updatedAt: any;
-        avatarUrl?: string | null;
-    };
-};
-export declare const AnalysisFieldsFragmentDoc: import("graphql").DocumentNode;
-export declare const CreateAnalysisDocument: import("graphql").DocumentNode;
+        __typename?: 'User'
+        id: string
+        firstname: string
+        lastname: string
+        email: string
+        phone?: string | null
+        timezone: string
+        locale: string
+        emailVerified: boolean
+        phoneVerified: boolean
+        lastLoginAt?: any | null
+        createdAt: any
+        updatedAt: any
+        avatarUrl?: string | null
+    }
+}
+export declare const AnalysisFieldsFragmentDoc: import('graphql').DocumentNode
+export declare const CreateAnalysisDocument: import('graphql').DocumentNode
 /**
  * __useCreateAnalysisMutation__
  *
@@ -766,11 +775,30 @@ export declare const CreateAnalysisDocument: import("graphql").DocumentNode;
  *   },
  * });
  */
-export declare function useCreateAnalysisMutation(options?: VueApolloComposable.UseMutationOptions<CreateAnalysisMutation, CreateAnalysisMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<CreateAnalysisMutation, CreateAnalysisMutationVariables>>): VueApolloComposable.UseMutationReturn<CreateAnalysisMutation, Exact<{
-    journalId: Scalars["ID"]["input"];
-}>>;
-export type CreateAnalysisMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<CreateAnalysisMutation, CreateAnalysisMutationVariables>;
-export declare const CreateJournalPageDocument: import("graphql").DocumentNode;
+export declare function useCreateAnalysisMutation(
+    options?:
+        | VueApolloComposable.UseMutationOptions<
+              CreateAnalysisMutation,
+              CreateAnalysisMutationVariables
+          >
+        | ReactiveFunction<
+              VueApolloComposable.UseMutationOptions<
+                  CreateAnalysisMutation,
+                  CreateAnalysisMutationVariables
+              >
+          >,
+): VueApolloComposable.UseMutationReturn<
+    CreateAnalysisMutation,
+    Exact<{
+        journalId: Scalars['ID']['input']
+    }>
+>
+export type CreateAnalysisMutationCompositionFunctionResult =
+    VueApolloComposable.UseMutationReturn<
+        CreateAnalysisMutation,
+        CreateAnalysisMutationVariables
+    >
+export declare const CreateJournalPageDocument: import('graphql').DocumentNode
 /**
  * __useCreateJournalPageMutation__
  *
@@ -788,11 +816,30 @@ export declare const CreateJournalPageDocument: import("graphql").DocumentNode;
  *   },
  * });
  */
-export declare function useCreateJournalPageMutation(options?: VueApolloComposable.UseMutationOptions<CreateJournalPageMutation, CreateJournalPageMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<CreateJournalPageMutation, CreateJournalPageMutationVariables>>): VueApolloComposable.UseMutationReturn<CreateJournalPageMutation, Exact<{
-    input: CreateJournalInput;
-}>>;
-export type CreateJournalPageMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<CreateJournalPageMutation, CreateJournalPageMutationVariables>;
-export declare const DeleteAnalysisDocument: import("graphql").DocumentNode;
+export declare function useCreateJournalPageMutation(
+    options?:
+        | VueApolloComposable.UseMutationOptions<
+              CreateJournalPageMutation,
+              CreateJournalPageMutationVariables
+          >
+        | ReactiveFunction<
+              VueApolloComposable.UseMutationOptions<
+                  CreateJournalPageMutation,
+                  CreateJournalPageMutationVariables
+              >
+          >,
+): VueApolloComposable.UseMutationReturn<
+    CreateJournalPageMutation,
+    Exact<{
+        input: CreateJournalInput
+    }>
+>
+export type CreateJournalPageMutationCompositionFunctionResult =
+    VueApolloComposable.UseMutationReturn<
+        CreateJournalPageMutation,
+        CreateJournalPageMutationVariables
+    >
+export declare const DeleteAnalysisDocument: import('graphql').DocumentNode
 /**
  * __useDeleteAnalysisMutation__
  *
@@ -810,11 +857,30 @@ export declare const DeleteAnalysisDocument: import("graphql").DocumentNode;
  *   },
  * });
  */
-export declare function useDeleteAnalysisMutation(options?: VueApolloComposable.UseMutationOptions<DeleteAnalysisMutation, DeleteAnalysisMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<DeleteAnalysisMutation, DeleteAnalysisMutationVariables>>): VueApolloComposable.UseMutationReturn<DeleteAnalysisMutation, Exact<{
-    id: Scalars["ID"]["input"];
-}>>;
-export type DeleteAnalysisMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<DeleteAnalysisMutation, DeleteAnalysisMutationVariables>;
-export declare const DeleteJournalPageDocument: import("graphql").DocumentNode;
+export declare function useDeleteAnalysisMutation(
+    options?:
+        | VueApolloComposable.UseMutationOptions<
+              DeleteAnalysisMutation,
+              DeleteAnalysisMutationVariables
+          >
+        | ReactiveFunction<
+              VueApolloComposable.UseMutationOptions<
+                  DeleteAnalysisMutation,
+                  DeleteAnalysisMutationVariables
+              >
+          >,
+): VueApolloComposable.UseMutationReturn<
+    DeleteAnalysisMutation,
+    Exact<{
+        id: Scalars['ID']['input']
+    }>
+>
+export type DeleteAnalysisMutationCompositionFunctionResult =
+    VueApolloComposable.UseMutationReturn<
+        DeleteAnalysisMutation,
+        DeleteAnalysisMutationVariables
+    >
+export declare const DeleteJournalPageDocument: import('graphql').DocumentNode
 /**
  * __useDeleteJournalPageMutation__
  *
@@ -832,11 +898,30 @@ export declare const DeleteJournalPageDocument: import("graphql").DocumentNode;
  *   },
  * });
  */
-export declare function useDeleteJournalPageMutation(options?: VueApolloComposable.UseMutationOptions<DeleteJournalPageMutation, DeleteJournalPageMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<DeleteJournalPageMutation, DeleteJournalPageMutationVariables>>): VueApolloComposable.UseMutationReturn<DeleteJournalPageMutation, Exact<{
-    id: Scalars["ID"]["input"];
-}>>;
-export type DeleteJournalPageMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<DeleteJournalPageMutation, DeleteJournalPageMutationVariables>;
-export declare const RegenerateAnalysisDocument: import("graphql").DocumentNode;
+export declare function useDeleteJournalPageMutation(
+    options?:
+        | VueApolloComposable.UseMutationOptions<
+              DeleteJournalPageMutation,
+              DeleteJournalPageMutationVariables
+          >
+        | ReactiveFunction<
+              VueApolloComposable.UseMutationOptions<
+                  DeleteJournalPageMutation,
+                  DeleteJournalPageMutationVariables
+              >
+          >,
+): VueApolloComposable.UseMutationReturn<
+    DeleteJournalPageMutation,
+    Exact<{
+        id: Scalars['ID']['input']
+    }>
+>
+export type DeleteJournalPageMutationCompositionFunctionResult =
+    VueApolloComposable.UseMutationReturn<
+        DeleteJournalPageMutation,
+        DeleteJournalPageMutationVariables
+    >
+export declare const RegenerateAnalysisDocument: import('graphql').DocumentNode
 /**
  * __useRegenerateAnalysisMutation__
  *
@@ -854,11 +939,30 @@ export declare const RegenerateAnalysisDocument: import("graphql").DocumentNode;
  *   },
  * });
  */
-export declare function useRegenerateAnalysisMutation(options?: VueApolloComposable.UseMutationOptions<RegenerateAnalysisMutation, RegenerateAnalysisMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<RegenerateAnalysisMutation, RegenerateAnalysisMutationVariables>>): VueApolloComposable.UseMutationReturn<RegenerateAnalysisMutation, Exact<{
-    analysisId: Scalars["ID"]["input"];
-}>>;
-export type RegenerateAnalysisMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<RegenerateAnalysisMutation, RegenerateAnalysisMutationVariables>;
-export declare const RestoreJournalPageDocument: import("graphql").DocumentNode;
+export declare function useRegenerateAnalysisMutation(
+    options?:
+        | VueApolloComposable.UseMutationOptions<
+              RegenerateAnalysisMutation,
+              RegenerateAnalysisMutationVariables
+          >
+        | ReactiveFunction<
+              VueApolloComposable.UseMutationOptions<
+                  RegenerateAnalysisMutation,
+                  RegenerateAnalysisMutationVariables
+              >
+          >,
+): VueApolloComposable.UseMutationReturn<
+    RegenerateAnalysisMutation,
+    Exact<{
+        analysisId: Scalars['ID']['input']
+    }>
+>
+export type RegenerateAnalysisMutationCompositionFunctionResult =
+    VueApolloComposable.UseMutationReturn<
+        RegenerateAnalysisMutation,
+        RegenerateAnalysisMutationVariables
+    >
+export declare const RestoreJournalPageDocument: import('graphql').DocumentNode
 /**
  * __useRestoreJournalPageMutation__
  *
@@ -876,11 +980,30 @@ export declare const RestoreJournalPageDocument: import("graphql").DocumentNode;
  *   },
  * });
  */
-export declare function useRestoreJournalPageMutation(options?: VueApolloComposable.UseMutationOptions<RestoreJournalPageMutation, RestoreJournalPageMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<RestoreJournalPageMutation, RestoreJournalPageMutationVariables>>): VueApolloComposable.UseMutationReturn<RestoreJournalPageMutation, Exact<{
-    id: Scalars["ID"]["input"];
-}>>;
-export type RestoreJournalPageMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<RestoreJournalPageMutation, RestoreJournalPageMutationVariables>;
-export declare const SignInDocument: import("graphql").DocumentNode;
+export declare function useRestoreJournalPageMutation(
+    options?:
+        | VueApolloComposable.UseMutationOptions<
+              RestoreJournalPageMutation,
+              RestoreJournalPageMutationVariables
+          >
+        | ReactiveFunction<
+              VueApolloComposable.UseMutationOptions<
+                  RestoreJournalPageMutation,
+                  RestoreJournalPageMutationVariables
+              >
+          >,
+): VueApolloComposable.UseMutationReturn<
+    RestoreJournalPageMutation,
+    Exact<{
+        id: Scalars['ID']['input']
+    }>
+>
+export type RestoreJournalPageMutationCompositionFunctionResult =
+    VueApolloComposable.UseMutationReturn<
+        RestoreJournalPageMutation,
+        RestoreJournalPageMutationVariables
+    >
+export declare const SignInDocument: import('graphql').DocumentNode
 /**
  * __useSignInMutation__
  *
@@ -898,11 +1021,30 @@ export declare const SignInDocument: import("graphql").DocumentNode;
  *   },
  * });
  */
-export declare function useSignInMutation(options?: VueApolloComposable.UseMutationOptions<SignInMutation, SignInMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<SignInMutation, SignInMutationVariables>>): VueApolloComposable.UseMutationReturn<SignInMutation, Exact<{
-    input: SignInInput;
-}>>;
-export type SignInMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<SignInMutation, SignInMutationVariables>;
-export declare const SignUpDocument: import("graphql").DocumentNode;
+export declare function useSignInMutation(
+    options?:
+        | VueApolloComposable.UseMutationOptions<
+              SignInMutation,
+              SignInMutationVariables
+          >
+        | ReactiveFunction<
+              VueApolloComposable.UseMutationOptions<
+                  SignInMutation,
+                  SignInMutationVariables
+              >
+          >,
+): VueApolloComposable.UseMutationReturn<
+    SignInMutation,
+    Exact<{
+        input: SignInInput
+    }>
+>
+export type SignInMutationCompositionFunctionResult =
+    VueApolloComposable.UseMutationReturn<
+        SignInMutation,
+        SignInMutationVariables
+    >
+export declare const SignUpDocument: import('graphql').DocumentNode
 /**
  * __useSignUpMutation__
  *
@@ -920,11 +1062,30 @@ export declare const SignUpDocument: import("graphql").DocumentNode;
  *   },
  * });
  */
-export declare function useSignUpMutation(options?: VueApolloComposable.UseMutationOptions<SignUpMutation, SignUpMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<SignUpMutation, SignUpMutationVariables>>): VueApolloComposable.UseMutationReturn<SignUpMutation, Exact<{
-    input: SignUpInput;
-}>>;
-export type SignUpMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<SignUpMutation, SignUpMutationVariables>;
-export declare const SoftDeleteJournalPageDocument: import("graphql").DocumentNode;
+export declare function useSignUpMutation(
+    options?:
+        | VueApolloComposable.UseMutationOptions<
+              SignUpMutation,
+              SignUpMutationVariables
+          >
+        | ReactiveFunction<
+              VueApolloComposable.UseMutationOptions<
+                  SignUpMutation,
+                  SignUpMutationVariables
+              >
+          >,
+): VueApolloComposable.UseMutationReturn<
+    SignUpMutation,
+    Exact<{
+        input: SignUpInput
+    }>
+>
+export type SignUpMutationCompositionFunctionResult =
+    VueApolloComposable.UseMutationReturn<
+        SignUpMutation,
+        SignUpMutationVariables
+    >
+export declare const SoftDeleteJournalPageDocument: import('graphql').DocumentNode
 /**
  * __useSoftDeleteJournalPageMutation__
  *
@@ -942,11 +1103,30 @@ export declare const SoftDeleteJournalPageDocument: import("graphql").DocumentNo
  *   },
  * });
  */
-export declare function useSoftDeleteJournalPageMutation(options?: VueApolloComposable.UseMutationOptions<SoftDeleteJournalPageMutation, SoftDeleteJournalPageMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<SoftDeleteJournalPageMutation, SoftDeleteJournalPageMutationVariables>>): VueApolloComposable.UseMutationReturn<SoftDeleteJournalPageMutation, Exact<{
-    id: Scalars["ID"]["input"];
-}>>;
-export type SoftDeleteJournalPageMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<SoftDeleteJournalPageMutation, SoftDeleteJournalPageMutationVariables>;
-export declare const UpdateJournalPageDocument: import("graphql").DocumentNode;
+export declare function useSoftDeleteJournalPageMutation(
+    options?:
+        | VueApolloComposable.UseMutationOptions<
+              SoftDeleteJournalPageMutation,
+              SoftDeleteJournalPageMutationVariables
+          >
+        | ReactiveFunction<
+              VueApolloComposable.UseMutationOptions<
+                  SoftDeleteJournalPageMutation,
+                  SoftDeleteJournalPageMutationVariables
+              >
+          >,
+): VueApolloComposable.UseMutationReturn<
+    SoftDeleteJournalPageMutation,
+    Exact<{
+        id: Scalars['ID']['input']
+    }>
+>
+export type SoftDeleteJournalPageMutationCompositionFunctionResult =
+    VueApolloComposable.UseMutationReturn<
+        SoftDeleteJournalPageMutation,
+        SoftDeleteJournalPageMutationVariables
+    >
+export declare const UpdateJournalPageDocument: import('graphql').DocumentNode
 /**
  * __useUpdateJournalPageMutation__
  *
@@ -965,12 +1145,31 @@ export declare const UpdateJournalPageDocument: import("graphql").DocumentNode;
  *   },
  * });
  */
-export declare function useUpdateJournalPageMutation(options?: VueApolloComposable.UseMutationOptions<UpdateJournalPageMutation, UpdateJournalPageMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<UpdateJournalPageMutation, UpdateJournalPageMutationVariables>>): VueApolloComposable.UseMutationReturn<UpdateJournalPageMutation, Exact<{
-    id: Scalars["ID"]["input"];
-    input: UpdateJournalInput;
-}>>;
-export type UpdateJournalPageMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<UpdateJournalPageMutation, UpdateJournalPageMutationVariables>;
-export declare const GetAnalysisByJournalPageDocument: import("graphql").DocumentNode;
+export declare function useUpdateJournalPageMutation(
+    options?:
+        | VueApolloComposable.UseMutationOptions<
+              UpdateJournalPageMutation,
+              UpdateJournalPageMutationVariables
+          >
+        | ReactiveFunction<
+              VueApolloComposable.UseMutationOptions<
+                  UpdateJournalPageMutation,
+                  UpdateJournalPageMutationVariables
+              >
+          >,
+): VueApolloComposable.UseMutationReturn<
+    UpdateJournalPageMutation,
+    Exact<{
+        id: Scalars['ID']['input']
+        input: UpdateJournalInput
+    }>
+>
+export type UpdateJournalPageMutationCompositionFunctionResult =
+    VueApolloComposable.UseMutationReturn<
+        UpdateJournalPageMutation,
+        UpdateJournalPageMutationVariables
+    >
+export declare const GetAnalysisByJournalPageDocument: import('graphql').DocumentNode
 /**
  * __useGetAnalysisByJournalPageQuery__
  *
@@ -986,14 +1185,68 @@ export declare const GetAnalysisByJournalPageDocument: import("graphql").Documen
  *   journalPageId: // value for 'journalPageId'
  * });
  */
-export declare function useGetAnalysisByJournalPageQuery(variables: GetAnalysisByJournalPageQueryVariables | VueCompositionApi.Ref<GetAnalysisByJournalPageQueryVariables> | ReactiveFunction<GetAnalysisByJournalPageQueryVariables>, options?: VueApolloComposable.UseQueryOptions<GetAnalysisByJournalPageQuery, GetAnalysisByJournalPageQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<GetAnalysisByJournalPageQuery, GetAnalysisByJournalPageQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<GetAnalysisByJournalPageQuery, GetAnalysisByJournalPageQueryVariables>>): VueApolloComposable.UseQueryReturn<GetAnalysisByJournalPageQuery, Exact<{
-    journalPageId: Scalars["ID"]["input"];
-}>>;
-export declare function useGetAnalysisByJournalPageLazyQuery(variables?: GetAnalysisByJournalPageQueryVariables | VueCompositionApi.Ref<GetAnalysisByJournalPageQueryVariables> | ReactiveFunction<GetAnalysisByJournalPageQueryVariables>, options?: VueApolloComposable.UseQueryOptions<GetAnalysisByJournalPageQuery, GetAnalysisByJournalPageQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<GetAnalysisByJournalPageQuery, GetAnalysisByJournalPageQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<GetAnalysisByJournalPageQuery, GetAnalysisByJournalPageQueryVariables>>): import("@vue/apollo-composable/dist/useLazyQuery.js").UseLazyQueryReturn<GetAnalysisByJournalPageQuery, Exact<{
-    journalPageId: Scalars["ID"]["input"];
-}>>;
-export type GetAnalysisByJournalPageQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<GetAnalysisByJournalPageQuery, GetAnalysisByJournalPageQueryVariables>;
-export declare const GetJournalPageDocument: import("graphql").DocumentNode;
+export declare function useGetAnalysisByJournalPageQuery(
+    variables:
+        | GetAnalysisByJournalPageQueryVariables
+        | VueCompositionApi.Ref<GetAnalysisByJournalPageQueryVariables>
+        | ReactiveFunction<GetAnalysisByJournalPageQueryVariables>,
+    options?:
+        | VueApolloComposable.UseQueryOptions<
+              GetAnalysisByJournalPageQuery,
+              GetAnalysisByJournalPageQueryVariables
+          >
+        | VueCompositionApi.Ref<
+              VueApolloComposable.UseQueryOptions<
+                  GetAnalysisByJournalPageQuery,
+                  GetAnalysisByJournalPageQueryVariables
+              >
+          >
+        | ReactiveFunction<
+              VueApolloComposable.UseQueryOptions<
+                  GetAnalysisByJournalPageQuery,
+                  GetAnalysisByJournalPageQueryVariables
+              >
+          >,
+): VueApolloComposable.UseQueryReturn<
+    GetAnalysisByJournalPageQuery,
+    Exact<{
+        journalPageId: Scalars['ID']['input']
+    }>
+>
+export declare function useGetAnalysisByJournalPageLazyQuery(
+    variables?:
+        | GetAnalysisByJournalPageQueryVariables
+        | VueCompositionApi.Ref<GetAnalysisByJournalPageQueryVariables>
+        | ReactiveFunction<GetAnalysisByJournalPageQueryVariables>,
+    options?:
+        | VueApolloComposable.UseQueryOptions<
+              GetAnalysisByJournalPageQuery,
+              GetAnalysisByJournalPageQueryVariables
+          >
+        | VueCompositionApi.Ref<
+              VueApolloComposable.UseQueryOptions<
+                  GetAnalysisByJournalPageQuery,
+                  GetAnalysisByJournalPageQueryVariables
+              >
+          >
+        | ReactiveFunction<
+              VueApolloComposable.UseQueryOptions<
+                  GetAnalysisByJournalPageQuery,
+                  GetAnalysisByJournalPageQueryVariables
+              >
+          >,
+): import('@vue/apollo-composable/dist/useLazyQuery.js').UseLazyQueryReturn<
+    GetAnalysisByJournalPageQuery,
+    Exact<{
+        journalPageId: Scalars['ID']['input']
+    }>
+>
+export type GetAnalysisByJournalPageQueryCompositionFunctionResult =
+    VueApolloComposable.UseQueryReturn<
+        GetAnalysisByJournalPageQuery,
+        GetAnalysisByJournalPageQueryVariables
+    >
+export declare const GetJournalPageDocument: import('graphql').DocumentNode
 /**
  * __useGetJournalPageQuery__
  *
@@ -1009,14 +1262,68 @@ export declare const GetJournalPageDocument: import("graphql").DocumentNode;
  *   id: // value for 'id'
  * });
  */
-export declare function useGetJournalPageQuery(variables: GetJournalPageQueryVariables | VueCompositionApi.Ref<GetJournalPageQueryVariables> | ReactiveFunction<GetJournalPageQueryVariables>, options?: VueApolloComposable.UseQueryOptions<GetJournalPageQuery, GetJournalPageQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<GetJournalPageQuery, GetJournalPageQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<GetJournalPageQuery, GetJournalPageQueryVariables>>): VueApolloComposable.UseQueryReturn<GetJournalPageQuery, Exact<{
-    id: Scalars["ID"]["input"];
-}>>;
-export declare function useGetJournalPageLazyQuery(variables?: GetJournalPageQueryVariables | VueCompositionApi.Ref<GetJournalPageQueryVariables> | ReactiveFunction<GetJournalPageQueryVariables>, options?: VueApolloComposable.UseQueryOptions<GetJournalPageQuery, GetJournalPageQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<GetJournalPageQuery, GetJournalPageQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<GetJournalPageQuery, GetJournalPageQueryVariables>>): import("@vue/apollo-composable/dist/useLazyQuery.js").UseLazyQueryReturn<GetJournalPageQuery, Exact<{
-    id: Scalars["ID"]["input"];
-}>>;
-export type GetJournalPageQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<GetJournalPageQuery, GetJournalPageQueryVariables>;
-export declare const GetJournalPagesDocument: import("graphql").DocumentNode;
+export declare function useGetJournalPageQuery(
+    variables:
+        | GetJournalPageQueryVariables
+        | VueCompositionApi.Ref<GetJournalPageQueryVariables>
+        | ReactiveFunction<GetJournalPageQueryVariables>,
+    options?:
+        | VueApolloComposable.UseQueryOptions<
+              GetJournalPageQuery,
+              GetJournalPageQueryVariables
+          >
+        | VueCompositionApi.Ref<
+              VueApolloComposable.UseQueryOptions<
+                  GetJournalPageQuery,
+                  GetJournalPageQueryVariables
+              >
+          >
+        | ReactiveFunction<
+              VueApolloComposable.UseQueryOptions<
+                  GetJournalPageQuery,
+                  GetJournalPageQueryVariables
+              >
+          >,
+): VueApolloComposable.UseQueryReturn<
+    GetJournalPageQuery,
+    Exact<{
+        id: Scalars['ID']['input']
+    }>
+>
+export declare function useGetJournalPageLazyQuery(
+    variables?:
+        | GetJournalPageQueryVariables
+        | VueCompositionApi.Ref<GetJournalPageQueryVariables>
+        | ReactiveFunction<GetJournalPageQueryVariables>,
+    options?:
+        | VueApolloComposable.UseQueryOptions<
+              GetJournalPageQuery,
+              GetJournalPageQueryVariables
+          >
+        | VueCompositionApi.Ref<
+              VueApolloComposable.UseQueryOptions<
+                  GetJournalPageQuery,
+                  GetJournalPageQueryVariables
+              >
+          >
+        | ReactiveFunction<
+              VueApolloComposable.UseQueryOptions<
+                  GetJournalPageQuery,
+                  GetJournalPageQueryVariables
+              >
+          >,
+): import('@vue/apollo-composable/dist/useLazyQuery.js').UseLazyQueryReturn<
+    GetJournalPageQuery,
+    Exact<{
+        id: Scalars['ID']['input']
+    }>
+>
+export type GetJournalPageQueryCompositionFunctionResult =
+    VueApolloComposable.UseQueryReturn<
+        GetJournalPageQuery,
+        GetJournalPageQueryVariables
+    >
+export declare const GetJournalPagesDocument: import('graphql').DocumentNode
 /**
  * __useGetJournalPagesQuery__
  *
@@ -1033,16 +1340,70 @@ export declare const GetJournalPagesDocument: import("graphql").DocumentNode;
  *   pagination: // value for 'pagination'
  * });
  */
-export declare function useGetJournalPagesQuery(variables?: GetJournalPagesQueryVariables | VueCompositionApi.Ref<GetJournalPagesQueryVariables> | ReactiveFunction<GetJournalPagesQueryVariables>, options?: VueApolloComposable.UseQueryOptions<GetJournalPagesQuery, GetJournalPagesQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<GetJournalPagesQuery, GetJournalPagesQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<GetJournalPagesQuery, GetJournalPagesQueryVariables>>): VueApolloComposable.UseQueryReturn<GetJournalPagesQuery, Exact<{
-    filters?: InputMaybe<JournalPageFilters>;
-    pagination?: InputMaybe<JournalPaginationInput>;
-}>>;
-export declare function useGetJournalPagesLazyQuery(variables?: GetJournalPagesQueryVariables | VueCompositionApi.Ref<GetJournalPagesQueryVariables> | ReactiveFunction<GetJournalPagesQueryVariables>, options?: VueApolloComposable.UseQueryOptions<GetJournalPagesQuery, GetJournalPagesQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<GetJournalPagesQuery, GetJournalPagesQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<GetJournalPagesQuery, GetJournalPagesQueryVariables>>): import("@vue/apollo-composable/dist/useLazyQuery.js").UseLazyQueryReturn<GetJournalPagesQuery, Exact<{
-    filters?: InputMaybe<JournalPageFilters>;
-    pagination?: InputMaybe<JournalPaginationInput>;
-}>>;
-export type GetJournalPagesQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<GetJournalPagesQuery, GetJournalPagesQueryVariables>;
-export declare const GetMeDocument: import("graphql").DocumentNode;
+export declare function useGetJournalPagesQuery(
+    variables?:
+        | GetJournalPagesQueryVariables
+        | VueCompositionApi.Ref<GetJournalPagesQueryVariables>
+        | ReactiveFunction<GetJournalPagesQueryVariables>,
+    options?:
+        | VueApolloComposable.UseQueryOptions<
+              GetJournalPagesQuery,
+              GetJournalPagesQueryVariables
+          >
+        | VueCompositionApi.Ref<
+              VueApolloComposable.UseQueryOptions<
+                  GetJournalPagesQuery,
+                  GetJournalPagesQueryVariables
+              >
+          >
+        | ReactiveFunction<
+              VueApolloComposable.UseQueryOptions<
+                  GetJournalPagesQuery,
+                  GetJournalPagesQueryVariables
+              >
+          >,
+): VueApolloComposable.UseQueryReturn<
+    GetJournalPagesQuery,
+    Exact<{
+        filters?: InputMaybe<JournalPageFilters>
+        pagination?: InputMaybe<JournalPaginationInput>
+    }>
+>
+export declare function useGetJournalPagesLazyQuery(
+    variables?:
+        | GetJournalPagesQueryVariables
+        | VueCompositionApi.Ref<GetJournalPagesQueryVariables>
+        | ReactiveFunction<GetJournalPagesQueryVariables>,
+    options?:
+        | VueApolloComposable.UseQueryOptions<
+              GetJournalPagesQuery,
+              GetJournalPagesQueryVariables
+          >
+        | VueCompositionApi.Ref<
+              VueApolloComposable.UseQueryOptions<
+                  GetJournalPagesQuery,
+                  GetJournalPagesQueryVariables
+              >
+          >
+        | ReactiveFunction<
+              VueApolloComposable.UseQueryOptions<
+                  GetJournalPagesQuery,
+                  GetJournalPagesQueryVariables
+              >
+          >,
+): import('@vue/apollo-composable/dist/useLazyQuery.js').UseLazyQueryReturn<
+    GetJournalPagesQuery,
+    Exact<{
+        filters?: InputMaybe<JournalPageFilters>
+        pagination?: InputMaybe<JournalPaginationInput>
+    }>
+>
+export type GetJournalPagesQueryCompositionFunctionResult =
+    VueApolloComposable.UseQueryReturn<
+        GetJournalPagesQuery,
+        GetJournalPagesQueryVariables
+    >
+export declare const GetMeDocument: import('graphql').DocumentNode
 /**
  * __useGetMeQuery__
  *
@@ -1055,11 +1416,48 @@ export declare const GetMeDocument: import("graphql").DocumentNode;
  * @example
  * const { result, loading, error } = useGetMeQuery();
  */
-export declare function useGetMeQuery(options?: VueApolloComposable.UseQueryOptions<GetMeQuery, GetMeQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<GetMeQuery, GetMeQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<GetMeQuery, GetMeQueryVariables>>): VueApolloComposable.UseQueryReturn<GetMeQuery, Exact<{
-    [key: string]: never;
-}>>;
-export declare function useGetMeLazyQuery(options?: VueApolloComposable.UseQueryOptions<GetMeQuery, GetMeQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<GetMeQuery, GetMeQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<GetMeQuery, GetMeQueryVariables>>): import("@vue/apollo-composable/dist/useLazyQuery.js").UseLazyQueryReturn<GetMeQuery, Exact<{
-    [key: string]: never;
-}>>;
-export type GetMeQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<GetMeQuery, GetMeQueryVariables>;
+export declare function useGetMeQuery(
+    options?:
+        | VueApolloComposable.UseQueryOptions<GetMeQuery, GetMeQueryVariables>
+        | VueCompositionApi.Ref<
+              VueApolloComposable.UseQueryOptions<
+                  GetMeQuery,
+                  GetMeQueryVariables
+              >
+          >
+        | ReactiveFunction<
+              VueApolloComposable.UseQueryOptions<
+                  GetMeQuery,
+                  GetMeQueryVariables
+              >
+          >,
+): VueApolloComposable.UseQueryReturn<
+    GetMeQuery,
+    Exact<{
+        [key: string]: never
+    }>
+>
+export declare function useGetMeLazyQuery(
+    options?:
+        | VueApolloComposable.UseQueryOptions<GetMeQuery, GetMeQueryVariables>
+        | VueCompositionApi.Ref<
+              VueApolloComposable.UseQueryOptions<
+                  GetMeQuery,
+                  GetMeQueryVariables
+              >
+          >
+        | ReactiveFunction<
+              VueApolloComposable.UseQueryOptions<
+                  GetMeQuery,
+                  GetMeQueryVariables
+              >
+          >,
+): import('@vue/apollo-composable/dist/useLazyQuery.js').UseLazyQueryReturn<
+    GetMeQuery,
+    Exact<{
+        [key: string]: never
+    }>
+>
+export type GetMeQueryCompositionFunctionResult =
+    VueApolloComposable.UseQueryReturn<GetMeQuery, GetMeQueryVariables>
 //# sourceMappingURL=graphql.d.ts.map

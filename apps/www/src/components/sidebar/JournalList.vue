@@ -129,12 +129,13 @@ const handleSelect = (id: string) => {
 }
 
 .loc-text {
-    font-size: 0.75rem;
+    font-size: 0.85rem;
     opacity: 0.4;
     font-style: italic;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 100px;
+    color: #000;
 }
 </style>

@@ -48,12 +48,10 @@ describe('Journals (e2e)', () => {
                     findMany: jest.fn().mockResolvedValue([mockJournal]),
                     findUnique: jest.fn().mockResolvedValue(mockJournal),
                     create: jest.fn().mockResolvedValue(mockJournal),
-                    update: jest
-                        .fn()
-                        .mockResolvedValue({
-                            ...mockJournal,
-                            content: 'Updated',
-                        }),
+                    update: jest.fn().mockResolvedValue({
+                        ...mockJournal,
+                        content: 'Updated',
+                    }),
                     delete: jest.fn().mockResolvedValue(true),
                     count: jest.fn().mockResolvedValue(1),
                 },

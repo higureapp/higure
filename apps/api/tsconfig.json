@@ -2,7 +2,7 @@
     "extends": "@higure/typescript-config/nestjs.json",
     "compilerOptions": {
         "outDir": "./dist",
-        "rootDir": ".",
+        "rootDir": "./src",
         "paths": {
             "@/*": ["./src/*"]
         }

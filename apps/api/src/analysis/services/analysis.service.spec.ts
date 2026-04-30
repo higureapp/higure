@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing'
 import { AnalysisService } from './analysis.service'
-import { JournalsService } from '@/src/journals/services/journals.service'
+import { JournalsService } from '@/journals/services/journals.service'
 import { AnalysisRepository } from '../analysis.repository'
 import { AnalysisMapper } from '../mappers/analysis.mapper'
 import { AiAnalysis } from '@higure/ai'
