@@ -1,4 +1,4 @@
-import { generateObject } from 'ai'
+import { generateText, Output } from 'ai'
 import { z } from 'zod'
 import { google } from '@ai-sdk/google'
 
@@ -134,9 +134,11 @@ export class AiAnalysis {
     public static async generateAnalysis(
         input: AnalysisInput,
     ): Promise<AiAnalysisResult> {
-        const { object } = await generateObject({
+        const { output } = await generateText({
             model: google('gemini-2.5-flash-lite'),
-            schema: AiAnalysisResultSchema,
+            output: Output.object({
+                schema: AiAnalysisResultSchema
+            }),
             prompt: `
             Analyze the following journal entry and provide a comprehensive psychological, stylistic, and emotional analysis.
             
@@ -154,9 +156,9 @@ export class AiAnalysis {
             5. Use the same language of the journal entry.
             
             Ensure the analysis is insightful and feels like it was written by a professional psychologist with a poetic touch.
-            `.trim(),
+            `.trim()
         })
 
-        return object
+        return output;
     }
 }

@@ -1,4 +1,4 @@
-import { generateObject } from 'ai'
+import { generateText, Output } from 'ai'
 import { z } from 'zod'
 import { google } from '@ai-sdk/google'
 
@@ -57,16 +57,18 @@ Reference date: ${this.referenceDate}
     ): Promise<MusicSongSuggestion[]> {
         const quantity = opts.quantity ?? 1
 
-        const { object } = await generateObject({
+        const { output } = await generateText({
             model: google('gemini-2.5-flash-lite'),
-            schema: z.object({
-                suggestions: z
-                    .array(MusicSongSuggestionSchema)
-                    .length(quantity),
+            output: Output.object({
+                schema: z.object({
+                    suggestions: z
+                        .array(MusicSongSuggestionSchema)
+                        .length(quantity),
+                }),
             }),
             prompt: this.buildPrompt(quantity),
         })
 
-        return object.suggestions
+        return output.suggestions
     }
 }
