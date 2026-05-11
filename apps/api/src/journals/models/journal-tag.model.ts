@@ -9,5 +9,5 @@ export class JournalTag {
     name: string
 
     @Field({ nullable: true })
-    color?: string
+    color?: string | null
 }

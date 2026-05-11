@@ -20,9 +20,9 @@ export class User {
     @Expose()
     email: string
 
-    @Field({ nullable: true })
+    @Field((type) => String, { nullable: true })
     @Sensitive()
-    phone?: string
+    phone?: string | null
 
     @Field()
     @Expose()
@@ -42,7 +42,7 @@ export class User {
 
     @Field({ nullable: true })
     @Expose()
-    lastLoginAt?: Date
+    lastLoginAt?: Date | null
 
     @Field()
     @Expose()
@@ -54,11 +54,11 @@ export class User {
 
     @Field({ nullable: true })
     @Expose()
-    deletedAt?: Date
+    deletedAt?: Date | null
 
     @Field({ nullable: true })
     @Expose()
-    avatarUrl?: string
+    avatarUrl?: string | null
 
     // Relations
     // @Field(type => [Task], { nullable: true })

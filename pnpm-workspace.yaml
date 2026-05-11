@@ -1,3 +1,12 @@
 packages:
   - 'apps/*'
   - 'packages/*'
+allowBuilds:
+  '@apollo/protobufjs': false
+  '@nestjs/core': true
+  '@prisma/engines': true
+  bcrypt: false
+  esbuild: false
+  prisma: true
+  sharp: false
+  vue-demi: false

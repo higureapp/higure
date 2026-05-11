@@ -16,8 +16,8 @@ export class AnalysisRepository {
         criticalAnalysis: string,
         suggestedSongs: any[],
         metrics: any,
-        quote?: string,
-        quoteAuthor?: string,
+        quote?: string | null,
+        quoteAuthor?: string | null,
     ): Promise<AnalysisWithMetrics> {
         return this.prisma.$transaction(async (tx) => {
             const analysis = await tx.journalAIAnalysis.create({
@@ -88,9 +88,19 @@ export class AnalysisRepository {
         })
     }
 
-    async deleteAnalysis(id: string): Promise<JournalAIAnalysis> {
-        return this.prisma.journalAIAnalysis.delete({
+    async deleteAnalysis(id: string): Promise<AnalysisWithMetrics | null> {
+        const analysis = await this.prisma.journalAIAnalysis.findUnique({
             where: { id },
         })
+        if (!analysis) return null
+
+        await this.prisma.journalAIAnalysis.delete({
+            where: { id },
+        })
+        // Return the deleted analysis with its metrics
+        const metrics = await this.prisma.journalMetrics.findUnique({
+            where: { journalPageId: analysis.journalPageId },
+        })
+        return { ...analysis, metrics }
     }
 }

@@ -137,7 +137,7 @@ export class AiAnalysis {
         const { output } = await generateText({
             model: google('gemini-2.5-flash-lite'),
             output: Output.object({
-                schema: AiAnalysisResultSchema
+                schema: AiAnalysisResultSchema,
             }),
             prompt: `
             Analyze the following journal entry and provide a comprehensive psychological, stylistic, and emotional analysis.
@@ -156,9 +156,9 @@ export class AiAnalysis {
             5. Use the same language of the journal entry.
             
             Ensure the analysis is insightful and feels like it was written by a professional psychologist with a poetic touch.
-            `.trim()
+            `.trim(),
         })
 
-        return output;
+        return output
     }
 }

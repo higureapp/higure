@@ -12,10 +12,10 @@ export class Journal {
     date: Date
 
     @Field({ nullable: true })
-    time?: Date
+    time?: Date | null
 
     @Field({ nullable: true })
-    location?: string
+    location?: string | null
 
     @Field()
     content: string
@@ -40,8 +40,8 @@ export class Journal {
     tags: JournalTag[]
 
     @Field(() => JournalMetrics, { nullable: true })
-    metrics?: JournalMetrics
+    metrics?: JournalMetrics | null
 
     @Field(() => JournalAIAnalysis, { nullable: true })
-    aiAnalysis?: JournalAIAnalysis
+    aiAnalysis?: JournalAIAnalysis | null
 }

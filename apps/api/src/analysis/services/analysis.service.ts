@@ -79,7 +79,7 @@ export class AnalysisService {
         const analysis = await AiAnalysis.generateAnalysis({
             content: journal.content,
             date: journal.date,
-            location: journal.location,
+            location: journal.location ?? undefined,
             mood: journal.mood,
         })
 
@@ -94,7 +94,7 @@ export class AnalysisService {
                         const response = await fetch(
                             `https://itunes.apple.com/search?term=${query}&entity=song&limit=1`,
                         )
-                        const data = await response.json()
+                        const data: any = await response.json()
                         if (data.results && data.results.length > 0) {
                             song.coverUrl =
                                 data.results[0].artworkUrl100.replace(
@@ -126,7 +126,7 @@ export class AnalysisService {
         return analysis ? AnalysisMapper.toModel(analysis) : null
     }
 
-    async deleteAnalysis(id: string): Promise<AnalysisModel> {
+    async deleteAnalysis(id: string): Promise<AnalysisModel | null> {
         const analysis = await this.analysisRepository.deleteAnalysis(id)
         return analysis ? AnalysisMapper.toModel(analysis) : null
     }

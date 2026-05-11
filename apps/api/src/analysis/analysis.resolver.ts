@@ -34,11 +34,11 @@ export class AnalysisResolver {
         return this.analysisService.regenerateAnalysis(user.userId, analysisId)
     }
 
-    @Mutation(() => AnalysisModel)
+    @Mutation(() => AnalysisModel, { nullable: true })
     async deleteAnalysis(
         @Args('id', { type: () => ID }) id: string,
         @CurrentUser() user: CurrentUserType,
-    ): Promise<AnalysisModel> {
+    ): Promise<AnalysisModel | null> {
         return this.analysisService.deleteAnalysis(id)
     }
 }
