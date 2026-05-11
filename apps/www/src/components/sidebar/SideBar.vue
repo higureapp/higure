@@ -69,7 +69,7 @@ const selectFilter: Ref<'YEAR' | 'MONTH'> = ref('YEAR')
     align-items: center;
     width: 100%;
     max-height: 30vh;
-    padding: 1rem;
+    margin: 1rem auto;
 }
 
 .actions {
