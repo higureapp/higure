@@ -8,6 +8,6 @@ export class JournalTag {
     @Field()
     name: string
 
-    @Field({ nullable: true })
+    @Field(() => String, { nullable: true })
     color?: string | null
 }

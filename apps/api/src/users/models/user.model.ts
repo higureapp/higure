@@ -40,23 +40,23 @@ export class User {
     @Expose()
     phoneVerified: boolean
 
-    @Field({ nullable: true })
+    @Field(() => Date, { nullable: true })
     @Expose()
     lastLoginAt?: Date | null
 
-    @Field()
+    @Field(() => Date)
     @Expose()
     createdAt: Date
 
-    @Field()
+    @Field(() => Date)
     @Expose()
     updatedAt: Date
 
-    @Field({ nullable: true })
+    @Field(() => Date, { nullable: true })
     @Expose()
     deletedAt?: Date | null
 
-    @Field({ nullable: true })
+    @Field(() => String, { nullable: true })
     @Expose()
     avatarUrl?: string | null
 

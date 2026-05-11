@@ -8,13 +8,13 @@ export class Journal {
     @Field(() => ID)
     id: string
 
-    @Field()
+    @Field(() => Date)
     date: Date
 
-    @Field({ nullable: true })
+    @Field(() => Date, { nullable: true })
     time?: Date | null
 
-    @Field({ nullable: true })
+    @Field(() => String, { nullable: true })
     location?: string | null
 
     @Field()
@@ -26,13 +26,13 @@ export class Journal {
     @Field()
     isActive: boolean
 
-    @Field()
+    @Field(() => Date)
     lastModified: Date
 
-    @Field()
+    @Field(() => Date)
     createdAt: Date
 
-    @Field()
+    @Field(() => Date)
     updatedAt: Date
 
     // Relations

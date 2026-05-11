@@ -13,18 +13,18 @@ import {
 
 @InputType()
 export class CreateJournalInput {
-    @Field()
+    @Field(() => Date)
     @IsDate()
     @Type(() => Date)
     date: Date
 
-    @Field({ nullable: true })
+    @Field(() => Date, { nullable: true })
     @IsOptional()
     @IsDate()
     @Type(() => Date)
     time?: Date
 
-    @Field({ nullable: true })
+    @Field(() => String, { nullable: true })
     @IsOptional()
     @IsString()
     location?: string

@@ -40,7 +40,7 @@ export class SignUpInput {
     @MaxLength(40)
     lastname: string
 
-    @Field({ nullable: true })
+    @Field(() => String, { nullable: true })
     @IsPhoneNumber()
     @IsOptional()
     phone?: string

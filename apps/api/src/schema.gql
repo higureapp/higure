@@ -179,7 +179,7 @@ type Mutation {
   restoreJournalPage(id: ID!): Journal!
   createAnalysis(journalId: ID!): AnalysisModel!
   regenerateAnalysis(analysisId: ID!): AnalysisModel!
-  deleteAnalysis(id: ID!): AnalysisModel!
+  deleteAnalysis(id: ID!): AnalysisModel
 }
 
 input SignUpInput {

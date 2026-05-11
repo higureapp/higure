@@ -12,13 +12,13 @@ import { Type } from 'class-transformer'
 
 @InputType()
 export class JournalPageFilters {
-    @Field({ nullable: true })
+    @Field(() => Date, { nullable: true })
     @IsOptional()
     @Type(() => Date)
     @IsDate()
     dateFrom?: Date
 
-    @Field({ nullable: true })
+    @Field(() => Date, { nullable: true })
     @IsOptional()
     @Type(() => Date)
     @IsDate()
@@ -38,7 +38,7 @@ export class JournalPageFilters {
     @Max(10)
     moodMax?: number
 
-    @Field({ nullable: true })
+    @Field(() => String, { nullable: true })
     @IsOptional()
     @IsString()
     location?: string
@@ -49,12 +49,12 @@ export class JournalPageFilters {
     @IsString({ each: true })
     tags?: string[]
 
-    @Field({ nullable: true })
+    @Field(() => String, { nullable: true })
     @IsOptional()
     @IsString()
     searchTerm?: string
 
-    @Field({ nullable: true })
+    @Field(() => Boolean, { nullable: true })
     @IsOptional()
     isActive?: boolean
 }

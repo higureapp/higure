@@ -20,13 +20,13 @@ export class JournalAIAnalysis {
     @Field(() => [SuggestedSong])
     suggestedSongs: SuggestedSong[]
 
-    @Field({ nullable: true })
+    @Field(() => String, { nullable: true })
     quote?: string
 
-    @Field({ nullable: true })
+    @Field(() => String, { nullable: true })
     quoteAuthor?: string
 
-    @Field()
+    @Field(() => Date)
     generatedAt: Date
 
     @Field()
