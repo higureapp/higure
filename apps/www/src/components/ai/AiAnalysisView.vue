@@ -14,7 +14,7 @@ const formatPercentage = (val: number) => (val * 100).toFixed(1) + '%';
 <template>
     <div class="analysis-view">
         <section class="analysis-section">
-            <div class="section-badge"><BarChart3 :size="14" /> Metrics Dashboard</div>
+            <div class="section-badge">Metrics Dashboard</div>
             <div class="metrics-grid">
                 <AiMetricGroup title="Structural" :icon="AlignLeft">
                     <AiMetricItem label="Words" :value="metrics.wordCount" />

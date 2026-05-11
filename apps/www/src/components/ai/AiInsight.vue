@@ -10,7 +10,7 @@ defineProps<{
     <div class="insight-view">
         <!-- Critical Analysis section -->
         <section class="analysis-section">
-            <div class="section-badge"><Wand2 :size="14" /> Reflection</div>
+            <div class="section-badge">Reflection</div>
             <p class="critical-text">{{ analysis.criticalAnalysis }}</p>
         </section>
 

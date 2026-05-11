@@ -11,7 +11,7 @@ defineProps<{
 <template>
     <div class="btn-ai" @click="action">
         <div class="icon-ai">
-            <component :is="icon" size="38" color="#000" />
+            <component :is="icon" size="38" color="#444" />
         </div>
         <div class="text">
             <p>{{ label }}</p>
@@ -22,7 +22,6 @@ defineProps<{
 <style scoped>
 .btn-ai {
     aspect-ratio: 1/1;
-    border: 1px solid #000;
     padding: 1rem 1rem;
     width: 4rem;
     height: auto;

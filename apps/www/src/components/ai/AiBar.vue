@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useAiStore } from '@/stores/ai-store';
-import { X, Sparkles, Stars, Brain } from 'lucide-vue-next';
+import { X, Sparkles, Stars, Brain, WandSparkles } from 'lucide-vue-next';
 import { onMounted, computed } from 'vue';
 import { useJournalStore } from '@/stores/journal-store';
 import { storeToRefs } from 'pinia';
@@ -42,7 +42,7 @@ onMounted(() => {
             <header class="ai-header">
                 <div class="header-main">
                     <div class="header-title">
-                        <Sparkles :size="20" class="icon-sparkle" />
+                        <WandSparkles :size="20" class="icon-sparkle" />
                         <h2>AI Companion</h2>
                     </div>
                     <button class="close-button" @click="aiStore.hideBar()" aria-label="Close">

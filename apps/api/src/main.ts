@@ -15,14 +15,14 @@ async function bootstrap() {
             'Apollo-Require-Preflight',
         ],
     })
-        ; (app.useGlobalPipes(
-            new ValidationPipe({
-                whitelist: true,
-                forbidNonWhitelisted: true,
-                transform: true,
-            }),
-        ),
-            await app.listen(3000))
+    ;(app.useGlobalPipes(
+        new ValidationPipe({
+            whitelist: true,
+            forbidNonWhitelisted: true,
+            transform: true,
+        }),
+    ),
+        await app.listen(3000))
 }
 
 void bootstrap()

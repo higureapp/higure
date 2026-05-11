@@ -323,6 +323,15 @@ async function deleteAccount() {
     pointer-events: none;
 }
 
+.journal-editor::placeholder {
+    color: #a3a3a3;
+    opacity: 1;
+}
+
+.journal-editor:placeholder-shown + .journal-preview {
+    visibility: hidden;
+}
+
 .journal-preview :deep(strong) {
     font-weight: 700;
 }
@@ -354,8 +363,44 @@ async function deleteAccount() {
 }
 
 .side-actions {
+    --bg-green: #FDC3C3;
+    --radius: 20px;
+
     position: fixed;
     top: 40vh;
-    right: 2rem;
+    right: 0;
+    background-color: var(--bg-green);
+    padding: 1rem;
+    min-width: 50px;
+
+    border-radius: var(--radius) 0 0 var(--radius);
+    z-index: 10;
+}
+
+/* Ala Superiore */
+.side-actions::before {
+    content: "";
+    position: absolute;
+    top: calc(var(--radius) * -1);
+    right: 0;
+    width: var(--radius);
+    height: var(--radius);
+    background-color: transparent;
+    border-bottom-right-radius: var(--radius);
+    box-shadow: 10px 10px 0 10px var(--bg-green);
+    pointer-events: none;
+}
+
+.side-actions::after {
+    content: "";
+    position: absolute;
+    bottom: calc(var(--radius) * -1);
+    right: 0;
+    width: var(--radius);
+    height: var(--radius);
+    background-color: transparent;
+    border-top-right-radius: var(--radius);
+    box-shadow: 10px -10px 0 10px var(--bg-green);
+    pointer-events: none;
 }
 </style>
