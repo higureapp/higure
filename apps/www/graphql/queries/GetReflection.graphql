@@ -1,0 +1,5 @@
+query GetReflection($journalPageId: ID!, $type: ReflectionType!) {
+  getReflection(journalPageId: $journalPageId, type: $type) {
+    ...ReflectionFields
+  }
+}

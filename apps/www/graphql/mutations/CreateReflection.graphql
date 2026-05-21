@@ -1,0 +1,5 @@
+mutation CreateReflection($journalId: ID!, $type: ReflectionType!) {
+  createReflection(journalId: $journalId, type: $type) {
+    ...ReflectionFields
+  }
+}

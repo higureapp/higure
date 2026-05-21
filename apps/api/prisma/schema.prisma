@@ -53,6 +53,29 @@ enum LanguageEnum {
   german
 }
 
+enum ReflectionType {
+  pragmatic
+  psychological
+  cynical
+  philosophical
+  empathetic
+  stoic
+  romantic
+  critical
+  playful
+  spiritual
+  narrative
+  future_oriented
+  past_oriented
+  social
+  existential
+  mindful
+  ambition_focused
+  contentment_focused
+  shadow_focused
+  integration_focused
+}
+
 //////////////////////
 // MODELS
 //////////////////////
@@ -209,6 +232,7 @@ model JournalPage {
   tags       JournalTag[]
   aiAnalysis JournalAIAnalysis?
   metrics    JournalMetrics?
+  reflections JournalReflection[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -296,4 +320,25 @@ model JournalMetrics {
   journalPage JournalPage @relation(fields: [journalPageId], references: [id], onDelete: Cascade)
 
   @@index([journalPageId])
+}
+
+model JournalReflection {
+  id            String         @id @default(uuid())
+  journalPageId String
+  type          ReflectionType
+
+  // AI-generated content
+  content           String   @db.Text
+  keyInsights       Json     // Array of 3 strings
+  suggestedQuestion String
+
+  // Generation metadata
+  generatedAt  DateTime @default(now())
+  modelVersion String   @default("gemini-2.5-flash-lite")
+
+  journalPage JournalPage @relation(fields: [journalPageId], references: [id], onDelete: Cascade)
+
+  @@unique([journalPageId, type])
+  @@index([journalPageId])
+  @@index([type])
 }

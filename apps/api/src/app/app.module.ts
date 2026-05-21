@@ -15,6 +15,7 @@ import { CacheModule } from '@nestjs/cache-manager'
 import { AppConfiguration } from '../config/app.config'
 import { JournalsModule } from '../journals/journals.module'
 import { AnalysisModule } from '../analysis/analysis.module'
+import { ReflectionModule } from '../reflection/reflection.module'
 
 @Module({
     imports: [
@@ -45,6 +46,7 @@ import { AnalysisModule } from '../analysis/analysis.module'
         AuthModule,
         JournalsModule,
         AnalysisModule,
+        ReflectionModule,
     ],
     providers: [
         AppService,

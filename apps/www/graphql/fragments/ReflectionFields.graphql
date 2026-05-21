@@ -1,0 +1,17 @@
+fragment ReflectionFields on ReflectionModel {
+  id
+  journalPageId
+  type
+  content
+  keyInsights
+  suggestedQuestion
+  generatedAt
+  modelVersion
+}
+
+fragment ReflectionTypeInfoFields on ReflectionTypeInfo {
+  type
+  label
+  description
+  icon
+}

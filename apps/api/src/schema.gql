@@ -128,6 +128,48 @@ type AnalysisModel {
   metrics: JournalMetrics
 }
 
+type ReflectionTypeInfo {
+  type: ReflectionType!
+  label: String!
+  description: String!
+  icon: String!
+}
+
+"""The type/style of reflection to generate"""
+enum ReflectionType {
+  PRAGMATIC
+  PSYCHOLOGICAL
+  CYNICAL
+  PHILOSOPHICAL
+  EMPATHETIC
+  STOIC
+  ROMANTIC
+  CRITICAL
+  PLAYFUL
+  SPIRITUAL
+  NARRATIVE
+  FUTURE_ORIENTED
+  PAST_ORIENTED
+  SOCIAL
+  EXISTENTIAL
+  MINDFUL
+  AMBITION_FOCUSED
+  CONTENTMENT_FOCUSED
+  SHADOW_FOCUSED
+  INTEGRATION_FOCUSED
+}
+
+type ReflectionModel {
+  id: String!
+  journalPageId: String!
+  type: ReflectionType!
+  content: String!
+  keyInsights: [String!]!
+  suggestedQuestion: String!
+  generatedAt: DateTime!
+  modelVersion: String!
+}
+
 type Query {
   me: User!
 
@@ -137,6 +179,9 @@ type Query {
   """Get journal pages with filters and pagination"""
   journalPages(filters: JournalPageFilters, pagination: JournalPaginationInput): GetJournalPagesOutput!
   getAnalysisByJournalPage(journalPageId: ID!): AnalysisModel
+  availableReflectionTypes: [ReflectionTypeInfo!]!
+  getReflection(journalPageId: ID!, type: ReflectionType!): ReflectionModel
+  getAllReflections(journalPageId: ID!): [ReflectionModel!]!
 }
 
 input JournalPageFilters {
@@ -180,6 +225,8 @@ type Mutation {
   createAnalysis(journalId: ID!): AnalysisModel!
   regenerateAnalysis(analysisId: ID!): AnalysisModel!
   deleteAnalysis(id: ID!): AnalysisModel
+  createReflection(journalId: ID!, type: ReflectionType!): ReflectionModel!
+  deleteReflection(id: ID!): ReflectionModel
 }
 
 input SignUpInput {
