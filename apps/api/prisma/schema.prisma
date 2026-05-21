@@ -40,26 +40,41 @@ enum HabitFrequency {
   weekly
 }
 
+enum Theme {
+  dark
+  light
+}
+
+enum LanguageEnum {
+  english
+  spanish
+  french
+  italian
+  german
+}
+
 //////////////////////
 // MODELS
 //////////////////////
 
 model User {
-  id            String     @id @default(uuid())
+  id            String       @id @default(uuid())
   firstname     String
   lastname      String
-  email         String     @unique
-  phone         String?    @unique
+  email         String       @unique
+  phone         String?      @unique
   password      String
   avatarUrl     String?
   timezone      String
   locale        String
-  emailVerified Boolean    @default(false)
-  phoneVerified Boolean    @default(false)
+  language      LanguageEnum @default(english)
+  theme         Theme        @default(light)
+  emailVerified Boolean      @default(false)
+  phoneVerified Boolean      @default(false)
   lastLoginAt   DateTime?
-  createdAt     DateTime   @default(now())
-  updatedAt     DateTime   @updatedAt
-  status        UserStatus @default(active)
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+  status        UserStatus   @default(active)
   deletedAt     DateTime?
 
   // Relations
@@ -173,7 +188,6 @@ model Sleep {
 
   @@index([userId])
 }
-
 
 model JournalPage {
   id     String @id @default(uuid())
