@@ -1,0 +1,34 @@
+fragment SearchHighlightFields on SearchHighlightModel {
+  matchedText
+  startIndex
+  endIndex
+  matchingConcept
+}
+
+fragment SearchResultFields on SearchResultModel {
+  journalPageId
+  date
+  relevanceScore
+  highlights {
+    ...SearchHighlightFields
+  }
+  summary
+  location
+  mood
+  contentPreview
+}
+
+fragment SearchResponseFields on SearchResponseModel {
+  results {
+    ...SearchResultFields
+  }
+  totalMatches
+  searchDurationMs
+}
+
+fragment SearchHistoryItemFields on SearchHistoryItemModel {
+  id
+  query
+  executedAt
+  resultCount
+}

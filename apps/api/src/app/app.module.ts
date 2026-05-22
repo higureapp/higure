@@ -16,6 +16,7 @@ import { AppConfiguration } from '../config/app.config'
 import { JournalsModule } from '../journals/journals.module'
 import { AnalysisModule } from '../analysis/analysis.module'
 import { ReflectionModule } from '../reflection/reflection.module'
+import { SearchModule } from '../search/search.module'
 
 @Module({
     imports: [
@@ -47,6 +48,7 @@ import { ReflectionModule } from '../reflection/reflection.module'
         JournalsModule,
         AnalysisModule,
         ReflectionModule,
+        SearchModule,
     ],
     providers: [
         AppService,

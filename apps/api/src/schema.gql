@@ -170,6 +170,58 @@ type ReflectionModel {
   modelVersion: String!
 }
 
+type SearchDateFilterModel {
+  fromDate: String
+  toDate: String
+  relativeDescription: String
+}
+
+type SearchConceptModel {
+  concept: String!
+  synonyms: [String!]!
+}
+
+type SearchQueryAnalysisModel {
+  originalQuery: String!
+  language: String!
+  dateFilter: SearchDateFilterModel!
+  concepts: [SearchConceptModel!]!
+  requiresSemanticSearch: Boolean!
+  explicitKeywords: [String!]!
+}
+
+type SearchHighlightModel {
+  matchedText: String!
+  startIndex: Float!
+  endIndex: Float!
+  matchingConcept: String!
+}
+
+type SearchResultModel {
+  journalPageId: String!
+  date: String!
+  relevanceScore: Float!
+  highlights: [SearchHighlightModel!]!
+  summary: String!
+  location: String
+  mood: Float
+  contentPreview: String
+}
+
+type SearchResponseModel {
+  queryAnalysis: SearchQueryAnalysisModel!
+  results: [SearchResultModel!]!
+  totalMatches: Float!
+  searchDurationMs: Float
+}
+
+type SearchHistoryItemModel {
+  id: String!
+  query: String!
+  executedAt: DateTime!
+  resultCount: Float!
+}
+
 type Query {
   me: User!
 
@@ -182,6 +234,8 @@ type Query {
   availableReflectionTypes: [ReflectionTypeInfo!]!
   getReflection(journalPageId: ID!, type: ReflectionType!): ReflectionModel
   getAllReflections(journalPageId: ID!): [ReflectionModel!]!
+  searchJournals(query: String!, saveToHistory: Boolean = true): SearchResponseModel!
+  searchHistory: [SearchHistoryItemModel!]!
 }
 
 input JournalPageFilters {
@@ -227,6 +281,8 @@ type Mutation {
   deleteAnalysis(id: ID!): AnalysisModel
   createReflection(journalId: ID!, type: ReflectionType!): ReflectionModel!
   deleteReflection(id: ID!): ReflectionModel
+  deleteSearchHistoryItem(id: ID!): SearchHistoryItemModel
+  clearSearchHistory: Float!
 }
 
 input SignUpInput {

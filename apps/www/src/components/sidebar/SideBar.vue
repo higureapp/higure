@@ -3,11 +3,13 @@ import { Calendar, Icon, Moon, Search, Settings } from 'lucide-vue-next';
 import Logo from '../Logo.vue';
 import { ref, type Ref } from 'vue';
 import { useSettingsStore } from '@/stores/settings-store';
+import { useSearchStore } from '@/stores/search-store';
 import router from '@/router';
 import MenuSection from './MenuSection.vue';
 import JournalList from './JournalList.vue';
 
 const settingsStore = useSettingsStore();
+const searchStore = useSearchStore();
 
 const actions = ref([
     {
@@ -16,7 +18,7 @@ const actions = ref([
     },
     {
         icon: Search,
-        click: () => router.push('#')
+        click: () => searchStore.openModal()
     },
     {
         icon: Settings,

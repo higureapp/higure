@@ -1,10 +1,17 @@
 import { Injectable } from '@nestjs/common'
-import { ReflectionModel, GraphQlReflectionType, ReflectionTypeInfo } from '../models/reflection.model'
+import {
+    ReflectionModel,
+    GraphQlReflectionType,
+    ReflectionTypeInfo,
+} from '../models/reflection.model'
 import { ReflectionRepository } from '../reflection.repository'
 import { ReflectionGenerator, ReflectionType } from '@higure/ai'
 import { JournalsService } from '@/journals/services/journals.service'
 import { Journal } from '@/journals/models/journal.model'
-import { ReflectionMapper, graphQlToPrismaTypeMap } from '../mappers/reflection.mapper'
+import {
+    ReflectionMapper,
+    graphQlToPrismaTypeMap,
+} from '../mappers/reflection.mapper'
 
 const graphQlToAiTypeMap: Record<GraphQlReflectionType, ReflectionType> = {
     [GraphQlReflectionType.PRAGMATIC]: ReflectionType.PRAGMATIC,
@@ -24,9 +31,11 @@ const graphQlToAiTypeMap: Record<GraphQlReflectionType, ReflectionType> = {
     [GraphQlReflectionType.EXISTENTIAL]: ReflectionType.EXISTENTIAL,
     [GraphQlReflectionType.MINDFUL]: ReflectionType.MINDFUL,
     [GraphQlReflectionType.AMBITION_FOCUSED]: ReflectionType.AMBITION_FOCUSED,
-    [GraphQlReflectionType.CONTENTMENT_FOCUSED]: ReflectionType.CONTENTMENT_FOCUSED,
+    [GraphQlReflectionType.CONTENTMENT_FOCUSED]:
+        ReflectionType.CONTENTMENT_FOCUSED,
     [GraphQlReflectionType.SHADOW_FOCUSED]: ReflectionType.SHADOW_FOCUSED,
-    [GraphQlReflectionType.INTEGRATION_FOCUSED]: ReflectionType.INTEGRATION_FOCUSED,
+    [GraphQlReflectionType.INTEGRATION_FOCUSED]:
+        ReflectionType.INTEGRATION_FOCUSED,
 }
 
 @Injectable()
@@ -50,7 +59,9 @@ export class ReflectionService {
         })
     }
 
-    private convertAiToGraphQlType(type: ReflectionType): GraphQlReflectionType {
+    private convertAiToGraphQlType(
+        type: ReflectionType,
+    ): GraphQlReflectionType {
         const entry = Object.entries(graphQlToAiTypeMap).find(
             ([, value]) => value === type,
         )
@@ -114,15 +125,31 @@ export class ReflectionService {
     ) {
         const aiType = graphQlToAiTypeMap[type]!
 
-        return ReflectionGenerator.generateReflection(
-            {
-                content: journal.content,
-                date: journal.date,
-                location: journal.location ?? undefined,
-                mood: journal.mood,
-            },
-            aiType,
-        )
+        try {
+            return await ReflectionGenerator.generateReflection(
+                {
+                    content: journal.content,
+                    date: journal.date,
+                    location: journal.location ?? undefined,
+                    mood: journal.mood,
+                },
+                aiType,
+            )
+        } catch (e) {
+            console.error('Reflection generation failed:', e)
+            const typeInfo = ReflectionGenerator.getTypeInfo(aiType)
+            return {
+                content: `I'm having trouble generating a ${typeInfo.label.toLowerCase()} reflection right now. Please try again in a moment.
+
+Your journal entry is meaningful, and I'd love to help you reflect on it when the service is available.`,
+                keyInsights: [
+                    'Your thoughts and feelings deserve attention and reflection',
+                    'Consider revisiting this entry later for AI-powered insights',
+                    `A ${typeInfo.label.toLowerCase()} perspective could reveal new dimensions of your experience`,
+                ],
+                suggestedQuestion: `What aspects of this entry feel most important to you right now?`,
+            }
+        }
     }
 
     async deleteReflection(id: string): Promise<ReflectionModel | null> {

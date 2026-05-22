@@ -4,16 +4,16 @@ import PlusButton from '@/components/PlusButton.vue';
 import SideBar from '@/components/sidebar/SideBar.vue';
 import WeekMenu from '@/components/WeekMenu.vue';
 import { useAuthStore } from '@/stores/auth-store';
+import { useJournalStore } from '@/stores/journal-store';
 import { computed, ref } from 'vue';
-import { useGetJournalPagesQuery } from '../../gql_generated/graphql';
 import HomeJournal from '@/components/journals/HomeJournal.vue';
 
 const authStore = useAuthStore();
+const journalStore = useJournalStore();
 
 const me = ref(authStore.me);
 
-const { result: getJournalsResult, refetch: refetchMe } = useGetJournalPagesQuery()
-const journals = computed(() => getJournalsResult.value?.journalPages ?? null)
+const journals = computed(() => journalStore.pages?.journalPages ?? null)
 </script>
 
 <template>

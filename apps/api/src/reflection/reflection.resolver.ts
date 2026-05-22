@@ -1,5 +1,9 @@
 import { Args, ID, Mutation, Query, Resolver } from '@nestjs/graphql'
-import { ReflectionModel, GraphQlReflectionType, ReflectionTypeInfo } from './models/reflection.model'
+import {
+    ReflectionModel,
+    GraphQlReflectionType,
+    ReflectionTypeInfo,
+} from './models/reflection.model'
 import {
     CurrentUser,
     CurrentUserType,
@@ -18,19 +22,28 @@ export class ReflectionResolver {
     @Mutation(() => ReflectionModel)
     async createReflection(
         @Args('journalId', { type: () => ID }) journalId: string,
-        @Args('type', { type: () => GraphQlReflectionType }) type: GraphQlReflectionType,
+        @Args('type', { type: () => GraphQlReflectionType })
+        type: GraphQlReflectionType,
         @CurrentUser() user: CurrentUserType,
     ): Promise<ReflectionModel> {
-        return this.reflectionService.createReflection(user.userId, journalId, type)
+        return this.reflectionService.createReflection(
+            user.userId,
+            journalId,
+            type,
+        )
     }
 
     @Query(() => ReflectionModel, { nullable: true })
     async getReflection(
         @Args('journalPageId', { type: () => ID }) journalPageId: string,
-        @Args('type', { type: () => GraphQlReflectionType }) type: GraphQlReflectionType,
+        @Args('type', { type: () => GraphQlReflectionType })
+        type: GraphQlReflectionType,
         @CurrentUser() user: CurrentUserType,
     ): Promise<ReflectionModel | null> {
-        return this.reflectionService.getReflectionByJournalPageAndType(journalPageId, type)
+        return this.reflectionService.getReflectionByJournalPageAndType(
+            journalPageId,
+            type,
+        )
     }
 
     @Query(() => [ReflectionModel])
@@ -38,7 +51,9 @@ export class ReflectionResolver {
         @Args('journalPageId', { type: () => ID }) journalPageId: string,
         @CurrentUser() user: CurrentUserType,
     ): Promise<ReflectionModel[]> {
-        return this.reflectionService.getAllReflectionsByJournalPage(journalPageId)
+        return this.reflectionService.getAllReflectionsByJournalPage(
+            journalPageId,
+        )
     }
 
     @Mutation(() => ReflectionModel, { nullable: true })

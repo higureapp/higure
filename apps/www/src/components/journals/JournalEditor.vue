@@ -1,12 +1,15 @@
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue';
 import dayjs from 'dayjs';
-import { ArrowLeft, Check, Save, Trash2, MapPin, Calendar, Clock } from 'lucide-vue-next';
+import { ArrowLeft, Check, Save, Trash2, MapPin, Calendar, Clock, Search } from 'lucide-vue-next';
 import JournalTagsViewer from './JournalTagsViewer.vue';
 import router from '@/router';
 import { useJournalStore } from '@/stores/journal-store';
 import { useAlertStore } from '@/stores/alert-store';
+import { useSearchStore } from '@/stores/search-store';
 import AiActions from '../ai/AiActions.vue';
+
+const searchStore = useSearchStore();
 
 const props = defineProps<{
     id?: string;
@@ -100,7 +103,11 @@ const handleSave = async () => {
 };
 
 const handleBack = () => {
-    router.go(-1);
+    if (searchStore.cameFromSearch) {
+        searchStore.backToSearch();
+    } else {
+        router.go(-1);
+    }
 };
 
 const alertStore = useAlertStore();

@@ -8,10 +8,17 @@ import ConfirmationAlert from './components/alerts/ConfirmationAlert.vue';
 import Modal from './components/modals/Modal.vue';
 import { useSettingsStore } from './stores/settings-store';
 import SettingsModal from './components/modals/SettingsModal.vue';
+import SearchModal from './components/modals/SearchModal.vue';
 
 const auth = useAuthStore();
 const journal = useJournalStore();
 const settingsStore = useSettingsStore();
+
+watch(() => auth.isLoggedIn, (isLoggedIn) => {
+    if (isLoggedIn) {
+        void journal.loadAllPages();
+    }
+}, { immediate: true });
 
 watch(() => auth.token, (token) => {
     if (!token) {
@@ -21,7 +28,7 @@ watch(() => auth.token, (token) => {
 </script>
 
 <template>
-  <LoadingPage v-if="auth.isLoading || journal.isLoading" />
+  <LoadingPage v-if="auth.isLoading || journal.isLoadingAll" />
   
   <router-view v-else v-slot="{ Component, route }">
     <transition name="fade-slide" mode="out-in">
@@ -31,6 +38,7 @@ watch(() => auth.token, (token) => {
 
   <ConfirmationAlert />
   <SettingsModal />
+  <SearchModal />
 </template>
 
 <style scoped>

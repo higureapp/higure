@@ -1,4 +1,4 @@
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { defineStore } from 'pinia'
 import {
     useCreateJournalPageMutation,
@@ -8,20 +8,37 @@ import {
     useUpdateJournalPageMutation,
     type CreateJournalInput,
     type UpdateJournalInput,
+    type GetJournalPagesQuery,
 } from '../../gql_generated/graphql'
 
+type JournalPageFromQuery = NonNullable<GetJournalPagesQuery['journalPages']['pages']>[number]
+
+const JOURNAL_PAGE_SIZE = 100
+
 export const useJournalStore = defineStore('journal', () => {
-    const {
-        result: getJournalPagesResult,
-        loading: loadingPages,
-        refetch: refetchPages,
-    } = useGetJournalPagesQuery()
     const { mutate: updateJournalMutation } = useUpdateJournalPageMutation()
     const { mutate: createJournalMutation } = useCreateJournalPageMutation()
-    const { mutate: softDeleteJournalMutation } =
-        useSoftDeleteJournalPageMutation()
+    const { mutate: softDeleteJournalMutation } = useSoftDeleteJournalPageMutation()
 
-    const pages = computed(() => getJournalPagesResult.value ?? null)
+    const allPages = ref<JournalPageFromQuery[]>([])
+    const totalCount = ref<number>(0)
+    const isLoadingAll = ref<boolean>(false)
+    const hasMorePages = ref<boolean>(false)
+    const fetchPage = ref<number>(0)
+
+    const { result: pagesResult, loading: loadingPages, refetch: refetchPages } = useGetJournalPagesQuery(
+        () => ({
+            filters: {},
+            pagination: {
+                page: fetchPage.value || 1,
+                limit: JOURNAL_PAGE_SIZE,
+            },
+        }),
+        {
+            enabled: computed(() => fetchPage.value > 0),
+            fetchPolicy: 'network-only',
+        },
+    )
 
     const activeJournalId = ref<string | null>(null)
 
@@ -41,6 +58,48 @@ export const useJournalStore = defineStore('journal', () => {
         () => singleResult.value?.journalPage ?? null,
     )
 
+    const pages = computed(() => ({
+        journalPages: {
+            pages: allPages.value,
+            totalCount: totalCount.value,
+            hasMore: hasMorePages.value,
+            currentPage: 1,
+            totalPages: Math.ceil(totalCount.value / JOURNAL_PAGE_SIZE),
+        },
+    }))
+
+    watch(pagesResult, (newResult) => {
+        if (newResult?.journalPages) {
+            const data = newResult.journalPages
+            const newPages = data.pages as JournalPageFromQuery[]
+            
+            if (fetchPage.value === 1) {
+                allPages.value = [...newPages]
+            } else {
+                allPages.value = [...allPages.value, ...newPages]
+            }
+            totalCount.value = data.totalCount
+            hasMorePages.value = data.hasMore
+
+            if (data.hasMore) {
+                fetchPage.value++
+            } else {
+                isLoadingAll.value = false
+            }
+        }
+    }, { deep: true })
+
+    async function loadAllPages(): Promise<void> {
+        if (isLoadingAll.value) return
+
+        isLoadingAll.value = true
+        allPages.value = []
+        totalCount.value = 0
+        hasMorePages.value = false
+        
+        fetchPage.value = 1
+    }
+
     function setSelectedJournal(id: string | null) {
         activeJournalId.value = id
     }
@@ -51,7 +110,7 @@ export const useJournalStore = defineStore('journal', () => {
                 id,
                 input,
             })
-            await refetchPages()
+            await loadAllPages()
         } catch (e) {
             console.error('Update failed:', e)
             throw e
@@ -65,7 +124,7 @@ export const useJournalStore = defineStore('journal', () => {
             const j = await createJournalMutation({
                 input,
             })
-            await refetchPages()
+            await loadAllPages()
             return j
         } catch (e) {
             console.error('Creation failed:', e)
@@ -78,7 +137,7 @@ export const useJournalStore = defineStore('journal', () => {
             await softDeleteJournalMutation({
                 id: journalId,
             })
-            await refetchPages()
+            await loadAllPages()
         } catch (e) {
             console.error('Deletation failed:', e)
             throw e
@@ -96,8 +155,11 @@ export const useJournalStore = defineStore('journal', () => {
         isLoading,
         loadingSingle,
         activeJournalId,
+        allPages,
+        totalCount,
+        isLoadingAll,
         setSelectedJournal,
-        refetchPages,
+        loadAllPages,
         updateJournal,
         createJournal,
         deleteJournal,

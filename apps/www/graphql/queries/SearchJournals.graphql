@@ -1,0 +1,5 @@
+query SearchJournals($query: String!, $saveToHistory: Boolean) {
+  searchJournals(query: $query, saveToHistory: $saveToHistory) {
+    ...SearchResponseFields
+  }
+}

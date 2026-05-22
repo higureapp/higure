@@ -1,0 +1,6 @@
+mutation DeleteSearchHistoryItem($id: ID!) {
+  deleteSearchHistoryItem(id: $id) {
+    id
+    query
+  }
+}

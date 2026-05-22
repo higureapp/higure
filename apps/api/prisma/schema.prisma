@@ -342,3 +342,19 @@ model JournalReflection {
   @@index([journalPageId])
   @@index([type])
 }
+
+model SearchHistory {
+  id        String   @id @default(uuid())
+  userId    String
+  query     String   @db.Text
+
+  // Cache of results for quick re-display
+  results   Json
+
+  // Metadata
+  executedAt DateTime @default(now())
+  resultCount Int @default(0)
+
+  @@index([userId])
+  @@index([executedAt])
+}

@@ -136,6 +136,7 @@ export type JournalTag = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  clearSearchHistory: Scalars['Float']['output'];
   createAnalysis: AnalysisModel;
   /** Create a new journal page */
   createJournalPage: Journal;
@@ -145,6 +146,7 @@ export type Mutation = {
   /** Permanently delete a journal page */
   deleteJournalPage: Scalars['Boolean']['output'];
   deleteReflection?: Maybe<ReflectionModel>;
+  deleteSearchHistoryItem?: Maybe<SearchHistoryItemModel>;
   logout: Scalars['String']['output'];
   logoutAllDevices: Scalars['String']['output'];
   refreshToken: AuthResponse;
@@ -187,6 +189,11 @@ export type MutationDeleteJournalPageArgs = {
 
 
 export type MutationDeleteReflectionArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+export type MutationDeleteSearchHistoryItemArgs = {
   id: Scalars['ID']['input'];
 };
 
@@ -242,6 +249,8 @@ export type Query = {
   /** Get journal pages with filters and pagination */
   journalPages: GetJournalPagesOutput;
   me: User;
+  searchHistory: Array<SearchHistoryItemModel>;
+  searchJournals: SearchResponseModel;
 };
 
 
@@ -271,6 +280,12 @@ export type QueryJournalPagesArgs = {
   pagination?: InputMaybe<JournalPaginationInput>;
 };
 
+
+export type QuerySearchJournalsArgs = {
+  query: Scalars['String']['input'];
+  saveToHistory?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
 export type ReflectionModel = {
   __typename?: 'ReflectionModel';
   content: Scalars['String']['output'];
@@ -285,26 +300,26 @@ export type ReflectionModel = {
 
 /** The type/style of reflection to generate */
 export enum ReflectionType {
-  AmbitionFocused = 'ambition_focused',
-  ContentmentFocused = 'contentment_focused',
-  Critical = 'critical',
-  Cynical = 'cynical',
-  Empathetic = 'empathetic',
-  Existential = 'existential',
-  FutureOriented = 'future_oriented',
-  IntegrationFocused = 'integration_focused',
-  Mindful = 'mindful',
-  Narrative = 'narrative',
-  PastOriented = 'past_oriented',
-  Philosophical = 'philosophical',
-  Playful = 'playful',
-  Pragmatic = 'pragmatic',
-  Psychological = 'psychological',
-  Romantic = 'romantic',
-  ShadowFocused = 'shadow_focused',
-  Social = 'social',
-  Spiritual = 'spiritual',
-  Stoic = 'stoic'
+  AmbitionFocused = 'AMBITION_FOCUSED',
+  ContentmentFocused = 'CONTENTMENT_FOCUSED',
+  Critical = 'CRITICAL',
+  Cynical = 'CYNICAL',
+  Empathetic = 'EMPATHETIC',
+  Existential = 'EXISTENTIAL',
+  FutureOriented = 'FUTURE_ORIENTED',
+  IntegrationFocused = 'INTEGRATION_FOCUSED',
+  Mindful = 'MINDFUL',
+  Narrative = 'NARRATIVE',
+  PastOriented = 'PAST_ORIENTED',
+  Philosophical = 'PHILOSOPHICAL',
+  Playful = 'PLAYFUL',
+  Pragmatic = 'PRAGMATIC',
+  Psychological = 'PSYCHOLOGICAL',
+  Romantic = 'ROMANTIC',
+  ShadowFocused = 'SHADOW_FOCUSED',
+  Social = 'SOCIAL',
+  Spiritual = 'SPIRITUAL',
+  Stoic = 'STOIC'
 }
 
 export type ReflectionTypeInfo = {
@@ -318,6 +333,65 @@ export type ReflectionTypeInfo = {
 export type RefreshTokenInput = {
   /** The refresh token to use for re-authentication */
   refreshToken: Scalars['String']['input'];
+};
+
+export type SearchConceptModel = {
+  __typename?: 'SearchConceptModel';
+  concept: Scalars['String']['output'];
+  synonyms: Array<Scalars['String']['output']>;
+};
+
+export type SearchDateFilterModel = {
+  __typename?: 'SearchDateFilterModel';
+  fromDate?: Maybe<Scalars['String']['output']>;
+  relativeDescription?: Maybe<Scalars['String']['output']>;
+  toDate?: Maybe<Scalars['String']['output']>;
+};
+
+export type SearchHighlightModel = {
+  __typename?: 'SearchHighlightModel';
+  endIndex: Scalars['Float']['output'];
+  matchedText: Scalars['String']['output'];
+  matchingConcept: Scalars['String']['output'];
+  startIndex: Scalars['Float']['output'];
+};
+
+export type SearchHistoryItemModel = {
+  __typename?: 'SearchHistoryItemModel';
+  executedAt: Scalars['DateTime']['output'];
+  id: Scalars['String']['output'];
+  query: Scalars['String']['output'];
+  resultCount: Scalars['Float']['output'];
+};
+
+export type SearchQueryAnalysisModel = {
+  __typename?: 'SearchQueryAnalysisModel';
+  concepts: Array<SearchConceptModel>;
+  dateFilter: SearchDateFilterModel;
+  explicitKeywords: Array<Scalars['String']['output']>;
+  language: Scalars['String']['output'];
+  originalQuery: Scalars['String']['output'];
+  requiresSemanticSearch: Scalars['Boolean']['output'];
+};
+
+export type SearchResponseModel = {
+  __typename?: 'SearchResponseModel';
+  queryAnalysis: SearchQueryAnalysisModel;
+  results: Array<SearchResultModel>;
+  searchDurationMs?: Maybe<Scalars['Float']['output']>;
+  totalMatches: Scalars['Float']['output'];
+};
+
+export type SearchResultModel = {
+  __typename?: 'SearchResultModel';
+  contentPreview?: Maybe<Scalars['String']['output']>;
+  date: Scalars['String']['output'];
+  highlights: Array<SearchHighlightModel>;
+  journalPageId: Scalars['String']['output'];
+  location?: Maybe<Scalars['String']['output']>;
+  mood?: Maybe<Scalars['Float']['output']>;
+  relevanceScore: Scalars['Float']['output'];
+  summary: Scalars['String']['output'];
 };
 
 export type SignInInput = {
@@ -392,6 +466,19 @@ export type ReflectionFieldsFragment = { __typename?: 'ReflectionModel', id: str
 
 export type ReflectionTypeInfoFieldsFragment = { __typename?: 'ReflectionTypeInfo', type: ReflectionType, label: string, description: string, icon: string };
 
+export type SearchHighlightFieldsFragment = { __typename?: 'SearchHighlightModel', matchedText: string, startIndex: number, endIndex: number, matchingConcept: string };
+
+export type SearchResultFieldsFragment = { __typename?: 'SearchResultModel', journalPageId: string, date: string, relevanceScore: number, summary: string, location?: string | null, mood?: number | null, contentPreview?: string | null, highlights: Array<{ __typename?: 'SearchHighlightModel', matchedText: string, startIndex: number, endIndex: number, matchingConcept: string }> };
+
+export type SearchResponseFieldsFragment = { __typename?: 'SearchResponseModel', totalMatches: number, searchDurationMs?: number | null, results: Array<{ __typename?: 'SearchResultModel', journalPageId: string, date: string, relevanceScore: number, summary: string, location?: string | null, mood?: number | null, contentPreview?: string | null, highlights: Array<{ __typename?: 'SearchHighlightModel', matchedText: string, startIndex: number, endIndex: number, matchingConcept: string }> }> };
+
+export type SearchHistoryItemFieldsFragment = { __typename?: 'SearchHistoryItemModel', id: string, query: string, executedAt: any, resultCount: number };
+
+export type ClearSearchHistoryMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ClearSearchHistoryMutation = { __typename?: 'Mutation', clearSearchHistory: number };
+
 export type CreateAnalysisMutationVariables = Exact<{
   journalId: Scalars['ID']['input'];
 }>;
@@ -420,6 +507,13 @@ export type DeleteAnalysisMutationVariables = Exact<{
 
 
 export type DeleteAnalysisMutation = { __typename?: 'Mutation', deleteAnalysis?: { __typename?: 'AnalysisModel', id: string, journalPageId: string, criticalAnalysis: string, quote?: string | null, quoteAuthor?: string | null, generatedAt: any, modelVersion: string, suggestedSongs: Array<{ __typename?: 'SongsModel', spotifyUrl: string, title: string, album: string, author: string, minutes: number, coverUrl?: string | null }>, metrics?: { __typename?: 'JournalMetrics', wordCount: number, sentenceCount: number, averageSentenceLength: number, paragraphCount: number, textDensity: number, estimatedWritingTime: number, temporalReferencesCount: number, temporalFocus: number, emotionalValence: number, emotionalIntensity: number, emotionalVariability: number, emotionalWordsCount: number, introspectionIndex: number, questionsCount: number, causeEffectCount: number, eventsCount: number, charactersCount: number, firstPersonUsage: number, narrativeSequentiality: number, lexicalRichness: number, keyRepetitionsCount: number, metaphorsCount: number, formality: number } | null } | null };
+
+export type DeleteSearchHistoryItemMutationVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+export type DeleteSearchHistoryItemMutation = { __typename?: 'Mutation', deleteSearchHistoryItem?: { __typename?: 'SearchHistoryItemModel', id: string, query: string } | null };
 
 export type DeleteJournalPageMutationVariables = Exact<{
   id: Scalars['ID']['input'];
@@ -511,6 +605,19 @@ export type GetReflectionQueryVariables = Exact<{
 
 export type GetReflectionQuery = { __typename?: 'Query', getReflection?: { __typename?: 'ReflectionModel', id: string, journalPageId: string, type: ReflectionType, content: string, keyInsights: Array<string>, suggestedQuestion: string, generatedAt: any, modelVersion: string } | null };
 
+export type SearchHistoryQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type SearchHistoryQuery = { __typename?: 'Query', searchHistory: Array<{ __typename?: 'SearchHistoryItemModel', id: string, query: string, executedAt: any, resultCount: number }> };
+
+export type SearchJournalsQueryVariables = Exact<{
+  query: Scalars['String']['input'];
+  saveToHistory?: InputMaybe<Scalars['Boolean']['input']>;
+}>;
+
+
+export type SearchJournalsQuery = { __typename?: 'Query', searchJournals: { __typename?: 'SearchResponseModel', totalMatches: number, searchDurationMs?: number | null, results: Array<{ __typename?: 'SearchResultModel', journalPageId: string, date: string, relevanceScore: number, summary: string, location?: string | null, mood?: number | null, contentPreview?: string | null, highlights: Array<{ __typename?: 'SearchHighlightModel', matchedText: string, startIndex: number, endIndex: number, matchingConcept: string }> }> } };
+
 export const AnalysisFieldsFragmentDoc = gql`
     fragment AnalysisFields on AnalysisModel {
   id
@@ -575,6 +682,68 @@ export const ReflectionTypeInfoFieldsFragmentDoc = gql`
   icon
 }
     `;
+export const SearchHighlightFieldsFragmentDoc = gql`
+    fragment SearchHighlightFields on SearchHighlightModel {
+  matchedText
+  startIndex
+  endIndex
+  matchingConcept
+}
+    `;
+export const SearchResultFieldsFragmentDoc = gql`
+    fragment SearchResultFields on SearchResultModel {
+  journalPageId
+  date
+  relevanceScore
+  highlights {
+    ...SearchHighlightFields
+  }
+  summary
+  location
+  mood
+  contentPreview
+}
+    ${SearchHighlightFieldsFragmentDoc}`;
+export const SearchResponseFieldsFragmentDoc = gql`
+    fragment SearchResponseFields on SearchResponseModel {
+  results {
+    ...SearchResultFields
+  }
+  totalMatches
+  searchDurationMs
+}
+    ${SearchResultFieldsFragmentDoc}`;
+export const SearchHistoryItemFieldsFragmentDoc = gql`
+    fragment SearchHistoryItemFields on SearchHistoryItemModel {
+  id
+  query
+  executedAt
+  resultCount
+}
+    `;
+export const ClearSearchHistoryDocument = gql`
+    mutation ClearSearchHistory {
+  clearSearchHistory
+}
+    `;
+
+/**
+ * __useClearSearchHistoryMutation__
+ *
+ * To run a mutation, you first call `useClearSearchHistoryMutation` within a Vue component and pass it any options that fit your needs.
+ * When your component renders, `useClearSearchHistoryMutation` returns an object that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - Several other properties: https://v4.apollo.vuejs.org/api/use-mutation.html#return
+ *
+ * @param options that will be passed into the mutation, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/mutation.html#options;
+ *
+ * @example
+ * const { mutate, loading, error, onDone } = useClearSearchHistoryMutation();
+ */
+export function useClearSearchHistoryMutation(options: VueApolloComposable.UseMutationOptions<ClearSearchHistoryMutation, ClearSearchHistoryMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<ClearSearchHistoryMutation, ClearSearchHistoryMutationVariables>> = {}) {
+  return VueApolloComposable.useMutation<ClearSearchHistoryMutation, ClearSearchHistoryMutationVariables>(ClearSearchHistoryDocument, options);
+}
+export type ClearSearchHistoryMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<ClearSearchHistoryMutation, ClearSearchHistoryMutationVariables>;
 export const CreateAnalysisDocument = gql`
     mutation CreateAnalysis($journalId: ID!) {
   createAnalysis(journalId: $journalId) {
@@ -700,6 +869,36 @@ export function useDeleteAnalysisMutation(options: VueApolloComposable.UseMutati
   return VueApolloComposable.useMutation<DeleteAnalysisMutation, DeleteAnalysisMutationVariables>(DeleteAnalysisDocument, options);
 }
 export type DeleteAnalysisMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<DeleteAnalysisMutation, DeleteAnalysisMutationVariables>;
+export const DeleteSearchHistoryItemDocument = gql`
+    mutation DeleteSearchHistoryItem($id: ID!) {
+  deleteSearchHistoryItem(id: $id) {
+    id
+    query
+  }
+}
+    `;
+
+/**
+ * __useDeleteSearchHistoryItemMutation__
+ *
+ * To run a mutation, you first call `useDeleteSearchHistoryItemMutation` within a Vue component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteSearchHistoryItemMutation` returns an object that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - Several other properties: https://v4.apollo.vuejs.org/api/use-mutation.html#return
+ *
+ * @param options that will be passed into the mutation, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/mutation.html#options;
+ *
+ * @example
+ * const { mutate, loading, error, onDone } = useDeleteSearchHistoryItemMutation({
+ *   variables: {
+ *     id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteSearchHistoryItemMutation(options: VueApolloComposable.UseMutationOptions<DeleteSearchHistoryItemMutation, DeleteSearchHistoryItemMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<DeleteSearchHistoryItemMutation, DeleteSearchHistoryItemMutationVariables>> = {}) {
+  return VueApolloComposable.useMutation<DeleteSearchHistoryItemMutation, DeleteSearchHistoryItemMutationVariables>(DeleteSearchHistoryItemDocument, options);
+}
+export type DeleteSearchHistoryItemMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<DeleteSearchHistoryItemMutation, DeleteSearchHistoryItemMutationVariables>;
 export const DeleteJournalPageDocument = gql`
     mutation DeleteJournalPage($id: ID!) {
   deleteJournalPage(id: $id)
@@ -1165,3 +1364,61 @@ export function useGetReflectionLazyQuery(variables?: GetReflectionQueryVariable
   return VueApolloComposable.useLazyQuery<GetReflectionQuery, GetReflectionQueryVariables>(GetReflectionDocument, variables, options);
 }
 export type GetReflectionQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<GetReflectionQuery, GetReflectionQueryVariables>;
+export const SearchHistoryDocument = gql`
+    query SearchHistory {
+  searchHistory {
+    ...SearchHistoryItemFields
+  }
+}
+    ${SearchHistoryItemFieldsFragmentDoc}`;
+
+/**
+ * __useSearchHistoryQuery__
+ *
+ * To run a query within a Vue component, call `useSearchHistoryQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSearchHistoryQuery` returns an object from Apollo Client that contains result, loading and error properties
+ * you can use to render your UI.
+ *
+ * @param options that will be passed into the query, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/query.html#options;
+ *
+ * @example
+ * const { result, loading, error } = useSearchHistoryQuery();
+ */
+export function useSearchHistoryQuery(options: VueApolloComposable.UseQueryOptions<SearchHistoryQuery, SearchHistoryQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<SearchHistoryQuery, SearchHistoryQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<SearchHistoryQuery, SearchHistoryQueryVariables>> = {}) {
+  return VueApolloComposable.useQuery<SearchHistoryQuery, SearchHistoryQueryVariables>(SearchHistoryDocument, {}, options);
+}
+export function useSearchHistoryLazyQuery(options: VueApolloComposable.UseQueryOptions<SearchHistoryQuery, SearchHistoryQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<SearchHistoryQuery, SearchHistoryQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<SearchHistoryQuery, SearchHistoryQueryVariables>> = {}) {
+  return VueApolloComposable.useLazyQuery<SearchHistoryQuery, SearchHistoryQueryVariables>(SearchHistoryDocument, {}, options);
+}
+export type SearchHistoryQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<SearchHistoryQuery, SearchHistoryQueryVariables>;
+export const SearchJournalsDocument = gql`
+    query SearchJournals($query: String!, $saveToHistory: Boolean) {
+  searchJournals(query: $query, saveToHistory: $saveToHistory) {
+    ...SearchResponseFields
+  }
+}
+    ${SearchResponseFieldsFragmentDoc}`;
+
+/**
+ * __useSearchJournalsQuery__
+ *
+ * To run a query within a Vue component, call `useSearchJournalsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSearchJournalsQuery` returns an object from Apollo Client that contains result, loading and error properties
+ * you can use to render your UI.
+ *
+ * @param variables that will be passed into the query
+ * @param options that will be passed into the query, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/query.html#options;
+ *
+ * @example
+ * const { result, loading, error } = useSearchJournalsQuery({
+ *   query: // value for 'query'
+ *   saveToHistory: // value for 'saveToHistory'
+ * });
+ */
+export function useSearchJournalsQuery(variables: SearchJournalsQueryVariables | VueCompositionApi.Ref<SearchJournalsQueryVariables> | ReactiveFunction<SearchJournalsQueryVariables>, options: VueApolloComposable.UseQueryOptions<SearchJournalsQuery, SearchJournalsQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<SearchJournalsQuery, SearchJournalsQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<SearchJournalsQuery, SearchJournalsQueryVariables>> = {}) {
+  return VueApolloComposable.useQuery<SearchJournalsQuery, SearchJournalsQueryVariables>(SearchJournalsDocument, variables, options);
+}
+export function useSearchJournalsLazyQuery(variables?: SearchJournalsQueryVariables | VueCompositionApi.Ref<SearchJournalsQueryVariables> | ReactiveFunction<SearchJournalsQueryVariables>, options: VueApolloComposable.UseQueryOptions<SearchJournalsQuery, SearchJournalsQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<SearchJournalsQuery, SearchJournalsQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<SearchJournalsQuery, SearchJournalsQueryVariables>> = {}) {
+  return VueApolloComposable.useLazyQuery<SearchJournalsQuery, SearchJournalsQueryVariables>(SearchJournalsDocument, variables, options);
+}
+export type SearchJournalsQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<SearchJournalsQuery, SearchJournalsQueryVariables>;

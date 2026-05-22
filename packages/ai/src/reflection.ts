@@ -25,7 +25,10 @@ export enum ReflectionType {
     INTEGRATION_FOCUSED = 'integration_focused',
 }
 
-export const ReflectionTypeInfo: Record<ReflectionType, { label: string; description: string; icon: string }> = {
+export const ReflectionTypeInfo: Record<
+    ReflectionType,
+    { label: string; description: string; icon: string }
+> = {
     [ReflectionType.PRAGMATIC]: {
         label: 'Pragmatic',
         description: 'Actionable insights and practical advice',
@@ -131,14 +134,19 @@ export const ReflectionTypeInfo: Record<ReflectionType, { label: string; descrip
 export const ReflectionResultSchema = z.object({
     content: z
         .string()
-        .describe('The main reflection content — 2-4 paragraphs of thoughtful reflection'),
+        .describe(
+            'The main reflection content — 2-4 paragraphs of thoughtful reflection',
+        )
+        .default('No reflection generated. Please try again.'),
     keyInsights: z
         .array(z.string())
-        .length(3)
-        .describe('Three concise, actionable or insightful bullet points'),
+        .max(5)
+        .describe('Up to 5 concise, actionable or insightful bullet points')
+        .default([]),
     suggestedQuestion: z
         .string()
-        .describe('A provocative question for further self-inquiry'),
+        .describe('A provocative question for further self-inquiry')
+        .default('What would you like to reflect on further?'),
 })
 
 export type ReflectionResult = z.infer<typeof ReflectionResultSchema>
@@ -651,7 +659,11 @@ export class ReflectionGenerator {
         return Object.values(ReflectionType)
     }
 
-    public static getTypeInfo(type: ReflectionType): { label: string; description: string; icon: string } {
+    public static getTypeInfo(type: ReflectionType): {
+        label: string
+        description: string
+        icon: string
+    } {
         return ReflectionTypeInfo[type]
     }
 }
