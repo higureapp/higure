@@ -92,7 +92,7 @@ export const SearchResultSchema = z.object({
 
 export const AiSearchResponseSchema = z.object({
     queryAnalysis: SearchQueryAnalysisSchema,
-    results: z.array(SearchResultSchema).max(50),
+    results: z.array(SearchResultSchema).max(200),
     totalMatches: z.number().int(),
     searchDurationMs: z.number().int().optional(),
 })
@@ -148,8 +148,12 @@ export class AiSearch {
 
         const duration = Date.now() - startTime
 
+        const truncatedResults = output.results.slice(0, 50)
+
         return {
             ...output,
+            results: truncatedResults,
+            totalMatches: Math.min(output.totalMatches, 50),
             searchDurationMs: duration,
         }
     }
