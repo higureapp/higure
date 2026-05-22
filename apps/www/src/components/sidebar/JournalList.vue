@@ -119,13 +119,13 @@ const handleSelect = (id: string) => {
 }
 
 .leaf-item:hover {
-    background: rgba(0, 0, 0, 0.05);
+    background: var(--hover-overlay-strong);
     border-radius: 8px;
 }
 
 .date-text {
     font-weight: 500;
-    color: #1a1a1a;
+    color: var(--text-primary);
 }
 
 .loc-text {
@@ -136,6 +136,6 @@ const handleSelect = (id: string) => {
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 100px;
-    color: #000;
+    color: var(--text-primary);
 }
 </style>

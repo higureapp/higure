@@ -45,6 +45,7 @@ onClickOutside(fabRef, () => (alertStore.isShowed = false));
     left: 0;
     width: 100vw;
     height: 100vh;
+    background: var(--bg-overlay);
     backdrop-filter: blur(4px);
     display: flex;
     align-items: center;
@@ -53,19 +54,19 @@ onClickOutside(fabRef, () => (alertStore.isShowed = false));
 }
 
 .alert-box {
-    background: white;
+    background: var(--bg-card);
     padding: 2rem;
     border-radius: 12px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    box-shadow: var(--shadow-dropdown);
     width: 90%;
     max-width: 400px;
     text-align: center;
-    box-shadow: 0 0 3px 0 #000;
+    box-shadow: var(--shadow-strong);
 }
 
 .alert-message {
     font-size: 1.1rem;
-    color: #333;
+    color: var(--text-primary);
     margin-bottom: 1.5rem;
 }
 
@@ -85,16 +86,16 @@ button {
 }
 
 .btn-cancel {
-    background: #e0e0e0;
-    color: #333;
+    background: var(--button-secondary-bg);
+    color: var(--button-secondary-text);
 }
 
 .btn-confirm {
-    background: #000;
-    color: #fff;
+    background: var(--button-primary-bg);
+    color: var(--button-primary-text);
 }
 
 .btn-confirm:hover {
-    background: #333;
+    background: var(--button-primary-hover);
 }
 </style>

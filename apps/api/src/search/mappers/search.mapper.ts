@@ -95,7 +95,9 @@ export class SearchMapper {
         return model
     }
 
-    static toSearchHistoryItemModel(entity: SearchHistory): SearchHistoryItemModel {
+    static toSearchHistoryItemModel(
+        entity: SearchHistory,
+    ): SearchHistoryItemModel {
         const model = new SearchHistoryItemModel()
         model.id = entity.id
         model.query = entity.query

@@ -1,13 +1,17 @@
 <script setup lang="ts">
 import { onClickOutside } from '@vueuse/core';
 import { X } from 'lucide-vue-next';
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
+import { useSettingsStore } from '@/stores/settings-store';
 
 const props = defineProps<{
     closeFn: () => void
 }>();
 
+const settingsStore = useSettingsStore();
 const fabRef = ref(null); 
+
+const iconColor = computed(() => settingsStore.isDarkTheme ? '#e5e5e5' : '#000000');
 
 onClickOutside(fabRef, () => (props.closeFn()));
 </script>
@@ -18,7 +22,7 @@ onClickOutside(fabRef, () => (props.closeFn()));
             <div class="alert-overlay">
                 <div class="alert-box" ref="fabRef">
                     <div class="close-modal" @click="closeFn">
-                        <X :size="24" color="#000" />
+                        <X :size="24" :color="iconColor" />
                     </div>
                     <slot></slot>
                 </div>
@@ -45,6 +49,7 @@ onClickOutside(fabRef, () => (props.closeFn()));
     left: 0;
     width: 100vw;
     height: 100vh;
+    background: var(--bg-overlay);
     backdrop-filter: blur(4px);
     display: flex;
     align-items: center;
@@ -53,14 +58,14 @@ onClickOutside(fabRef, () => (props.closeFn()));
 }
 
 .alert-box {
-    background: white;
+    background: var(--bg-card);
     padding: 2rem;
     border-radius: 12px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    box-shadow: var(--shadow-dropdown);
     width: 90%;
     max-width: 400px;
     text-align: center;
-    box-shadow: 0 0 3px 0 #000;
+    box-shadow: var(--shadow-strong);
     position: relative;
 }
 
@@ -79,7 +84,7 @@ onClickOutside(fabRef, () => (props.closeFn()));
 
 .alert-message {
     font-size: 1.1rem;
-    color: #333;
+    color: var(--text-primary);
     margin-bottom: 1.5rem;
 }
 

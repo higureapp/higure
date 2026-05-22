@@ -49,7 +49,7 @@ const journals = computed(() => journalStore.pages?.journalPages ?? null)
 }
 
 .main {
-    background: #EDEDED;
+    background: var(--bg-main);
     flex: 1;
     display: flex;
     justify-content: center;

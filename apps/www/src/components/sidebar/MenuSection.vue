@@ -41,7 +41,7 @@ defineProps<{
     font-weight: 700;
     font-size: 0.8rem;
     text-transform: uppercase;
-    color: #000000;
+    color: var(--text-primary);
     letter-spacing: 0.05em;
 }
 .select-wrapper {
@@ -52,14 +52,14 @@ defineProps<{
 .order-indicator {
     appearance: none; 
     -webkit-appearance: none;
-    background: rgba(255, 255, 255, 0.4);
+    background: var(--bg-input);
     backdrop-filter: blur(4px); 
     padding: 5px 10px 5px 25px; 
     border-radius: 20px;
     font-size: 0.75rem;
     font-weight: 500;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    color: #000;
+    border: 1px solid var(--border-light);
+    color: var(--text-primary);
     cursor: pointer;
     transition: all 0.2s ease;
     outline: none;
@@ -67,7 +67,7 @@ defineProps<{
 .chevron {
     font-size: 0.9rem;
     pointer-events: none; 
-    color: #000000;
+    color: var(--text-primary);
     position: absolute;
     left: 12px;
     z-index: 10;

@@ -26,7 +26,7 @@ const greeting = computed(() => {
 
 <style scoped>
 h1 {
-    color: #000;
+    color: var(--text-primary);
     font-family: "Ibarra Real Nova", serif;
     font-weight: 300;
     font-optical-sizing: auto;

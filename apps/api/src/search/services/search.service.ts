@@ -1,5 +1,8 @@
 import { Injectable } from '@nestjs/common'
-import { SearchResponseModel, SearchHistoryItemModel } from '../models/search.model'
+import {
+    SearchResponseModel,
+    SearchHistoryItemModel,
+} from '../models/search.model'
 import { SearchRepository } from '../search.repository'
 import { SearchMapper } from '../mappers/search.mapper'
 import { AiSearch, SearchJournalEntry } from '@higure/ai'
@@ -61,7 +64,10 @@ export class SearchService {
         return SearchMapper.toSearchHistoryItemModelArray(history)
     }
 
-    async deleteSearch(userId: string, id: string): Promise<SearchHistoryItemModel | null> {
+    async deleteSearch(
+        userId: string,
+        id: string,
+    ): Promise<SearchHistoryItemModel | null> {
         const deleted = await this.searchRepository.deleteSearch(userId, id)
         return deleted ? SearchMapper.toSearchHistoryItemModel(deleted) : null
     }

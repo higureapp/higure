@@ -13,17 +13,31 @@ export const useSearchStore = defineStore('search', () => {
     const isModalOpen = ref<boolean>(false)
     const currentQuery = ref<string>('')
     const isSearching = ref<boolean>(false)
-    const searchResults = ref<SearchJournalsQuery['searchJournals'] | null>(null)
+    const searchResults = ref<SearchJournalsQuery['searchJournals'] | null>(
+        null,
+    )
     const cameFromSearch = ref<boolean>(false)
 
-    const { mutate: deleteSearchHistoryItemMutation } = useDeleteSearchHistoryItemMutation()
-    const { mutate: clearSearchHistoryMutation } = useClearSearchHistoryMutation()
+    const { mutate: deleteSearchHistoryItemMutation } =
+        useDeleteSearchHistoryItemMutation()
+    const { mutate: clearSearchHistoryMutation } =
+        useClearSearchHistoryMutation()
 
-    const { result: historyResult, loading: historyLoading, refetch: refetchHistory } = useSearchHistoryQuery()
-    const searchHistory = computed(() => historyResult.value?.searchHistory ?? [])
+    const {
+        result: historyResult,
+        loading: historyLoading,
+        refetch: refetchHistory,
+    } = useSearchHistoryQuery()
+    const searchHistory = computed(
+        () => historyResult.value?.searchHistory ?? [],
+    )
 
     const searchTrigger = ref<number>(0)
-    const { result: searchResult, loading: searchLoading, refetch: refetchSearch } = useSearchJournalsQuery(
+    const {
+        result: searchResult,
+        loading: searchLoading,
+        refetch: refetchSearch,
+    } = useSearchJournalsQuery(
         () => ({
             query: currentQuery.value,
             saveToHistory: true,

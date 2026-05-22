@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { computed } from 'vue';
+import { useSettingsStore } from '@/stores/settings-store';
 
 defineProps<{
     label: string;
@@ -6,12 +8,14 @@ defineProps<{
     action: () => void;
 }>();
 
+const settingsStore = useSettingsStore();
+const iconColor = computed(() => settingsStore.isDarkTheme ? '#a0a0a0' : '#444');
 </script>
 
 <template>
     <div class="btn-ai" @click="action">
         <div class="icon-ai">
-            <component :is="icon" size="38" color="#444" />
+            <component :is="icon" size="38" :color="iconColor" />
         </div>
         <div class="text">
             <p>{{ label }}</p>
@@ -33,14 +37,14 @@ defineProps<{
     cursor: pointer;
     font-family: "Glory", sans-serif;
     transition: 300ms;
-    background-color: #EBD8DC;
-    box-shadow: 0 0 3px 0 #000;
+    background-color: var(--bg-tertiary);
+    box-shadow: var(--shadow-strong);
 }
 
 .btn-ai:hover {
-    background: #FDC3C3;
+    background: var(--bg-card-hover);
     transition: 300ms;
     transform: translateY(3px);
-    box-shadow: 0;
+    box-shadow: none;
 }
 </style>

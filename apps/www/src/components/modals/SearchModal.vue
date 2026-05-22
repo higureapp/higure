@@ -248,7 +248,7 @@ const hasHistory = computed(() => searchStore.searchHistory.length > 0);
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: rgba(0, 0, 0, 0.3);
+    background: var(--bg-overlay);
     backdrop-filter: blur(6px);
     display: flex;
     align-items: flex-start;
@@ -258,9 +258,9 @@ const hasHistory = computed(() => searchStore.searchHistory.length > 0);
 }
 
 .search-box {
-    background: #EDEDED;
+    background: var(--bg-main);
     border-radius: 16px;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+    box-shadow: var(--shadow-dropdown);
     width: 90%;
     max-width: 700px;
     max-height: 80vh;
@@ -275,23 +275,23 @@ const hasHistory = computed(() => searchStore.searchHistory.length > 0);
     align-items: center;
     gap: 1rem;
     padding: 1.25rem 1.25rem 1rem 1.25rem;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-    background: #EDEDED;
+    border-bottom: 1px solid var(--border-subtle);
+    background: var(--bg-main);
 }
 
 .search-input-wrapper {
     flex: 1;
     display: flex;
     align-items: center;
-    background: #fff;
-    border: 1px solid rgba(0, 0, 0, 0.08);
+    background: var(--bg-card);
+    border: 1px solid var(--border-light);
     border-radius: 12px;
     padding: 0 0.75rem 0 1rem;
     gap: 0.5rem;
 }
 
 .search-icon {
-    color: #999;
+    color: var(--icon-color-muted);
     flex-shrink: 0;
 }
 
@@ -303,10 +303,11 @@ const hasHistory = computed(() => searchStore.searchHistory.length > 0);
     padding: 0.85rem 0;
     outline: none;
     font-family: "Figtree", sans-serif;
+    color: var(--text-primary);
 }
 
 .search-input::placeholder {
-    color: #aaa;
+    color: var(--text-placeholder);
 }
 
 .search-btn {
@@ -314,16 +315,16 @@ const hasHistory = computed(() => searchStore.searchHistory.length > 0);
     align-items: center;
     justify-content: center;
     padding: 0.5rem;
-    background: #000;
+    background: var(--button-primary-bg);
     border: none;
     border-radius: 8px;
-    color: #fff;
+    color: var(--button-primary-text);
     cursor: pointer;
     transition: all 0.2s ease;
 }
 
 .search-btn:hover:not(:disabled) {
-    background: #1a1a1a;
+    background: var(--button-primary-hover);
 }
 
 .search-btn:disabled {
@@ -342,7 +343,7 @@ const hasHistory = computed(() => searchStore.searchHistory.length > 0);
 }
 
 .close-modal:hover {
-    background: rgba(0, 0, 0, 0.05);
+    background: var(--hover-overlay-strong);
 }
 
 .search-body {
@@ -358,7 +359,7 @@ const hasHistory = computed(() => searchStore.searchHistory.length > 0);
     justify-content: center;
     padding: 3rem;
     gap: 1rem;
-    color: #666;
+    color: var(--text-secondary);
 }
 
 .spinning {
@@ -377,12 +378,13 @@ const hasHistory = computed(() => searchStore.searchHistory.length > 0);
     justify-content: center;
     padding: 2rem 1rem;
     text-align: center;
-    color: #666;
+    color: var(--text-secondary);
 }
 
 .empty-icon {
     opacity: 0.3;
     margin-bottom: 1rem;
+    color: var(--icon-color-muted);
 }
 
 .search-suggestions {
@@ -396,15 +398,16 @@ const hasHistory = computed(() => searchStore.searchHistory.length > 0);
 .suggestion {
     font-size: 0.85rem;
     padding: 0.5rem 1rem;
-    background: #DBD3DC;
+    background: var(--tag-bg);
     border-radius: 20px;
     cursor: pointer;
     transition: all 0.2s ease;
     font-family: "Figtree", sans-serif;
+    color: var(--tag-text);
 }
 
 .suggestion:hover {
-    background: #cfc7d0;
+    background: var(--tag-bg-hover);
 }
 
 .results-section {
@@ -417,13 +420,13 @@ const hasHistory = computed(() => searchStore.searchHistory.length > 0);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-bottom: 0.5rem;
+    padding-bottom:0.5rem;
 }
 
 .results-count {
     font-size: 0.85rem;
     font-weight: 600;
-    color: #666;
+    color: var(--text-secondary);
     text-transform: uppercase;
     letter-spacing: 0.05em;
 }
@@ -434,17 +437,17 @@ const hasHistory = computed(() => searchStore.searchHistory.length > 0);
     gap: 0.4rem;
     padding: 0.4rem 0.75rem;
     background: transparent;
-    border: 1px solid rgba(0, 0, 0, 0.1);
+    border: 1px solid var(--border-medium);
     border-radius: 8px;
     font-size: 0.8rem;
-    color: #666;
+    color: var(--text-secondary);
     cursor: pointer;
     transition: all 0.2s ease;
 }
 
 .btn-show-history:hover {
-    background: rgba(0, 0, 0, 0.02);
-    border-color: rgba(0, 0, 0, 0.15);
+    background: var(--hover-overlay);
+    border-color: var(--border-hover);
 }
 
 .results-list {
@@ -454,16 +457,16 @@ const hasHistory = computed(() => searchStore.searchHistory.length > 0);
 }
 
 .result-card {
-    background: #fff;
+    background: var(--bg-card);
     border-radius: 12px;
     padding: 1rem 1.25rem;
-    border: 1px solid rgba(0, 0, 0, 0.04);
+    border: 1px solid var(--border-subtle);
     cursor: pointer;
     transition: all 0.2s ease;
 }
 
 .result-card:hover {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    box-shadow: var(--shadow-medium);
     transform: translateY(-1px);
 }
 
@@ -477,7 +480,7 @@ const hasHistory = computed(() => searchStore.searchHistory.length > 0);
 .result-date {
     font-size: 0.8rem;
     font-weight: 600;
-    color: #8b5cf6;
+    color: var(--accent-purple);
     text-transform: uppercase;
     letter-spacing: 0.03em;
 }
@@ -485,26 +488,26 @@ const hasHistory = computed(() => searchStore.searchHistory.length > 0);
 .result-relevance {
     font-size: 0.75rem;
     padding: 0.25rem 0.5rem;
-    background: rgba(139, 92, 246, 0.1);
+    background: var(--accent-purple-light);
     border-radius: 4px;
-    color: #7c3aed;
+    color: var(--accent-purple);
 }
 
 .result-summary {
     font-family: "Ibarra Real Nova", serif;
     font-size: 1rem;
     line-height: 1.5;
-    color: #1a1a1a;
+    color: var(--text-primary);
     margin: 0.5rem 0;
 }
 
 .result-preview {
     font-size: 0.85rem;
-    color: #666;
+    color: var(--text-secondary);
     line-height: 1.5;
     margin-top: 0.5rem;
     padding-top: 0.5rem;
-    border-top: 1px solid rgba(0, 0, 0, 0.04);
+    border-top: 1px solid var(--border-subtle);
 }
 
 .result-highlights {
@@ -513,7 +516,7 @@ const hasHistory = computed(() => searchStore.searchHistory.length > 0);
     gap: 0.5rem;
     margin-top: 0.75rem;
     padding-top: 0.75rem;
-    border-top: 1px dashed rgba(0, 0, 0, 0.06);
+    border-top: 1px dashed var(--border-subtle);
 }
 
 .highlight-item {
@@ -522,19 +525,19 @@ const hasHistory = computed(() => searchStore.searchHistory.length > 0);
 
 .highlight-concept {
     font-weight: 600;
-    color: #8b5cf6;
+    color: var(--accent-purple);
     margin-right: 0.25rem;
 }
 
 .highlight-text {
     font-style: italic;
-    color: #555;
+    color: var(--text-secondary);
 }
 
 .no-results {
     text-align: center;
     padding: 3rem 1rem;
-    color: #999;
+    color: var(--text-tertiary);
 }
 
 .history-section {
@@ -554,7 +557,7 @@ const hasHistory = computed(() => searchStore.searchHistory.length > 0);
     margin: 0;
     font-size: 0.85rem;
     font-weight: 600;
-    color: #666;
+    color: var(--text-secondary);
     text-transform: uppercase;
     letter-spacing: 0.05em;
 }
@@ -568,14 +571,14 @@ const hasHistory = computed(() => searchStore.searchHistory.length > 0);
     border: none;
     border-radius: 8px;
     font-size: 0.8rem;
-    color: #999;
+    color: var(--text-tertiary);
     cursor: pointer;
     transition: all 0.2s ease;
 }
 
 .btn-clear-history:hover {
-    color: #ef4444;
-    background: rgba(239, 68, 68, 0.05);
+    color: var(--accent-danger);
+    background: color-mix(in srgb, var(--accent-danger) 10%, transparent);
 }
 
 .history-list {
@@ -595,18 +598,18 @@ const hasHistory = computed(() => searchStore.searchHistory.length > 0);
 }
 
 .history-item:hover {
-    background: rgba(0, 0, 0, 0.02);
+    background: var(--hover-overlay);
 }
 
 .history-icon {
-    color: #999;
+    color: var(--icon-color-muted);
     flex-shrink: 0;
 }
 
 .history-query {
     flex: 1;
     font-size: 0.95rem;
-    color: #1a1a1a;
+    color: var(--text-primary);
     font-family: "Ibarra Real Nova", serif;
 }
 
@@ -616,7 +619,7 @@ const hasHistory = computed(() => searchStore.searchHistory.length > 0);
 
 .history-meta {
     font-size: 0.75rem;
-    color: #999;
+    color: var(--text-tertiary);
     flex-shrink: 0;
 }
 
@@ -628,7 +631,7 @@ const hasHistory = computed(() => searchStore.searchHistory.length > 0);
     background: transparent;
     border: none;
     border-radius: 6px;
-    color: #bbb;
+    color: var(--text-muted);
     cursor: pointer;
     opacity: 0;
     transition: all 0.2s ease;
@@ -639,7 +642,7 @@ const hasHistory = computed(() => searchStore.searchHistory.length > 0);
 }
 
 .btn-delete-history:hover {
-    color: #ef4444;
-    background: rgba(239, 68, 68, 0.05);
+    color: var(--accent-danger);
+    background: color-mix(in srgb, var(--accent-danger) 10%, transparent);
 }
 </style>

@@ -33,7 +33,7 @@ const numToWeekDay: Record<number, string> = {
 
 <style scoped>
 .jcard {
-    color: #000000;
+    color: var(--text-primary);
     padding: 1rem;
     border-radius: 14px;
     display: flex;
@@ -59,7 +59,7 @@ const numToWeekDay: Record<number, string> = {
     font-size: 0.7rem;
     margin: 0;
     line-height: 1;
-    color: #666;
+    color: var(--text-secondary);
 }
 
 .dayofmonth {
@@ -68,6 +68,7 @@ const numToWeekDay: Record<number, string> = {
     font-size: 1.8rem;
     margin: 0;
     line-height: 1.1;
+    color: var(--text-primary);
 }
 
 .jbody {
@@ -75,8 +76,8 @@ const numToWeekDay: Record<number, string> = {
 }
 
 .jcard:hover {
-    box-shadow: 0 0 3px 0 #000;
-    background-color: #FDC3C3;
+    box-shadow: var(--shadow-strong);
+    background-color: var(--bg-card-hover);
     transition: 300ms;
 }
 </style>

@@ -2,6 +2,129 @@
 @import url('https://fonts.googleapis.com/css2?family=Ibarra+Real+Nova:ital,wght@0,400..700;1,400..700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap');
 
+:root {
+    --bg-main: #EDEDED;
+    --bg-secondary: #ffffff;
+    --bg-tertiary: #EBD8DC;
+    --bg-card: #ffffff;
+    --bg-card-hover: #FDC3C3;
+    --bg-input: rgba(255, 255, 255, 0.4);
+    --bg-tab-inactive: #cbcbcd;
+    --bg-tab-active: #EDEDED;
+    --bg-overlay: rgba(0, 0, 0, 0.3);
+    --bg-dropdown: #ffffff;
+    
+    --sidebar-gradient-start: #CFD9DF;
+    --sidebar-gradient-end: #FED6E3;
+    
+    --text-primary: #000000;
+    --text-secondary: #666666;
+    --text-tertiary: #999999;
+    --text-placeholder: #a3a3a3;
+    --text-muted: #71717a;
+    --text-link: #0ca7c2;
+    
+    --border-subtle: rgba(0, 0, 0, 0.05);
+    --border-light: rgba(0, 0, 0, 0.08);
+    --border-medium: rgba(0, 0, 0, 0.1);
+    --border-hover: rgba(0, 0, 0, 0.15);
+    
+    --hover-overlay: rgba(0, 0, 0, 0.02);
+    --hover-overlay-strong: rgba(0, 0, 0, 0.05);
+    
+    --shadow-subtle: 0 1px 3px rgba(0, 0, 0, 0.1);
+    --shadow-medium: 0 4px 12px rgba(0, 0, 0, 0.05);
+    --shadow-strong: 0 0 3px 0 rgba(0, 0, 0, 0.2);
+    --shadow-elevated: -10px 0 30px rgba(0, 0, 0, 0.02);
+    --shadow-dropdown: 0 10px 40px rgba(0, 0, 0, 0.1);
+    
+    --accent-success: #059669;
+    --accent-danger: #dc2626;
+    --accent-purple: #8b5cf6;
+    --accent-purple-light: rgba(139, 92, 246, 0.1);
+    
+    --button-primary-bg: #000000;
+    --button-primary-text: #ffffff;
+    --button-primary-hover: #1a1a1a;
+    --button-secondary-bg: #DBD3DC;
+    --button-secondary-text: #18181b;
+    --button-secondary-hover: #cfc7d0;
+    
+    --scrollbar-track: transparent;
+    --scrollbar-thumb: rgba(255, 255, 255, 0.267);
+    
+    --icon-color: #000000;
+    --icon-color-secondary: #666666;
+    --icon-color-muted: #999999;
+    
+    --editor-caret: #000000;
+    --editor-preview: #1a1a1a;
+    
+    --highlight-bg: rgba(0, 0, 0, 0.04);
+    --highlight-text: #555555;
+    
+    --tag-bg: #DBD3DC;
+    --tag-bg-hover: #cfc7d0;
+    --tag-text: #1a1a1a;
+    
+    --side-actions-bg: #FDC3C3;
+}
+
+:root.dark {
+    --bg-main: #0d1117;
+    --bg-secondary: #161b27;
+    --bg-tertiary: #1c2236;
+    --bg-card: #161b27;
+    --bg-card-hover: #1e2540;
+    --bg-input: rgba(255, 255, 255, 0.04);
+    --bg-tab-inactive: #1a2030;
+    --bg-tab-active: #222b42;
+    --bg-overlay: rgba(0, 0, 0, 0.65);
+    --bg-dropdown: #1f263a;
+    --sidebar-gradient-start: #131929;
+    --sidebar-gradient-end: #1a1d2e;
+    --text-primary: #f0f2f8;
+    --text-secondary: #8892b0;
+    --text-tertiary: #5c6480;
+    --text-placeholder: #3e4560;
+    --text-muted: #7a85a3;
+    --text-link: #60a5fa;
+    --border-subtle: rgba(99, 120, 180, 0.06);
+    --border-light: rgba(99, 120, 180, 0.1);
+    --border-medium: rgba(99, 120, 180, 0.14);
+    --border-hover: rgba(99, 120, 180, 0.22);
+    --hover-overlay: rgba(148, 163, 214, 0.03);
+    --hover-overlay-strong: rgba(148, 163, 214, 0.06);
+    --shadow-subtle: 0 1px 3px rgba(0, 0, 0, 0.4);
+    --shadow-medium: 0 4px 16px rgba(0, 0, 0, 0.5);
+    --shadow-strong: 0 0 3px 0 rgba(99, 120, 180, 0.12);
+    --shadow-elevated: -10px 0 30px rgba(0, 0, 0, 0.35);
+    --shadow-dropdown: 0 12px 40px rgba(0, 0, 0, 0.6);
+    --accent-success: #4ade80;
+    --accent-danger: #f87171;
+    --accent-purple: #a78bfa;
+    --accent-purple-light: rgba(167, 139, 250, 0.12);
+    --button-primary-bg: #e2e8f0;
+    --button-primary-text: #0d1117;
+    --button-primary-hover: #ffffff;
+    --button-secondary-bg: #252d45;
+    --button-secondary-text: #d0d8f0;
+    --button-secondary-hover: #2e3852;
+    --scrollbar-track: transparent;
+    --scrollbar-thumb: rgba(99, 120, 180, 0.15);
+    --icon-color: #d0d8f0;
+    --icon-color-secondary: #8892b0;
+    --icon-color-muted: #5c6480;
+    --editor-caret: #f0f2f8;
+    --editor-preview: #f0f2f8;
+    --highlight-bg: rgba(99, 120, 180, 0.07);
+    --highlight-text: #c8d0e8;
+    --tag-bg: #1e2a45;
+    --tag-bg-hover: #253356;
+    --tag-text: #c8d0e8;
+    --side-actions-bg: #1c233a;
+}
+
 * {
     padding: 0;
     margin: 0;
@@ -11,15 +134,17 @@ body {
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
-    color: #fff;
+    color: var(--text-primary);
     font-family: "Ibarra Real Nova", serif;
     font-optical-sizing: auto;
     font-style: normal;
     position: relative;
+    background: var(--bg-main);
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 a {
-    color: #0ca7c2;
+    color: var(--text-link);
 }
 
 ::-webkit-scrollbar {
@@ -29,8 +154,12 @@ a {
 }
 
 ::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.267);
+    background: var(--scrollbar-thumb);
     border-radius: 4px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--scrollbar-track);
 }
 
 b {

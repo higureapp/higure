@@ -28,19 +28,19 @@ defineProps<{
 
 .label {
     font-size: 0.8rem;
-    color: #3c3c3c;
+    color: var(--text-secondary);
 }
 
 .value {
     font-size: 0.85rem;
     font-weight: 600;
-    color: #000000;
+    color: var(--text-primary);
 }
 
 .progress-bar {
     width: 60px;
     height: 6px;
-    background: #f0f0f0;
+    background: var(--bg-tab-inactive);
     border-radius: 3px;
     overflow: hidden;
 }

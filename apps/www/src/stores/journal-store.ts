@@ -11,14 +11,17 @@ import {
     type GetJournalPagesQuery,
 } from '../../gql_generated/graphql'
 
-type JournalPageFromQuery = NonNullable<GetJournalPagesQuery['journalPages']['pages']>[number]
+type JournalPageFromQuery = NonNullable<
+    GetJournalPagesQuery['journalPages']['pages']
+>[number]
 
 const JOURNAL_PAGE_SIZE = 100
 
 export const useJournalStore = defineStore('journal', () => {
     const { mutate: updateJournalMutation } = useUpdateJournalPageMutation()
     const { mutate: createJournalMutation } = useCreateJournalPageMutation()
-    const { mutate: softDeleteJournalMutation } = useSoftDeleteJournalPageMutation()
+    const { mutate: softDeleteJournalMutation } =
+        useSoftDeleteJournalPageMutation()
 
     const allPages = ref<JournalPageFromQuery[]>([])
     const totalCount = ref<number>(0)
@@ -26,7 +29,11 @@ export const useJournalStore = defineStore('journal', () => {
     const hasMorePages = ref<boolean>(false)
     const fetchPage = ref<number>(0)
 
-    const { result: pagesResult, loading: loadingPages, refetch: refetchPages } = useGetJournalPagesQuery(
+    const {
+        result: pagesResult,
+        loading: loadingPages,
+        refetch: refetchPages,
+    } = useGetJournalPagesQuery(
         () => ({
             filters: {},
             pagination: {
@@ -68,26 +75,30 @@ export const useJournalStore = defineStore('journal', () => {
         },
     }))
 
-    watch(pagesResult, (newResult) => {
-        if (newResult?.journalPages) {
-            const data = newResult.journalPages
-            const newPages = data.pages as JournalPageFromQuery[]
-            
-            if (fetchPage.value === 1) {
-                allPages.value = [...newPages]
-            } else {
-                allPages.value = [...allPages.value, ...newPages]
-            }
-            totalCount.value = data.totalCount
-            hasMorePages.value = data.hasMore
+    watch(
+        pagesResult,
+        (newResult) => {
+            if (newResult?.journalPages) {
+                const data = newResult.journalPages
+                const newPages = data.pages as JournalPageFromQuery[]
 
-            if (data.hasMore) {
-                fetchPage.value++
-            } else {
-                isLoadingAll.value = false
+                if (fetchPage.value === 1) {
+                    allPages.value = [...newPages]
+                } else {
+                    allPages.value = [...allPages.value, ...newPages]
+                }
+                totalCount.value = data.totalCount
+                hasMorePages.value = data.hasMore
+
+                if (data.hasMore) {
+                    fetchPage.value++
+                } else {
+                    isLoadingAll.value = false
+                }
             }
-        }
-    }, { deep: true })
+        },
+        { deep: true },
+    )
 
     async function loadAllPages(): Promise<void> {
         if (isLoadingAll.value) return
@@ -96,7 +107,7 @@ export const useJournalStore = defineStore('journal', () => {
         allPages.value = []
         totalCount.value = 0
         hasMorePages.value = false
-        
+
         fetchPage.value = 1
     }
 

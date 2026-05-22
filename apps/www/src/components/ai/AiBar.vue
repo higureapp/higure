@@ -238,11 +238,11 @@ onMounted(() => {
     position: relative;
     width: 100%;
     height: 100%;
-    background: #EBD8DC;
-    border-left: 1px solid rgba(0, 0, 0, 0.05);
+    background: var(--bg-tertiary);
+    border-left: 1px solid var(--border-subtle);
     display: flex;
     flex-direction: column;
-    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.02);
+    box-shadow: var(--shadow-elevated);
     z-index: 100;
     font-family: "Figtree", sans-serif;
 }
@@ -251,8 +251,8 @@ onMounted(() => {
     display: flex;
     flex-direction: column;
     padding: 1.25rem 1.25rem 0.75rem 1.25rem;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.03);
-    background: #EBD8DC;
+    border-bottom: 1px solid var(--border-subtle);
+    background: var(--bg-tertiary);
 }
 
 .header-main {
@@ -271,19 +271,19 @@ onMounted(() => {
 .header-title h2 {
     font-size: 1.1rem;
     font-weight: 700;
-    color: #000000;
+    color: var(--text-primary);
     margin: 0;
     letter-spacing: -0.02em;
     text-transform: uppercase;
 }
 
 .icon-sparkle {
-    color: #000000;
+    color: var(--icon-color);
 }
 
 .tab-switcher {
     display: flex;
-    background: #cbcbcd;
+    background: var(--bg-tab-inactive);
     padding: 0.25rem;
     border-radius: 10px;
     gap: 0.25rem;
@@ -301,15 +301,15 @@ onMounted(() => {
     border-radius: 8px;
     font-size: 0.8rem;
     font-weight: 600;
-    color: #71717a;
+    color: var(--text-muted);
     cursor: pointer;
     transition: all 0.2s ease;
 }
 
 .tab-btn.active {
-    background: #EDEDED;
-    color: #18181b;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    background: var(--bg-tab-active);
+    color: var(--text-primary);
+    box-shadow: var(--shadow-subtle);
 }
 
 .reflection-selector {
@@ -320,8 +320,8 @@ onMounted(() => {
 }
 
 .custom-select {
-    background: #EDEDED;
-    border: 1px solid rgba(0, 0, 0, 0.08);
+    background: var(--bg-tab-active);
+    border: 1px solid var(--border-light);
     border-radius: 10px;
     padding: 0.75rem 1rem;
     cursor: pointer;
@@ -329,8 +329,8 @@ onMounted(() => {
 }
 
 .custom-select:hover {
-    border-color: rgba(0, 0, 0, 0.15);
-    background: #f0f0f0;
+    border-color: var(--border-hover);
+    background: var(--hover-overlay);
 }
 
 .selected-type {
@@ -341,12 +341,12 @@ onMounted(() => {
 
 .type-label {
     font-weight: 600;
-    color: #18181b;
+    color: var(--text-primary);
     font-size: 0.95rem;
 }
 
 .dropdown-icon {
-    color: #666;
+    color: var(--icon-color-secondary);
     transition: transform 0.2s ease;
 }
 
@@ -356,7 +356,7 @@ onMounted(() => {
 
 .type-description {
     font-size: 0.75rem;
-    color: #71717a;
+    color: var(--text-muted);
     margin-top: 0.25rem;
 }
 
@@ -366,10 +366,10 @@ onMounted(() => {
     right: 1.25rem;
     top: auto;
     margin-top: 0.25rem;
-    background: #fff;
-    border: 1px solid rgba(0, 0, 0, 0.1);
+    background: var(--bg-card);
+    border: 1px solid var(--border-medium);
     border-radius: 12px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--shadow-dropdown);
     max-height: 300px;
     overflow-y: auto;
     z-index: 1000;
@@ -379,7 +379,7 @@ onMounted(() => {
     padding: 0.85rem 1rem;
     cursor: pointer;
     transition: background 0.15s ease;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+    border-bottom: 1px solid var(--border-subtle);
 }
 
 .dropdown-item:last-child {
@@ -387,24 +387,24 @@ onMounted(() => {
 }
 
 .dropdown-item:hover {
-    background: #f5f5f5;
+    background: var(--hover-overlay);
 }
 
 .dropdown-item.active {
-    background: #EBD8DC;
+    background: var(--bg-tertiary);
 }
 
 .item-label {
     display: block;
     font-weight: 600;
-    color: #18181b;
+    color: var(--text-primary);
     font-size: 0.9rem;
 }
 
 .item-desc {
     display: block;
     font-size: 0.75rem;
-    color: #71717a;
+    color: var(--text-muted);
     margin-top: 0.15rem;
 }
 
@@ -414,8 +414,8 @@ onMounted(() => {
     justify-content: center;
     gap: 0.5rem;
     padding: 0.75rem 1rem;
-    background: #000;
-    color: #fff;
+    background: var(--button-primary-bg);
+    color: var(--button-primary-text);
     border: none;
     border-radius: 10px;
     font-weight: 600;
@@ -425,7 +425,7 @@ onMounted(() => {
 }
 
 .generate-reflection-btn:hover:not(:disabled) {
-    background: #1a1a1a;
+    background: var(--button-primary-hover);
     transform: translateY(-1px);
 }
 
@@ -441,9 +441,9 @@ onMounted(() => {
     justify-content: center;
     gap: 0.5rem;
     padding: 0.85rem 1rem;
-    background: #DBD3DC;
-    color: #18181b;
-    border: 1px solid rgba(0, 0, 0, 0.08);
+    background: var(--tag-bg);
+    color: var(--tag-text);
+    border: 1px solid var(--border-light);
     border-radius: 10px;
     font-weight: 600;
     font-size: 0.9rem;
@@ -454,11 +454,11 @@ onMounted(() => {
 }
 
 .btn-regenerate-reflection:hover {
-    background: #cfc7d0;
+    background: var(--tag-bg-hover);
 }
 
 .empty-icon {
-    color: #999;
+    color: var(--icon-color-muted);
     margin-bottom: 1rem;
     opacity: 0.5;
 }
@@ -467,7 +467,7 @@ onMounted(() => {
     background: transparent;
     border: none;
     cursor: pointer;
-    color: #666;
+    color: var(--icon-color-secondary);
     padding: 0.5rem;
     border-radius: 50%;
     transition: all 0.2s ease;
@@ -477,8 +477,8 @@ onMounted(() => {
 }
 
 .close-button:hover {
-    background: rgba(0, 0, 0, 0.05);
-    color: #000;
+    background: var(--hover-overlay-strong);
+    color: var(--icon-color);
 }
 
 .ai-scroll-container {
@@ -509,7 +509,7 @@ onMounted(() => {
 
 .shimmer-card {
     height: 180px;
-    background: linear-gradient(90deg, #f0f0f0 25%, #f8f8f8 50%, #f0f0f0 75%);
+    background: linear-gradient(90deg, var(--hover-overlay) 25%, var(--bg-card) 50%, var(--hover-overlay) 75%);
     background-size: 200% 100%;
     animation: shimmer 1.5s infinite;
     border-radius: 12px;
@@ -517,7 +517,7 @@ onMounted(() => {
 
 .shimmer-text {
     height: 12px;
-    background: #8d8d8d;
+    background: var(--text-muted);
     border-radius: 6px;
 }
 
@@ -530,14 +530,14 @@ onMounted(() => {
 
 .loading-label {
     text-align: center;
-    color: #999;
+    color: var(--text-tertiary);
     font-size: 0.9rem;
     margin-top: 1rem;
 }
 
 .btn-retry {
-    background: #000;
-    color: #fff;
+    background: var(--button-primary-bg);
+    color: var(--button-primary-text);
     border: none;
     padding: 0.75rem 1.5rem;
     border-radius: 8px;
@@ -549,6 +549,6 @@ onMounted(() => {
 .empty-state {
     text-align: center;
     padding: 3rem 1rem;
-    color: #999;
+    color: var(--text-tertiary);
 }
 </style>

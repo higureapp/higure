@@ -69,7 +69,7 @@ watch(
 .journal-detail-page {
     font-family: "Ibarra Real Nova", serif;
     color: #000000;
-    background-color: #EDEDED;
+    background-color: var(--bg-main);
     height: 100vh;
     width: 100%;
     overflow: hidden;
@@ -90,7 +90,7 @@ watch(
     overflow-y: auto;
     display: flex;
     justify-content: center;
-    background-color: #EDEDED;
+    background-color: var(--bg-main);
 }
 
 

@@ -22,7 +22,10 @@ export class SearchRepository {
         })
     }
 
-    async getSearchHistory(userId: string, limit: number = 20): Promise<SearchHistory[]> {
+    async getSearchHistory(
+        userId: string,
+        limit: number = 20,
+    ): Promise<SearchHistory[]> {
         return this.prisma.searchHistory.findMany({
             where: { userId },
             orderBy: { executedAt: 'desc' },
@@ -30,7 +33,10 @@ export class SearchRepository {
         })
     }
 
-    async deleteSearch(userId: string, id: string): Promise<SearchHistory | null> {
+    async deleteSearch(
+        userId: string,
+        id: string,
+    ): Promise<SearchHistory | null> {
         const existing = await this.prisma.searchHistory.findUnique({
             where: { id },
         })

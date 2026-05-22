@@ -74,10 +74,10 @@ function formatReflectionType(type: string): string {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    background: #DBD3DC;
+    background: var(--tag-bg);
     padding: 0.4rem 0.75rem;
     border-radius: 8px;
-    color: #24283B;
+    color: var(--text-primary);
     font-size: 0.75rem;
     font-weight: 600;
     text-transform: uppercase;
@@ -89,7 +89,7 @@ function formatReflectionType(type: string): string {
     font-family: "Ibarra Real Nova", serif;
     font-size: 1.1rem;
     line-height: 1.7;
-    color: #000000;
+    color: var(--text-primary);
     white-space: pre-line;
 }
 
@@ -97,7 +97,7 @@ function formatReflectionType(type: string): string {
     font-size: 1rem;
     font-weight: 700;
     margin-bottom: 1.25rem;
-    color: #000;
+    color: var(--text-primary);
     text-transform: uppercase;
     letter-spacing: 0.05em;
 }
@@ -112,14 +112,14 @@ function formatReflectionType(type: string): string {
     display: flex;
     gap: 0.75rem;
     padding: 1rem;
-    background: #DBD3DC;
+    background: var(--tag-bg);
     border-radius: 12px;
-    border: 1px solid rgba(0, 0, 0, 0.04);
+    border: 1px solid var(--border-subtle);
     align-items: flex-start;
 }
 
 .insight-icon {
-    color: #8b5cf6;
+    color: var(--accent-purple);
     flex-shrink: 0;
     margin-top: 0.1rem;
 }
@@ -127,24 +127,24 @@ function formatReflectionType(type: string): string {
 .insight-item span {
     font-size: 0.95rem;
     line-height: 1.5;
-    color: #1a1a1a;
+    color: var(--text-primary);
 }
 
 .question-section {
     position: relative;
     padding: 2rem 1.5rem;
     margin-top: 2rem;
-    background: #fabab5;
+    background: var(--bg-card-hover);
     border-radius: 16px;
     text-align: center;
-    border: 1px dashed rgba(0, 0, 0, 0.08);
+    border: 1px dashed var(--border-light);
 }
 
 .question-icon {
     position: absolute;
     top: -14px;
     left: 20px;
-    color: #000000;
+    color: var(--icon-color);
     opacity: 0.15;
 }
 
@@ -152,7 +152,7 @@ function formatReflectionType(type: string): string {
     font-family: "Ibarra Real Nova", serif;
     font-style: italic;
     font-size: 1.2rem;
-    color: #1a1a1a;
+    color: var(--text-primary);
     line-height: 1.5;
 }
 </style>

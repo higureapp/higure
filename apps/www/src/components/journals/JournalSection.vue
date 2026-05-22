@@ -18,7 +18,7 @@ defineProps<{
 <style scoped>
 
 h1 {
-    color: #000000;
+    color: var(--text-primary);
     font-family: "Ibarra Real Nova", serif;
     font-weight: 600;
     font-optical-sizing: auto;

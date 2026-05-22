@@ -90,12 +90,13 @@ const currentStreak = computed(() => {
 .week-container {
     display: flex;
     flex-direction: column;
-    color: #000;
+    color: var(--text-primary);
 }
 
 .streak {
     width: 100%;
     margin-bottom: 0.5rem;
+    color: var(--text-primary);
 }
 
 .streak>p {

@@ -31,11 +31,11 @@ const isOpen = ref(false);
     cursor: pointer;
     user-select: none;
     transition: background 0.2s;
-    color: #000;
+    color: var(--text-primary);
     border-radius: 8px;
 }
 .group-header:hover {
-    background: rgba(0, 0, 0, 0.05);
+    background: var(--hover-overlay-strong);
 }
 .label {
     font-size: 0.85rem;

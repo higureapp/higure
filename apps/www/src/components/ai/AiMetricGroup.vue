@@ -21,10 +21,10 @@ defineProps<{
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
-    background: #ccc;
+    background: var(--tag-bg);
     padding: 1rem;
     border-radius: 1rem;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.01), 0 2px 4px -1px rgba(0, 0, 0, 0.006);
+    box-shadow: var(--shadow-subtle);
 }
 
 .metric-group h4 {
@@ -34,7 +34,7 @@ defineProps<{
     font-size: 0.7rem;
     font-weight: 700;
     text-transform: uppercase;
-    color: #000000;
+    color: var(--text-primary);
     letter-spacing: 0.05em;
     margin: 0 0 0.25rem 0;
 }

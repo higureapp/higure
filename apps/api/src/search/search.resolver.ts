@@ -1,5 +1,8 @@
 import { Args, ID, Mutation, Query, Resolver } from '@nestjs/graphql'
-import { SearchResponseModel, SearchHistoryItemModel } from './models/search.model'
+import {
+    SearchResponseModel,
+    SearchHistoryItemModel,
+} from './models/search.model'
 import {
     CurrentUser,
     CurrentUserType,
@@ -13,7 +16,12 @@ export class SearchResolver {
     @Query(() => SearchResponseModel)
     async searchJournals(
         @Args('query') query: string,
-        @Args('saveToHistory', { type: () => Boolean, nullable: true, defaultValue: true }) saveToHistory: boolean,
+        @Args('saveToHistory', {
+            type: () => Boolean,
+            nullable: true,
+            defaultValue: true,
+        })
+        saveToHistory: boolean,
         @CurrentUser() user: CurrentUserType,
     ): Promise<SearchResponseModel> {
         return this.searchService.search(user.userId, query, saveToHistory)

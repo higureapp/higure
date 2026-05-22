@@ -3,29 +3,70 @@ import { z } from 'zod'
 import { google } from '@ai-sdk/google'
 
 export const SearchDateFilterSchema = z.object({
-    fromDate: z.string().nullable().describe('ISO date string for start of range, or null if not filtered').default(null),
-    toDate: z.string().nullable().describe('ISO date string for end of range, or null if not filtered').default(null),
-    relativeDescription: z.string().nullable().describe('Human description like "last 6 months", "last year", or null').default(null),
+    fromDate: z
+        .string()
+        .nullable()
+        .describe('ISO date string for start of range, or null if not filtered')
+        .default(null),
+    toDate: z
+        .string()
+        .nullable()
+        .describe('ISO date string for end of range, or null if not filtered')
+        .default(null),
+    relativeDescription: z
+        .string()
+        .nullable()
+        .describe(
+            'Human description like "last 6 months", "last year", or null',
+        )
+        .default(null),
 })
 
 export const SearchConceptSchema = z.object({
-    concept: z.string().describe('The main concept or theme being searched for').default(''),
-    synonyms: z.array(z.string()).describe('Related terms and synonyms to look for').default([]),
+    concept: z
+        .string()
+        .describe('The main concept or theme being searched for')
+        .default(''),
+    synonyms: z
+        .array(z.string())
+        .describe('Related terms and synonyms to look for')
+        .default([]),
 })
 
 export const SearchQueryAnalysisSchema = z.object({
     originalQuery: z.string().describe('The original user query'),
-    language: z.string().describe('Language code like "it", "en", "es", etc.').default('en'),
-    dateFilter: SearchDateFilterSchema.default({}),
-    concepts: z.array(SearchConceptSchema).max(5).describe('Up to 5 key concepts to search for').default([]),
-    requiresSemanticSearch: z.boolean().describe('True if this query needs semantic understanding vs just keyword matching').default(false),
-    explicitKeywords: z.array(z.string()).describe('Any explicit keywords mentioned').default([]),
+    language: z
+        .string()
+        .describe('Language code like "it", "en", "es", etc.')
+        .default('en'),
+    dateFilter: SearchDateFilterSchema.optional(),
+    concepts: z
+        .array(SearchConceptSchema)
+        .max(5)
+        .describe('Up to 5 key concepts to search for')
+        .default([]),
+    requiresSemanticSearch: z
+        .boolean()
+        .describe(
+            'True if this query needs semantic understanding vs just keyword matching',
+        )
+        .default(false),
+    explicitKeywords: z
+        .array(z.string())
+        .describe('Any explicit keywords mentioned')
+        .default([]),
 })
 
 export const SearchHighlightSchema = z.object({
     matchedText: z.string().describe('The exact text snippet that matched'),
-    startIndex: z.number().int().describe('Starting character index in the original content'),
-    endIndex: z.number().int().describe('Ending character index in the original content'),
+    startIndex: z
+        .number()
+        .int()
+        .describe('Starting character index in the original content'),
+    endIndex: z
+        .number()
+        .int()
+        .describe('Ending character index in the original content'),
     matchingConcept: z.string().describe('Which concept this matched'),
 })
 
@@ -33,8 +74,14 @@ export const SearchResultSchema = z.object({
     journalPageId: z.string(),
     date: z.string().describe('ISO date of the journal entry'),
     relevanceScore: z.number().min(0).max(1).describe('Relevance from 0-1'),
-    highlights: z.array(SearchHighlightSchema).describe('Matching text snippets').default([]),
-    summary: z.string().describe('Brief summary of why this entry matched').default(''),
+    highlights: z
+        .array(SearchHighlightSchema)
+        .describe('Matching text snippets')
+        .default([]),
+    summary: z
+        .string()
+        .describe('Brief summary of why this entry matched')
+        .default(''),
     location: z.string().nullable().default(null),
     mood: z.number().nullable().default(null),
 })
@@ -67,7 +114,10 @@ export interface SearchInput {
     journals: SearchJournalEntry[]
 }
 
-function formatJournalForPrompt(journal: SearchJournalEntry, index: number): string {
+function formatJournalForPrompt(
+    journal: SearchJournalEntry,
+    index: number,
+): string {
     return `
 --- ENTRY #${index + 1} [ID: ${journal.id}] ---
 Date: ${journal.date.toISOString().split('T')[0]}
@@ -81,9 +131,7 @@ ${journal.content}
 }
 
 export class AiSearch {
-    public static async search(
-        input: SearchInput,
-    ): Promise<AiSearchResponse> {
+    public static async search(input: SearchInput): Promise<AiSearchResponse> {
         const startTime = Date.now()
 
         const { output } = await generateText({
@@ -108,9 +156,10 @@ export class AiSearch {
             .map((j, i) => formatJournalForPrompt(j, i))
             .join('\n\n')
 
-        const sampleJournalsWarning = input.journals.length > 200
-            ? `\n\nNOTE: Showing first 200 entries for analysis. Apply date filtering first to narrow results.\n`
-            : ''
+        const sampleJournalsWarning =
+            input.journals.length > 200
+                ? `\n\nNOTE: Showing first 200 entries for analysis. Apply date filtering first to narrow results.\n`
+                : ''
 
         return `
 # AI SEMANTIC SEARCH ENGINE

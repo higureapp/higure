@@ -43,28 +43,23 @@ watch(() => auth.token, (token) => {
 
 <style scoped>
 .fade-slide-enter-from {
-  opacity: 0;
-  transform: translateY(10px);
+    opacity: 0;
+    transform: translateY(10px);
 }
 
 .fade-slide-leave-to {
-  opacity: 0;
-  transform: translateY(-10px);
+    opacity: 0;
+    transform: translateY(-10px);
 }
 
 .fade-slide-enter-active,
 .fade-slide-leave-active {
-  transition: all 0.3s ease-out;
-}
-
-.fade-slide-enter-to,
-.fade-slide-leave-from {
-  opacity: 1;
-  transform: translateY(0);
+    transition: all 0.3s ease-out;
 }
 
 .page {
-  width: 100%;
-  min-height: 100vh;
+    width: 100%;
+    min-height: 100vh;
+    background: var(--bg-main);
 }
 </style>

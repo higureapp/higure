@@ -66,7 +66,7 @@ defineProps<{
 .section-badge {
     display: inline-flex;
     align-items: center;
-    color: #24283B;
+    color: var(--text-primary);
     font-size: 0.75rem;
     font-weight: 600;
     text-transform: uppercase;
@@ -78,7 +78,7 @@ defineProps<{
     font-family: "Ibarra Real Nova", serif;
     font-size: 1.1rem;
     line-height: 1.7;
-    color: #000000;
+    color: var(--text-primary);
     white-space: pre-line;
 }
 
@@ -86,17 +86,17 @@ defineProps<{
     position: relative;
     padding: 2.5rem 1.5rem;
     margin: 2.5rem 0;
-    background: #fabab5;
+    background: var(--bg-card-hover);
     border-radius: 16px;
     text-align: center;
-    border: 1px dashed rgba(0, 0, 0, 0.08);
+    border: 1px dashed var(--border-light);
 }
 
 .quote-icon {
     position: absolute;
     top: -15px;
     left: 20px;
-    color: #000000;
+    color: var(--icon-color);
     opacity: 0.15;
 }
 
@@ -104,7 +104,7 @@ defineProps<{
     font-family: "Ibarra Real Nova", serif;
     font-style: italic;
     font-size: 1.4rem;
-    color: #1a1a1a;
+    color: var(--text-primary);
     margin-bottom: 1rem;
     line-height: 1.4;
 }
@@ -112,7 +112,7 @@ defineProps<{
 .quote-author {
     font-family: "Figtree", sans-serif;
     font-size: 0.85rem;
-    color: #666;
+    color: var(--text-secondary);
     font-weight: 500;
     letter-spacing: 0.1em;
 }
@@ -121,7 +121,7 @@ defineProps<{
     font-size: 1rem;
     font-weight: 700;
     margin-bottom: 1.25rem;
-    color: #000;
+    color: var(--text-primary);
     text-transform: uppercase;
     letter-spacing: 0.05em;
 }
@@ -133,10 +133,10 @@ defineProps<{
 }
 
 .song-card {
-    background: #DBD3DC;
+    background: var(--tag-bg);
     padding: 1.25rem;
     border-radius: 12px;
-    border: 1px solid rgba(0, 0, 0, 0.04);
+    border: 1px solid var(--border-subtle);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -151,7 +151,7 @@ defineProps<{
     align-self: start;
     border-radius: 8px;
     overflow: hidden;
-    background: #24283B;
+    background: var(--bg-secondary);
 }
 
 .song-cover img {
@@ -166,14 +166,14 @@ defineProps<{
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #2E3440;
-    color: #a1a1aa;
+    background: var(--bg-secondary);
+    color: var(--text-muted);
 }
 
 .song-card:hover {
 
     transform: translateY(-2px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+    box-shadow: var(--shadow-medium);
 }
 
 .song-info {
@@ -185,7 +185,7 @@ defineProps<{
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    color: #999;
+    color: var(--text-tertiary);
     margin-bottom: 0.25rem;
 }
 
@@ -200,18 +200,18 @@ defineProps<{
     font-size: 1.05rem;
     font-weight: 600;
     margin: 0 0 0.5rem 0;
-    color: #1a1a1a;
+    color: var(--text-primary);
 }
 
 .song-reason {
     font-size: 0.85rem;
-    color: #666;
+    color: var(--text-secondary);
     line-height: 1.5;
     font-style: italic;
 }
 
 .play-btn {
-    color: #1db954;
+    color: var(--accent-success);
     transition: transform 0.2s ease;
 }
 

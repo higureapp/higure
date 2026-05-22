@@ -185,8 +185,8 @@ async function deleteAccount() {
     min-height: 100vh;
     width: 100%;
     font-family: "Ibarra Real Nova", serif;
-    color: #000000;
-    background: #EDEDED;
+    color: var(--text-primary);
+    background: var(--bg-main);
 }
 
 .page-header {
@@ -197,7 +197,7 @@ async function deleteAccount() {
     justify-content: space-between;
     align-items: center;
     padding: 1rem 1.5rem;
-    background: rgba(237, 237, 237, 0.7);
+    background: color-mix(in srgb, var(--bg-main) 70%, transparent);
     backdrop-filter: blur(8px);
 }
 
@@ -220,29 +220,30 @@ async function deleteAccount() {
     transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     border-radius: 8px;
     padding: 0.5rem 0.75rem;
+    color: var(--text-primary);
 }
 
 .btn-back:hover {
-    background: rgba(0, 0, 0, 0.05);
+    background: var(--hover-overlay-strong);
     transform: translateX(-2px);
 }
 
 .btn-save.unsaved:hover {
-    background: rgba(0, 0, 0, 0.05);
-    color: #000;
+    background: var(--hover-overlay-strong);
+    color: var(--text-primary);
 }
 
 .btn-save.saved {
-    color: #059669;
+    color: var(--accent-success);
     cursor: default;
 }
 
 .btn-delete {
-    color: #dc2626;
+    color: var(--accent-danger);
 }
 
 .btn-delete:hover {
-    background: rgba(220, 38, 38, 0.1);
+    background: color-mix(in srgb, var(--accent-danger) 10%, transparent);
     transform: scale(1.05);
 }
 
@@ -257,7 +258,7 @@ async function deleteAccount() {
     font-size: clamp(1.75rem, 5vw, 2.25rem);
     font-weight: 600;
     margin: 0 0 1.5rem 0;
-    color: #1a1a1a;
+    color: var(--text-primary);
     letter-spacing: -0.02em;
     line-height: 1.2;
 }
@@ -274,6 +275,7 @@ async function deleteAccount() {
     align-items: center;
     gap: 0.5rem;
     padding: 0.25rem 0;
+    color: var(--text-secondary);
 }
 
 .location-input {
@@ -283,7 +285,7 @@ async function deleteAccount() {
     background: transparent;
     padding: 0;
     font-size: 1rem;
-    color: #000000;
+    color: var(--text-primary);
     font-family: inherit;
     border-bottom: 1px solid transparent;
     transition: border-color 0.2s;
@@ -315,7 +317,7 @@ async function deleteAccount() {
     height: 100%;
     color: transparent;
     background: transparent;
-    caret-color: #000;
+    caret-color: var(--editor-caret);
     resize: none;
     z-index: 2;
     border: none;
@@ -325,13 +327,13 @@ async function deleteAccount() {
 
 .journal-preview {
     position: relative;
-    color: #1a1a1a;
+    color: var(--editor-preview);
     z-index: 1;
     pointer-events: none;
 }
 
 .journal-editor::placeholder {
-    color: #a3a3a3;
+    color: var(--text-placeholder);
     opacity: 1;
 }
 
@@ -370,7 +372,7 @@ async function deleteAccount() {
 }
 
 .side-actions {
-    --bg-green: #FDC3C3;
+    --bg-green: var(--side-actions-bg);
     --radius: 20px;
 
     position: fixed;
@@ -384,7 +386,6 @@ async function deleteAccount() {
     z-index: 10;
 }
 
-/* Ala Superiore */
 .side-actions::before {
     content: "";
     position: absolute;
