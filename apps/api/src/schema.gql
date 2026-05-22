@@ -10,6 +10,8 @@ type User {
   phone: String
   timezone: String!
   locale: String!
+  language: LanguageEnum!
+  theme: Theme!
   emailVerified: Boolean!
   phoneVerified: Boolean!
   lastLoginAt: DateTime
@@ -17,6 +19,21 @@ type User {
   updatedAt: DateTime!
   deletedAt: DateTime
   avatarUrl: String
+}
+
+"""User language preference"""
+enum LanguageEnum {
+  english
+  spanish
+  french
+  italian
+  german
+}
+
+"""User theme preference (dark or light)"""
+enum Theme {
+  dark
+  light
 }
 
 """
@@ -255,6 +272,7 @@ input JournalPaginationInput {
 }
 
 type Mutation {
+  updateSettings(input: UpdateUserInput!): User!
   deleteAccount: String!
   signUp(signUpInput: SignUpInput!): SignUpResponse!
   signIn(signInInput: SignInInput!): AuthResponse!
@@ -283,6 +301,16 @@ type Mutation {
   deleteReflection(id: ID!): ReflectionModel
   deleteSearchHistoryItem(id: ID!): SearchHistoryItemModel
   clearSearchHistory: Float!
+}
+
+input UpdateUserInput {
+  firstname: String
+  lastname: String
+  email: String
+  timezone: String
+  locale: String
+  language: LanguageEnum
+  theme: Theme
 }
 
 input SignUpInput {

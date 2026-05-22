@@ -56,9 +56,4 @@ export class AuthResolver {
         await this.authService.logoutAllDevices(user.userId)
         return 'Logged out from all devices'
     }
-
-    @Query(() => User)
-    async me(@CurrentUser() user: CurrentUserType): Promise<User> {
-        return this.authService.validateUser(user.userId)
-    }
 }

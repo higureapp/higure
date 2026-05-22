@@ -1,5 +1,5 @@
 import { User } from '@/generated/prisma/client'
-import { User as UserModel } from '../models/user.model'
+import { User as UserModel, LanguageEnum, Theme } from '../models/user.model'
 
 export class UsersMapper {
     public static toPublic(user: User): UserModel {
@@ -11,6 +11,8 @@ export class UsersMapper {
             phone: user.phone,
             timezone: user.timezone,
             locale: user.locale,
+            language: user.language as LanguageEnum,
+            theme: user.theme as Theme,
             emailVerified: user.emailVerified,
             phoneVerified: user.phoneVerified,
             lastLoginAt: user.lastLoginAt,

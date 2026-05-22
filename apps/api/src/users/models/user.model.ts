@@ -1,6 +1,19 @@
-import { Field, ID, ObjectType } from '@nestjs/graphql'
+import { Field, ID, ObjectType, registerEnumType } from '@nestjs/graphql'
 import { Expose } from 'class-transformer'
 import { Sensitive } from '../../utils/decorators/sensitive.decorator'
+import { LanguageEnum, Theme } from '../../generated/prisma/client'
+
+registerEnumType(Theme, {
+    name: 'Theme',
+    description: 'User theme preference (dark or light)',
+})
+
+registerEnumType(LanguageEnum, {
+    name: 'LanguageEnum',
+    description: 'User language preference',
+})
+
+export { Theme, LanguageEnum }
 
 @ObjectType()
 export class User {
@@ -32,6 +45,14 @@ export class User {
     @Expose()
     locale: string
 
+    @Field(() => LanguageEnum)
+    @Expose()
+    language: LanguageEnum
+
+    @Field(() => Theme)
+    @Expose()
+    theme: Theme
+
     @Field()
     @Expose()
     emailVerified: boolean
@@ -59,20 +80,4 @@ export class User {
     @Field(() => String, { nullable: true })
     @Expose()
     avatarUrl?: string | null
-
-    // Relations
-    // @Field(type => [Task], { nullable: true })
-    // tasks?: Task[];
-
-    // @Field(type => [TaskCategory], { nullable: true })
-    // taskCategories?: TaskCategory[];
-
-    // @Field(type => [Event], { nullable: true })
-    // events?: Event[];
-
-    // @Field(type => [Habit], { nullable: true })
-    // habits?: Habit[];
-
-    // @Field(type => [Sleep], { nullable: true })
-    // sleeps?: Sleep[];
 }

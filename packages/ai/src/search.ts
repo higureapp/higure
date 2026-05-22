@@ -39,7 +39,11 @@ export const SearchQueryAnalysisSchema = z.object({
         .string()
         .describe('Language code like "it", "en", "es", etc.')
         .default('en'),
-    dateFilter: SearchDateFilterSchema.optional(),
+    dateFilter: SearchDateFilterSchema.default(() => ({
+        fromDate: null,
+        toDate: null,
+        relativeDescription: null,
+    })),
     concepts: z
         .array(SearchConceptSchema)
         .max(5)
