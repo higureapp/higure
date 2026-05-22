@@ -118,19 +118,19 @@ function contentPreview(content: string): string {
             <SideBar />
         </div>
         <div class="main">
-            <div class="base">
-                <div class="top-bar">
-                    <button class="back-btn" @click="router.push('/')">
-                        <ArrowLeft :size="18" />
-                        <span>Home</span>
-                    </button>
-                </div>
+            <header class="page-header">
+                <button class="btn-back" @click="router.push('/')">
+                    <ArrowLeft :size="20" />
+                    <span>Back</span>
+                </button>
+            </header>
 
+            <div class="content-wrapper">
                 <div class="calendar-wrapper">
                     <div class="calendar-container">
-                        <div class="calendar-header">
+                        <div class="calendar-nav">
                             <h2 class="month-title">{{ monthYear }}</h2>
-                            <div class="header-nav">
+                            <div class="nav-buttons">
                                 <button class="nav-btn" @click="prevMonth">
                                     <ChevronLeft :size="18" />
                                 </button>
@@ -159,7 +159,6 @@ function contentPreview(content: string): string {
                                     'other-month': !day.isCurrentMonth,
                                     today: day.isToday,
                                     selected: day.isSelected,
-                                    'has-entries': day.entries.length > 0,
                                 }"
                                 @click="selectDay(day)"
                             >
@@ -194,9 +193,8 @@ function contentPreview(content: string): string {
                     </div>
                 </div>
             </div>
-            <div class="plus-wrapper">
-                <PlusButton />
-            </div>
+
+            <PlusButton />
         </div>
     </div>
 </template>
@@ -209,94 +207,101 @@ function contentPreview(content: string): string {
     overflow: hidden;
 }
 
+.sidebar {
+    flex-shrink: 0;
+}
+
 .main {
     background: var(--bg-main);
     flex: 1;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow-y: auto;
-    padding: 2rem 0;
-}
-
-.base {
-    width: 85vw;
-    max-width: 1100px;
-    min-height: 0;
-    display: flex;
     flex-direction: column;
-    padding: 0 1rem;
+    min-width: 0;
+    overflow: hidden;
 }
 
-@media (max-width: 1200px) {
-    .base {
-        width: 95vw;
-        max-width: none;
-    }
-}
-
-.top-bar {
+.page-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
     display: flex;
     align-items: center;
-    margin-bottom: 1rem;
+    gap: 1rem;
+    padding: 1rem 1.5rem;
+    background: color-mix(in srgb, var(--bg-main) 70%, transparent);
+    backdrop-filter: blur(8px);
     flex-shrink: 0;
 }
 
-.back-btn {
+.btn-back {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    padding: 0.4rem 0.75rem;
     border: none;
     background: transparent;
-    color: var(--text-secondary);
     font-family: "Figtree", sans-serif;
-    font-size: 0.85rem;
+    font-size: 0.95rem;
     font-weight: 500;
     cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     border-radius: 8px;
-    transition: all 0.2s ease;
-}
-
-.back-btn:hover {
-    background: var(--hover-overlay-strong);
+    padding: 0.5rem 0.75rem;
     color: var(--text-primary);
 }
 
-.calendar-wrapper {
-    flex: 0 0 auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    margin-top: 5rem;
+.btn-back:hover {
+    background: var(--hover-overlay-strong);
+    transform: translateX(-2px);
 }
 
-.calendar-container {
-    border-radius: 16px;
-    box-shadow: var(--shadow-medium);
-    overflow: hidden;
-    border: 1px solid var(--border-medium);
-    background: var(--bg-secondary);
-}
-
-.calendar-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1.25rem 1.5rem;
-    border-bottom: 1px solid var(--border-medium);
-    background: var(--bg-secondary);
-}
-
-.month-title {
+.page-title {
     font-family: "Ibarra Real Nova", serif;
-    font-size: 1.4rem;
+    font-size: 1.25rem;
     font-weight: 600;
     color: var(--text-primary);
     margin: 0;
 }
 
-.header-nav {
+.content-wrapper {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 1.5rem;
+}
+
+.calendar-wrapper {
+    width: 100%;
+    max-width: 900px;
+}
+
+.calendar-container {
+    background: var(--bg-card-hover);
+    border-radius: 16px;
+    box-shadow: var(--shadow-medium);
+    overflow: hidden;
+    border: 1px solid var(--border-medium);
+}
+
+.calendar-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid var(--border-medium);
+    background: var(--bg-input);
+}
+
+.month-title {
+    font-family: "Ibarra Real Nova", serif;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.nav-buttons {
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -341,35 +346,28 @@ function contentPreview(content: string): string {
 .calendar-grid {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    grid-template-rows: auto repeat(6, minmax(110px, 1fr));
-    min-height: 680px;
-}
-
-@media (max-width: 900px) {
-    .calendar-grid {
-        grid-template-rows: auto repeat(6, minmax(90px, 1fr));
-        min-height: 550px;
-    }
+    grid-template-rows: auto repeat(6, minmax(100px, 1fr));
+    min-height: 600px;
 }
 
 .day-header {
     text-align: center;
     padding: 0.75rem 0.25rem 0.5rem;
     font-family: "Figtree", sans-serif;
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     font-weight: 600;
     color: var(--text-secondary);
     text-transform: uppercase;
     letter-spacing: 0.05em;
     border-bottom: 1px solid var(--border-medium);
-    background: var(--bg-secondary);
+    background: var(--bg-card-hover);
 }
 
 .day-cell {
     position: relative;
     display: flex;
     flex-direction: column;
-    padding: 0.5rem 0.4rem;
+    padding: 0.4rem 0.35rem;
     border-right: 1px solid var(--border-light);
     border-bottom: 1px solid var(--border-light);
     cursor: default;
@@ -392,7 +390,7 @@ function contentPreview(content: string): string {
 
 .day-cell.current-month {
     cursor: pointer;
-    background: var(--bg-tab-inactive);
+    background: var(--bg-card);
 }
 
 .day-cell.current-month:hover {
@@ -403,10 +401,6 @@ function contentPreview(content: string): string {
     background: var(--accent-purple-light);
 }
 
-.day-cell.today {
-    background: var(--bg-card);
-}
-
 .day-number {
     font-family: "Figtree", sans-serif;
     font-size: 0.8rem;
@@ -415,7 +409,7 @@ function contentPreview(content: string): string {
     text-align: left;
     line-height: 1;
     min-height: 22px;
-    margin-bottom: 0.25rem;
+    margin-bottom: 0.3rem;
 }
 
 .today-badge {
@@ -440,7 +434,7 @@ function contentPreview(content: string): string {
 }
 
 .entry-item {
-    font-size: 0.8rem;
+    font-size: 0.7rem;
     padding: 0.2rem 0.4rem;
     border-radius: 4px;
     overflow: hidden;
@@ -448,7 +442,7 @@ function contentPreview(content: string): string {
     white-space: nowrap;
     cursor: pointer;
     transition: all 0.15s ease;
-    background: var(--accent-purple);
+    background: var(--text-tertiary);
     color: white;
     font-family: "Ibarra Real Nova", serif;
     font-weight: 500;
@@ -476,5 +470,52 @@ function contentPreview(content: string): string {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+}
+
+@media (max-width: 900px) {
+    .page-header {
+        padding: 0.75rem 1rem;
+    }
+
+    .btn-back span {
+        display: none;
+    }
+
+    .content-wrapper {
+        padding: 1rem;
+    }
+
+    .calendar-nav {
+        padding: 0.75rem 1rem;
+        flex-direction: column;
+        gap: 0.75rem;
+        align-items: flex-start;
+    }
+
+    .nav-buttons {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .calendar-grid {
+        grid-template-rows: auto repeat(6, minmax(80px, 1fr));
+        min-height: 500px;
+    }
+}
+
+@media (max-width: 640px) {
+    .calendar-grid {
+        grid-template-rows: auto repeat(6, minmax(70px, 1fr));
+        min-height: 450px;
+    }
+
+    .day-cell {
+        padding: 0.25rem 0.2rem;
+    }
+
+    .entry-item {
+        font-size: 0.65rem;
+        padding: 0.15rem 0.3rem;
+    }
 }
 </style>

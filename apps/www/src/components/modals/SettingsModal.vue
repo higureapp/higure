@@ -1,11 +1,15 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
-import { X, Save, Loader2 } from 'lucide-vue-next'
+import { X, Save, Loader2, LogOut } from 'lucide-vue-next'
 import { useSettingsStore } from '@/stores/settings-store'
+import { useAuthStore } from '@/stores/auth-store'
+import { useAlertStore } from '@/stores/alert-store'
 import { languages, themes, getBrowserTimezone, getBrowserLocale } from '@/utils/languages'
 import type { LanguageValue, ThemeValue } from '@/utils/languages'
 
 const settingsStore = useSettingsStore()
+const authStore = useAuthStore()
+const alertStore = useAlertStore()
 const { form, isSaving, error } = storeToRefs(settingsStore)
 
 function handleCancel() {
@@ -31,6 +35,11 @@ function useBrowserTimezone() {
 function useBrowserLocale() {
     form.value.locale = getBrowserLocale()
 }
+
+async function handleLogout() {
+    settingsStore.closeModal()
+    await authStore.logout()
+}
 </script>
 
 <template>
@@ -50,105 +59,68 @@ function useBrowserLocale() {
 
                         <div class="form-section">
                             <h3 class="section-title">Profile</h3>
-                            
+
                             <div class="form-grid">
                                 <div class="form-group">
                                     <label class="form-label">First Name</label>
-                                    <input 
-                                        v-model="form.firstname" 
-                                        type="text" 
-                                        class="form-input"
-                                        placeholder="Enter your first name"
-                                    />
+                                    <input v-model="form.firstname" type="text" class="form-input"
+                                        placeholder="Enter your first name" />
                                 </div>
 
                                 <div class="form-group">
                                     <label class="form-label">Last Name</label>
-                                    <input 
-                                        v-model="form.lastname" 
-                                        type="text" 
-                                        class="form-input"
-                                        placeholder="Enter your last name"
-                                    />
+                                    <input v-model="form.lastname" type="text" class="form-input"
+                                        placeholder="Enter your last name" />
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="form-label">Email</label>
-                                <input 
-                                    v-model="form.email" 
-                                    type="email" 
-                                    class="form-input"
-                                    placeholder="Enter your email"
-                                />
+                                <input v-model="form.email" type="email" class="form-input"
+                                    placeholder="Enter your email" />
                             </div>
                         </div>
 
                         <div class="form-section">
                             <h3 class="section-title">Localization</h3>
-                            
+
                             <div class="form-group">
                                 <label class="form-label">
                                     Timezone
-                                    <button 
-                                        type="button" 
-                                        class="hint-btn" 
-                                        @click="useBrowserTimezone"
-                                        title="Use browser timezone"
-                                    >
+                                    <button type="button" class="hint-btn" @click="useBrowserTimezone"
+                                        title="Use browser timezone">
                                         Auto
                                     </button>
                                 </label>
-                                <input 
-                                    v-model="form.timezone" 
-                                    type="text" 
-                                    class="form-input"
-                                    placeholder="e.g., Europe/Rome, America/New_York"
-                                />
+                                <input v-model="form.timezone" type="text" class="form-input"
+                                    placeholder="e.g., Europe/Rome, America/New_York" />
                                 <p class="form-hint">Your timezone for date and time calculations</p>
                             </div>
 
                             <div class="form-group">
                                 <label class="form-label">
                                     Locale
-                                    <button 
-                                        type="button" 
-                                        class="hint-btn" 
-                                        @click="useBrowserLocale"
-                                        title="Use browser locale"
-                                    >
+                                    <button type="button" class="hint-btn" @click="useBrowserLocale"
+                                        title="Use browser locale">
                                         Auto
                                     </button>
                                 </label>
-                                <input 
-                                    v-model="form.locale" 
-                                    type="text" 
-                                    class="form-input"
-                                    placeholder="e.g., it-IT, en-US, es-ES"
-                                />
+                                <input v-model="form.locale" type="text" class="form-input"
+                                    placeholder="e.g., it-IT, en-US, es-ES" />
                                 <p class="form-hint">Your locale for formatting dates and numbers</p>
                             </div>
                         </div>
 
                         <div class="form-section">
                             <h3 class="section-title">Preferences</h3>
-                            
+
                             <div class="form-group">
                                 <label class="form-label">Language</label>
                                 <div class="radio-group">
-                                    <label 
-                                        v-for="lang in languages" 
-                                        :key="lang.value" 
-                                        class="radio-item"
-                                        :class="{ active: form.language === lang.value }"
-                                    >
-                                        <input 
-                                            type="radio" 
-                                            :value="lang.value" 
-                                            v-model="form.language"
-                                            @change="updateLanguage(lang.value)"
-                                            class="radio-input"
-                                        />
+                                    <label v-for="lang in languages" :key="lang.value" class="radio-item"
+                                        :class="{ active: form.language === lang.value }">
+                                        <input type="radio" :value="lang.value" v-model="form.language"
+                                            @change="updateLanguage(lang.value)" class="radio-input" />
                                         <span class="radio-label">{{ lang.label }}</span>
                                     </label>
                                 </div>
@@ -157,19 +129,10 @@ function useBrowserLocale() {
                             <div class="form-group">
                                 <label class="form-label">Theme</label>
                                 <div class="radio-group">
-                                    <label 
-                                        v-for="t in themes" 
-                                        :key="t.value" 
-                                        class="radio-item"
-                                        :class="{ active: form.theme === t.value }"
-                                    >
-                                        <input 
-                                            type="radio" 
-                                            :value="t.value" 
-                                            v-model="form.theme"
-                                            @change="updateTheme(t.value)"
-                                            class="radio-input"
-                                        />
+                                    <label v-for="t in themes" :key="t.value" class="radio-item"
+                                        :class="{ active: form.theme === t.value }">
+                                        <input type="radio" :value="t.value" v-model="form.theme"
+                                            @change="updateTheme(t.value)" class="radio-input" />
                                         <span class="radio-label">{{ t.label }}</span>
                                     </label>
                                 </div>
@@ -179,23 +142,20 @@ function useBrowserLocale() {
                     </div>
 
                     <footer class="modal-footer">
-                        <button 
-                            type="button" 
-                            class="btn btn-secondary" 
-                            @click="handleCancel"
-                        >
-                            Cancel
+                        <button type="button" class="btn btn-logout" @click="handleLogout">
+                            <LogOut :size="18" />
+                            <span>Log Out</span>
                         </button>
-                        <button 
-                            type="button" 
-                            class="btn btn-primary" 
-                            @click="handleSave"
-                            :disabled="isSaving"
-                        >
-                            <Loader2 v-if="isSaving" :size="18" class="spinning" />
-                            <Save v-else :size="18" />
-                            <span>{{ isSaving ? 'Saving...' : 'Save Changes' }}</span>
-                        </button>
+                        <div class="footer-right">
+                            <button type="button" class="btn btn-secondary" @click="handleCancel">
+                                Cancel
+                            </button>
+                            <button type="button" class="btn btn-primary" @click="handleSave" :disabled="isSaving">
+                                <Loader2 v-if="isSaving" :size="18" class="spinning" />
+                                <Save v-else :size="18" />
+                                <span>{{ isSaving ? 'Saving...' : 'Save Changes' }}</span>
+                            </button>
+                        </div>
                     </footer>
                 </div>
             </div>
@@ -426,12 +386,16 @@ function useBrowserLocale() {
 
 .modal-footer {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
-    gap: 0.75rem;
     padding: 1rem 1.5rem;
     border-top: 1px solid var(--border-subtle);
     background: var(--bg-main);
+}
+
+.footer-right {
+    display: flex;
+    gap: 0.75rem;
 }
 
 .btn {
@@ -472,34 +436,55 @@ function useBrowserLocale() {
     background: var(--button-primary-hover);
 }
 
+.btn-logout {
+    background: transparent;
+    color: var(--accent-danger);
+    border: 1px solid var(--accent-danger);
+}
+
+.btn-logout:hover:not(:disabled) {
+    background: color-mix(in srgb, var(--accent-danger) 10%, transparent);
+}
+
 .spinning {
     animation: spin 1s linear infinite;
 }
 
 @keyframes spin {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 @media (max-width: 640px) {
     .form-grid {
         grid-template-columns: 1fr;
     }
-    
+
     .radio-group {
         flex-direction: column;
         gap: 0.5rem;
     }
-    
+
     .radio-item {
         width: 100%;
         box-sizing: border-box;
     }
-    
+
     .modal-footer {
-        flex-direction: column-reverse;
+        flex-direction: column;
+        gap: 0.75rem;
     }
-    
+
+    .footer-right {
+        flex-direction: column-reverse;
+        width: 100%;
+    }
+
     .btn {
         width: 100%;
     }

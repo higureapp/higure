@@ -80,10 +80,12 @@ export const useAuthStore = defineStore('auth', () => {
         localStorage.setItem('token', newToken)
     }
 
-    function logout() {
+    async function logout() {
         token.value = null
+        setToken("");
         localStorage.removeItem('token')
         getMeResult.value = undefined
+        await refetchMe()
     }
 
     return {
