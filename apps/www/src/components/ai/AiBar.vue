@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useAiStore } from '@/stores/ai-store';
-import { X, Sparkles, Stars, Brain, WandSparkles, ChevronDown } from 'lucide-vue-next';
+import { X, Sparkles, Stars, Brain, WandSparkles, ChevronDown, LampIcon } from 'lucide-vue-next';
 import { onMounted, computed, ref, watch } from 'vue';
 import { useJournalStore } from '@/stores/journal-store';
 import { storeToRefs } from 'pinia';
@@ -127,7 +127,7 @@ onMounted(() => {
                         :class="{ active: activeTab === 'reflection' }"
                         @click="aiStore.currentTab = 'reflection'"
                     >
-                        <Sparkles :size="16" />
+                        <LampIcon :size="16" />
                         Reflect
                     </button>
                 </div>
@@ -224,7 +224,7 @@ onMounted(() => {
                     </div>
 
                     <div v-else class="empty-state">
-                        <Sparkles :size="32" class="empty-icon" />
+                        <LampIcon :size="32" class="empty-icon" />
                         <p>Choose a reflection style and click Generate to explore different perspectives on your thoughts.</p>
                     </div>
                 </div>

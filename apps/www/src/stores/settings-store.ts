@@ -79,19 +79,27 @@ export const useSettingsStore = defineStore('settings', () => {
         try {
             const mutationInput: Record<string, any> = {}
 
-            if (form.value.firstname) mutationInput.firstname = form.value.firstname
-            if (form.value.lastname) mutationInput.lastname = form.value.lastname
+            if (form.value.firstname)
+                mutationInput.firstname = form.value.firstname
+            if (form.value.lastname)
+                mutationInput.lastname = form.value.lastname
             if (form.value.email) mutationInput.email = form.value.email
-            if (form.value.timezone) mutationInput.timezone = form.value.timezone
+            if (form.value.timezone)
+                mutationInput.timezone = form.value.timezone
             if (form.value.locale) mutationInput.locale = form.value.locale
-            if (form.value.language) mutationInput.language = form.value.language
+            if (form.value.language)
+                mutationInput.language = form.value.language
             if (form.value.theme) mutationInput.theme = form.value.theme
 
-            const result = await updateSettingsMutation({ input: mutationInput })
+            const result = await updateSettingsMutation({
+                input: mutationInput,
+            })
 
             if (result?.data?.updateSettings) {
                 if (result.data.updateSettings.theme) {
-                    applyLocalTheme(result.data.updateSettings.theme as ThemeValue)
+                    applyLocalTheme(
+                        result.data.updateSettings.theme as ThemeValue,
+                    )
                 }
                 await authStore.refetchMe()
                 closeModal()
@@ -119,14 +127,11 @@ export const useSettingsStore = defineStore('settings', () => {
         { immediate: true },
     )
 
-    watch(
-        me,
-        (user) => {
-            if (user?.theme && isModalOpen.value) {
-                form.value.theme = user.theme as ThemeValue
-            }
-        },
-    )
+    watch(me, (user) => {
+        if (user?.theme && isModalOpen.value) {
+            form.value.theme = user.theme as ThemeValue
+        }
+    })
 
     return {
         isModalOpen,

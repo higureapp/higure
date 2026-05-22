@@ -14,7 +14,7 @@ const searchStore = useSearchStore();
 const actions = ref([
     {
         icon: Calendar,
-        click: () => router.push('/signin')
+        click: () => router.push('/calendar')
     },
     {
         icon: Search,

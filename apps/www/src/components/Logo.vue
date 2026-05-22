@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import router from '@/router';
 import { useSettingsStore } from '../stores/settings-store' 
 
 withDefaults(
@@ -16,7 +17,7 @@ const settingsStore = useSettingsStore()
 </script>
 
 <template>
-    <div class="logo-container">
+    <div class="logo-container" @click="router.push('/')">
         <img 
             :src="format === 'png' ? '/higure_crop.png' : '/logo_higure.svg'" 
             alt="Higure logo" 
@@ -29,6 +30,7 @@ const settingsStore = useSettingsStore()
 <style scoped>
 .logo-container {
     display: inline-block;
+    cursor: pointer;
 }
 
 .logo-container img {

@@ -6,14 +6,14 @@ export const languages = [
     { value: 'german', label: 'Deutsch' },
 ] as const
 
-export type LanguageValue = typeof languages[number]['value']
+export type LanguageValue = (typeof languages)[number]['value']
 
 export const themes = [
     { value: 'light', label: 'Light' },
     { value: 'dark', label: 'Dark' },
 ] as const
 
-export type ThemeValue = typeof themes[number]['value']
+export type ThemeValue = (typeof themes)[number]['value']
 
 export function getBrowserTimezone(): string {
     return Intl.DateTimeFormat().resolvedOptions().timeZone

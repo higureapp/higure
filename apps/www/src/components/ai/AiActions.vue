@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { Brain, Stars, Sparkles } from 'lucide-vue-next';
+import { Brain, Stars, LampIcon } from 'lucide-vue-next';
 import AiButton from './AiButton.vue';
-import router from '@/router';
 import { useAiStore } from '@/stores/ai-store';
 
 const aiStore = useAiStore();
@@ -11,7 +10,7 @@ const aiStore = useAiStore();
     <div class="ai-actions" v-if="!aiStore.isShowed">
         <AiButton :icon="Stars" label="Insight" :action="() => aiStore.showBar('insight')" />
         <AiButton :icon="Brain" label="Analysis" :action="() => aiStore.showBar('analysis')" />
-        <AiButton :icon="Sparkles" label="Reflect" :action="() => aiStore.showBar('reflection')" />
+        <AiButton :icon="LampIcon" label="Reflect" :action="() => aiStore.showBar('reflection')" />
     </div>
 </template>
 

@@ -1,5 +1,6 @@
 import { useAuthStore } from '@/stores/auth-store'
 import HomeView from '@/views/HomeView.vue'
+import CalendarView from '@/views/CalendarView.vue'
 import JournalNewView from '@/views/JournalNewView.vue'
 import JournalView from '@/views/JournalView.vue'
 import SignInView from '@/views/SignInView.vue'
@@ -13,6 +14,12 @@ const router = createRouter({
             path: '/',
             name: 'home',
             component: HomeView,
+            meta: { requiresAuth: true },
+        },
+        {
+            path: '/calendar',
+            name: 'calendar',
+            component: CalendarView,
             meta: { requiresAuth: true },
         },
         {

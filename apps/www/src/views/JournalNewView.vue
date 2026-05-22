@@ -1,11 +1,21 @@
 <script setup lang="ts">
+import { computed } from 'vue'
+import { useRoute } from 'vue-router'
 import JournalEditor from '@/components/journals/JournalEditor.vue';
 
+const route = useRoute()
+const dateFromQuery = computed(() => {
+    const dateStr = route.query.date
+    if (typeof dateStr === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(dateStr)) {
+        return new Date(dateStr + 'T00:00:00').toISOString()
+    }
+    return undefined
+})
 </script>
 
 <template>
     <div class="journal-detail-page">
-        <JournalEditor class="journal-detail-new" is-new />
+        <JournalEditor class="journal-detail-new" is-new :date="dateFromQuery" />
         <div class="bar">
             <AiBar />
         </div>
